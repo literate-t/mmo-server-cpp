@@ -154,7 +154,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PreBuildEvent>
-      <Command>CALL D:\SourceCode\GameSource\CPP_Server\Protobuf\bin\GeneratePacket.bat</Command>
+      <Command>CALL D:\SourceCode\GameSource\MMO_Basic_Cpp\Protobuf\bin\GeneratePacket.bat</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
