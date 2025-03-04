@@ -1,0 +1,7 @@
+.vs/
+Binary/
+Output/
+Libraries/
+*.pyc
+**/__pycache__/
+*.exe
