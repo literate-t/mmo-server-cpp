@@ -24,7 +24,6 @@ void JobTimer::DistributeJobs(uint64 now)
 		while (false == _timer_items.empty())
 		{
 			const TimerItem& item = _timer_items.top();
-			uint64 now = GetTickCount64();
 			// 현재의 틱이 가장 가까운 실행 시점에 도달하지 않았다면 바로 종료
 			if (now < item.executeTime)
 				break;
@@ -37,7 +36,7 @@ void JobTimer::DistributeJobs(uint64 now)
 	for (const TimerItem& item : items)
 	{
 		// 이미 메모리가 해제된 JobQueue라면 일감을 추가하지 않는다
-		if (const SharedJobQueue& queue = item.job_data->owner_queue.lock())
+		if (const SharedJobQueue queue = item.job_data->owner_queue.lock())
 			queue->Push(item.job_data->job);
 
 		ObjectPool<JobData>::Push(item.job_data);
