@@ -11,19 +11,19 @@ def main():
     arg_parser.add_argument("--send", type=str, default="S_" , help="send convevntion")
     args = arg_parser.parse_args()
     
-    parser = ProtoParser.ProtoParser(1000, args.recv, args.send)
-    # ¼ö½Å ÆĞÅ¶, ¼Û½Å ÆĞÅ¶À» ±¸ºĞÇÏ°í ÆĞÅ¶ ¾ÆÀÌµğ ºÎ¿©¸¦ À§ÇØ ¸ğµç ÆĞÅ¶ÀÇ Á¤º¸µµ °®´Â´Ù
+    parser = ProtoParser.ProtoParser(0, args.recv, args.send)
+    # ìˆ˜ì‹  íŒ¨í‚·, ì†¡ì‹  íŒ¨í‚·ì„ êµ¬ë¶„í•˜ê³  íŒ¨í‚· ì•„ì´ë”” ë¶€ì—¬ë¥¼ ìœ„í•´ ëª¨ë“  íŒ¨í‚·ì˜ ì •ë³´ë„ ê°–ëŠ”ë‹¤
     parser.parse_proto(args.path)
     
     # jinja2
-    # ÀÚµ¿È­ ÀÛ¾÷À» À§ÇÑ Çì´õ ÆÄÀÏÀÌ À§Ä¡ÇÑ Æú´õ
+    # ìë™í™” ì‘ì—…ì„ ìœ„í•œ í—¤ë” íŒŒì¼ì´ ìœ„ì¹˜í•œ í´ë”
     file_loader = jinja2.FileSystemLoader("Templates")
     env = jinja2.Environment(loader=file_loader)
     
-    #¿ì¸®°¡ ÀÛ¾÷ÇÒ Çì´õ ÆÄÀÏ
+    #ìš°ë¦¬ê°€ ì‘ì—…í•  í—¤ë” íŒŒì¼
     packet_handler_template = env.get_template("PacketHandler.h")
-    # outputÀº ÇÁ·Î±×·¥À» ½ÇÇàÇÒ ¶§ ³ÖÀ» ¿É¼Ç °ª Áß¿¡ ÇÏ³ª·Î Å¬·¡½ºÀÇ ÀÌ¸§¿¡ ¾²ÀÎ´Ù
-    # parser=parser¸¦ ÅëÇØ ³»ºÎ¿¡¼­ parser °´Ã¼ÀÇ ¸â¹ö º¯¼ö¸¦ ¾µ ¼ö ÀÖ´Ù
+    # outputì€ í”„ë¡œê·¸ë¨ì„ ì‹¤í–‰í•  ë•Œ ë„£ì„ ì˜µì…˜ ê°’ ì¤‘ì— í•˜ë‚˜ë¡œ í´ë˜ìŠ¤ì˜ ì´ë¦„ì— ì“°ì¸ë‹¤
+    # parser=parserë¥¼ í†µí•´ ë‚´ë¶€ì—ì„œ parser ê°ì²´ì˜ ë©¤ë²„ ë³€ìˆ˜ë¥¼ ì“¸ ìˆ˜ ìˆë‹¤
     result = packet_handler_template.render(parser=parser, output=args.output)
     
     file = open(args.output+".h", "w+");

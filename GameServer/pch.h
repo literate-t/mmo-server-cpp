@@ -13,5 +13,4 @@
 
 #include "CorePch.h"
 #include "Types.h"
-
-#include "Enum.pb.h"
+#include "Protocol.pb.h"

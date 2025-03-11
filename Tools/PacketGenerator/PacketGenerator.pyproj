@@ -11,6 +11,8 @@
     <OutputPath>.</OutputPath>
     <Name>PacketGenerator</Name>
     <RootNamespace>PacketGenerator</RootNamespace>
+    <InterpreterId>
+    </InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -29,6 +31,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Templates\PacketHandler.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="Global|PythonCore|3.13" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

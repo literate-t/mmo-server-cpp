@@ -18,7 +18,8 @@ class ProtoParser():
                 continue
             # split 함수에 아무 것도 넣지 않으면 공백 문자 기준으로 자른다(\\n, \\r, \\t, \\f)
             # message 뒤에 등장하는 것이 패킷의 이름이 된다
-            packet_name = line.split()[1].upper()
+            # packet_name = line.split()[1].upper()
+            packet_name = line.split()[1]
             # 수신 패킷은 recv_packet 멤버변수에 넣고
             if packet_name.startswith(self.recv_prefix):
                 self.recv_packet.append(Packet(packet_name, self.id))
