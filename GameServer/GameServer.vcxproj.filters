@@ -13,6 +13,9 @@
     <Filter Include="GameContents">
       <UniqueIdentifier>{da51e85f-a537-4c69-8f0c-9ccc29ff4376}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DB">
+      <UniqueIdentifier>{aa8bb5b7-b528-42fd-a5ec-c7e8d234b958}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameServer.cpp">
@@ -42,6 +45,7 @@
     <ClCompile Include="Protocol.pb.cc">
       <Filter>Protocol</Filter>
     </ClCompile>
+    <ClCompile Include="ServerDB.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -71,5 +75,6 @@
     <ClInclude Include="Protocol.pb.h">
       <Filter>Protocol</Filter>
     </ClInclude>
+    <ClInclude Include="ServerDB.h" />
   </ItemGroup>
 </Project>

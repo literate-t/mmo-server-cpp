@@ -199,6 +199,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Room.cpp" />
+    <ClCompile Include="ServerDB.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameSession.h" />
@@ -209,6 +210,7 @@
     <ClInclude Include="ClientPacketHandler.h" />
     <ClInclude Include="Protocol.pb.h" />
     <ClInclude Include="Room.h" />
+    <ClInclude Include="ServerDB.h" />
     <ClInclude Include="Types.h" />
   </ItemGroup>
   <ItemGroup>
