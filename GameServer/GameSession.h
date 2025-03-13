@@ -1,5 +1,7 @@
 #pragma once
 #include "Session.h"
+#include "Protocol.pb.h"
+using namespace Protocol;
 
 class GameSession : public PacketSession
 {
@@ -14,12 +16,20 @@ public:
 	void AddPlayer(SharedPlayer player);
 	void RemovePlayer(SharedPlayer player);
 
+	int32 GetAccountId() const { return _account_id; }
+
 	inline SharedPlayer& GetPlayer(const int64 index) { return _players[index]; }
 	inline SharedPlayer& GetPlayer() { return _current_player; }
 	inline weak_ptr<class Room>& GetRoom() { return _room; }
+
+	void HandleLogin(C_Login& login_packet);
 
 private:
 	xvector<SharedPlayer> _players;
 	SharedPlayer _current_player;
 	weak_ptr<class Room> _room;
+	int32 _account_id;
+
+	PlayerServerState _server_state = PlayerServerState::SERVER_STATE_LOGIN;
+	xvector<LobbyPlayerInfo*> _lobby_players;
 };
