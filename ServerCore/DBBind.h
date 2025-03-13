@@ -55,6 +55,19 @@ public:
 		_param_flag |= (1LL << index);
 	}
 
+	void BindParam(int32 index/*0 start*/, const char* value)
+	{
+		// char* to wchar_t*
+		size_t converted_chars;
+		mbstowcs_s(&converted_chars, nullptr, 0, value, 0);
+		wchar_t* dest = new wchar_t[converted_chars];
+		mbstowcs_s(&converted_chars, dest, converted_chars, value, _TRUNCATE);
+
+		_db_connection.BindParam(index + 1, dest, &_param_index[index]);
+		_param_flag |= (1LL << index);
+		delete[] dest;
+	}	
+
 	template<typename T, int32 N>
 	void BindParam(int32 index/*0 start*/, T(&value)[N])
 	{
@@ -89,11 +102,29 @@ public:
 		_column_flag |= (1LL << index);
 	}
 
+	void BindColumn(int32 index, char* value, int32 len)
+	{
+		// char* to wchar_t*
+		size_t converted_chars;
+		mbstowcs_s(&converted_chars, nullptr, 0, value, 0);
+		wchar_t* dest = new wchar_t[converted_chars];
+		mbstowcs_s(&converted_chars, dest, converted_chars, value, _TRUNCATE);
+
+		_db_connection.BindColumn(index + 1, dest, converted_chars, &_column_index[index]);
+		_column_flag |= (1LL << index);
+		delete[] dest;
+	}
+
 	template<typename T, int32 N>
 	void BindColumn(int32 index, T(&value)[N])
 	{
 		_db_connection.BindColumn(index + 1, value, sizeof(value), &_column_index[index]);
 		_column_flag |= (1LL << index);
+	}
+
+	bool GetId(OUT int64& id)
+	{
+		return _db_connection.GetData(id);
 	}
 
 protected:
