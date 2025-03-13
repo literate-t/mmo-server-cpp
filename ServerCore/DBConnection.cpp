@@ -211,6 +211,24 @@ bool DBConnection::BindColumn(int32 column_index, BYTE* value, int32 size, SQLLE
 	return BindColumn(column_index, SQL_BINARY, size, value, index);
 }
 
+bool DBConnection::GetData(int64& id)
+{
+	SQLRETURN ret = SQLMoreResults(_statement);
+	if (SQL_SUCCEEDED(ret))
+	{
+		ret = SQLFetch(_statement);
+		if (SQL_SUCCEEDED(ret))
+		{
+			ret = SQLGetData(_statement, 1, SQL_C_SLONG, &id, 0, nullptr);
+			if (SQL_SUCCEEDED(ret))
+				return true;
+			else
+				return false;
+		}
+	}
+	return false;
+}
+
 bool DBConnection::BindParam(SQLUSMALLINT parameter_index, SQLSMALLINT c_type, SQLSMALLINT sql_type, SQLLEN len, SQLPOINTER ptr, SQLLEN* index)
 {
 	SQLRETURN sql_return = SQLBindParameter(_statement, parameter_index, SQL_PARAM_INPUT, c_type, sql_type, len, 0, ptr, 0, index);
