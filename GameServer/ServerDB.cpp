@@ -10,18 +10,18 @@ void ServerDB::Init(bool create)
 	auto account_table_query = 
 		create ? 
 		L"															\
-		DROP TABLE IF EXISTS [dbo].[Account];						\
-		CREATE TABLE [dbo].[Account]								\
+		DROP TABLE IF EXISTS [dbo].[accounts];						\
+		CREATE TABLE [dbo].[accounts]								\
 		(															\
-			[AccountId] INT NOT NULL PRIMARY KEY IDENTITY(1,1),	\
-			[AccountName] NVARCHAR(50)								\
+			[account_id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),	\
+			[account_name] NVARCHAR(50)								\
 		);"
 		:
 		L"															\
-		CREATE TABLE [dbo].[Account]								\
+		CREATE TABLE [dbo].[accounts]								\
 		(															\
-			[AccountId] INT NOT NULL PRIMARY KEY IDENTITY(1,1),	\
-			[AccountName] NVARCHAR(50)								\
+			[account_id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),	\
+			[account_name] NVARCHAR(50)								\
 		);";		
 	ASSERT_CRASH(db_conn->Execute(account_table_query));
 
@@ -29,82 +29,82 @@ void ServerDB::Init(bool create)
 	auto player_table_query = 
 		create ?
 		L"															\
-		DROP TABLE [dbo].[Player];									\
-		CREATE TABLE [dbo].[Player]									\
+		DROP TABLE [dbo].[players];									\
+		CREATE TABLE [dbo].[players]									\
 		(															\
-			[PlayerId] INT NOT NULL PRIMARY KEY IDENTITY(1,1),		\
-			[PlayerName] NVARCHAR(50),								\
-			[AccountId] INT,										\
-			CONSTRAINT FK_ACCOUNT_PLAYER FOREIGN KEY (AccountId) REFERENCES Account(AccountId) \
+			[player_id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),		\
+			[player_name] NVARCHAR(50),								\
+			[account_id] INT,										\
+			CONSTRAINT FK_ACCOUNTS_PLAYERS FOREIGN KEY (account_id) REFERENCES accounts(account_id) \
 		);"
 		:
 		L"									\
-		CREATE TABLE [dbo].[Player]									\
+		CREATE TABLE [dbo].[players]									\
 		(															\
-			[PlayerId] INT NOT NULL PRIMARY KEY IDENTITY(1,1),		\
-			[PlayerName] NVARCHAR(50),								\
-			[AccountId] INT,										\
-			CONSTRAINT FK_ACCOUNT_PLAYER FOREIGN KEY (AccountId) REFERENCES Account(AccountId) \
+			[player_id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),		\
+			[player_name] NVARCHAR(50),								\
+			[account_id] INT,										\
+			CONSTRAINT FK_ACCOUNTS_PLAYERS FOREIGN KEY (account_id) REFERENCES accounts(account_id) \
 		);";
 	ASSERT_CRASH(db_conn->Execute(player_table_query));
 
 	auto stat_table_query = 
 		create ? 
 		L"															\
-		DROP TABLE IF EXISTS [dbo].[Stat];							\
-		CREATE TABLE [dbo].[Stat]									\
+		DROP TABLE IF EXISTS [dbo].[stats];							\
+		CREATE TABLE [dbo].[stats]									\
 		(															\
-			[StatId] INT NOT NULL PRIMARY KEY IDENTITY(1,1),		\
-			[Level] INT,											\
-			[Hp] INT,												\
-			[MaxHp] INT,											\
-			[Attack] INT,											\
-			[Speed] INT,											\
-			[TotalExp] INT,											\
-			[PlayerId] INT UNIQUE,									\
-			CONSTRAINT FK_PLAYER_STAT FOREIGN KEY(PlayerId) REFERENCES Player(PlayerId) \
+			[stat_id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),		\
+			[level] INT,											\
+			[hp] INT,												\
+			[max_hp] INT,											\
+			[attack] INT,											\
+			[speed] INT,											\
+			[total_exp] INT,											\
+			[player_id] INT UNIQUE,									\
+			CONSTRAINT FK_PLAYERS_STATS FOREIGN KEY(player_id) REFERENCES players(player_id) \
 		);"
 		:
 		L"															\
-		CREATE TABLE [dbo].[Stat]									\
+		CREATE TABLE [dbo].[stats]									\
 		(															\
-			[StatId] INT NOT NULL PRIMARY KEY IDENTITY(1,1),		\
-			[Level] INT,											\
-			[Hp] INT,												\
-			[MaxHp] INT,											\
-			[Attack] INT,											\
-			[Speed] INT,											\
-			[TotalExp] INT,											\
-			[PlayerId] INT UNIQUE,									\
-			CONSTRAINT FK_PLAYER_STAT FOREIGN KEY(PlayerId) REFERENCES Player(PlayerId) \
+			[stat_id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),		\
+			[level] INT,											\
+			[hp] INT,												\
+			[max_hp] INT,											\
+			[attack] INT,											\
+			[speed] INT,											\
+			[total_exp] INT,											\
+			[player_id] INT UNIQUE,									\
+			CONSTRAINT FK_PLAYERS_STATS FOREIGN KEY(player_id) REFERENCES players(player_id) \
 		);";
 	ASSERT_CRASH(db_conn->Execute(stat_table_query));
 
 	auto item_table_query = 
 		create ?
 		L"															\
-		DROP TABLE IF EXISTS [dbo].[Item];							\
-		CREATE TABLE [dbo].[Item]									\
+		DROP TABLE IF EXISTS [dbo].[items];							\
+		CREATE TABLE [dbo].[items]									\
 		(															\
-			[ItemId] INT NOT NULL PRIMARY KEY IDENTITY(1,1),		\
-			[DataSheetId] INT,										\
-			[Count]	INT,											\
-			[Slot]	INT,											\
-			[Equipped] BIT,											\
-			[OwnerId] INT,											\
-			CONSTRAINT FK_PLAYER_ITEM FOREIGN KEY(OwnerId) REFERENCES Player(PlayerId)	\
+			[item_id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),		\
+			[data_sheet_id] INT,										\
+			[count]	INT,											\
+			[slot]	INT,											\
+			[equipped] BIT,											\
+			[owner_id] INT,											\
+			CONSTRAINT FK_PLAYERS_ITEMS FOREIGN KEY(owner_id) REFERENCES players(player_id)	\
 		);"
 		:
 		L"															\
-		CREATE TABLE [dbo].[Item]									\
+		CREATE TABLE [dbo].[items]									\
 		(															\
-			[ItemId] INT NOT NULL PRIMARY KEY IDENTITY(1,1),		\
-			[DataSheetId] INT,										\
-			[Count]	INT,											\
-			[Slot]	INT,											\
-			[Equipped] BIT,											\
-			[OwnerId] INT,											\
-			CONSTRAINT FK_PLAYER_ITEM FOREIGN KEY(OwnerId) REFERENCES Player(PlayerId)	\
+			[item_id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),		\
+			[data_sheet_id] INT,										\
+			[count]	INT,											\
+			[slot]	INT,											\
+			[equipped] BIT,											\
+			[owner_id] INT,											\
+			CONSTRAINT FK_PLAYERS_ITEMS FOREIGN KEY(owner_id) REFERENCES players(player_id)	\
 		);";
 	ASSERT_CRASH(db_conn->Execute(item_table_query));
 
