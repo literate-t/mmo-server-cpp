@@ -42,6 +42,8 @@ public:
 	bool BindColumn(int32 column_index, WCHAR* value, int32 size, SQLLEN* index);
 	bool BindColumn(int32 column_index, BYTE* value, int32 size, SQLLEN* index);
 
+	bool GetData(OUT int64& id);
+
 private:
 	bool BindParam(SQLUSMALLINT parameter_index, SQLSMALLINT c_type, SQLSMALLINT sql_type, SQLLEN len, SQLPOINTER ptr, SQLLEN* index);
 	bool BindColumn(SQLUSMALLINT column_index, SQLSMALLINT target_type, SQLULEN len, SQLPOINTER value, SQLLEN* index);
