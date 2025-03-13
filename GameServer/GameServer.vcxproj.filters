@@ -16,6 +16,9 @@
     <Filter Include="DB">
       <UniqueIdentifier>{aa8bb5b7-b528-42fd-a5ec-c7e8d234b958}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{6ce9dbaf-0a48-41dd-bf26-306c98777d59}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameServer.cpp">
@@ -45,7 +48,12 @@
     <ClCompile Include="Protocol.pb.cc">
       <Filter>Protocol</Filter>
     </ClCompile>
-    <ClCompile Include="ServerDB.cpp" />
+    <ClCompile Include="ServerDB.cpp">
+      <Filter>DB</Filter>
+    </ClCompile>
+    <ClCompile Include="Info.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -76,5 +84,6 @@
       <Filter>Protocol</Filter>
     </ClInclude>
     <ClInclude Include="ServerDB.h" />
+    <ClInclude Include="Info.h" />
   </ItemGroup>
 </Project>
