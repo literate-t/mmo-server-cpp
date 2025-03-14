@@ -2,6 +2,7 @@
 class ServerDB
 {
 public:
-	static void Init(bool create = false);
+	ServerDB();
+	void Init(bool create = false);
 };
 

@@ -1,24 +1,28 @@
 #include "pch.h"
 #include "ServerDB.h"
 
-void ServerDB::Init(bool create)
+ServerDB::ServerDB()
 {
 	ASSERT_CRASH(g_db_connection_pool->Connect(10, L"Driver={ODBC Driver 17 for SQL Server};Server=(localdb)\\MSSQLLocalDB;Database=ServerDB;Trusted_Connection=Yes;"));
+}
+
+void ServerDB::Init(bool create)
+{
 	DBConnection* db_conn = g_db_connection_pool->Pop();
 
 	// account table
 	auto account_table_query = 
 		create ? 
 		L"															\
-		DROP TABLE IF EXISTS [dbo].[accounts];						\
-		CREATE TABLE [dbo].[accounts]								\
+		DROP TABLE IF EXISTS accounts;								\
+		CREATE TABLE accounts										\
 		(															\
 			[account_id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),	\
 			[account_name] NVARCHAR(50)								\
 		);"
 		:
 		L"															\
-		CREATE TABLE [dbo].[accounts]								\
+		CREATE TABLE accounts										\
 		(															\
 			[account_id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),	\
 			[account_name] NVARCHAR(50)								\
@@ -29,8 +33,8 @@ void ServerDB::Init(bool create)
 	auto player_table_query = 
 		create ?
 		L"															\
-		DROP TABLE [dbo].[players];									\
-		CREATE TABLE [dbo].[players]									\
+		DROP TABLE players;											\
+		CREATE TABLE players										\
 		(															\
 			[player_id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),		\
 			[player_name] NVARCHAR(50),								\
@@ -38,8 +42,8 @@ void ServerDB::Init(bool create)
 			CONSTRAINT FK_ACCOUNTS_PLAYERS FOREIGN KEY (account_id) REFERENCES accounts(account_id) \
 		);"
 		:
-		L"									\
-		CREATE TABLE [dbo].[players]									\
+		L"															\
+		CREATE TABLE players										\
 		(															\
 			[player_id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),		\
 			[player_name] NVARCHAR(50),								\
@@ -51,8 +55,8 @@ void ServerDB::Init(bool create)
 	auto stat_table_query = 
 		create ? 
 		L"															\
-		DROP TABLE IF EXISTS [dbo].[stats];							\
-		CREATE TABLE [dbo].[stats]									\
+		DROP TABLE IF EXISTS stats;									\
+		CREATE TABLE stats											\
 		(															\
 			[stat_id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),		\
 			[level] INT,											\
@@ -66,7 +70,7 @@ void ServerDB::Init(bool create)
 		);"
 		:
 		L"															\
-		CREATE TABLE [dbo].[stats]									\
+		CREATE TABLE stats											\
 		(															\
 			[stat_id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),		\
 			[level] INT,											\
@@ -83,11 +87,11 @@ void ServerDB::Init(bool create)
 	auto item_table_query = 
 		create ?
 		L"															\
-		DROP TABLE IF EXISTS [dbo].[items];							\
-		CREATE TABLE [dbo].[items]									\
+		DROP TABLE IF EXISTS items;									\
+		CREATE TABLE items											\
 		(															\
 			[item_id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),		\
-			[data_sheet_id] INT,										\
+			[data_sheet_id] INT,									\
 			[count]	INT,											\
 			[slot]	INT,											\
 			[equipped] BIT,											\
@@ -96,10 +100,10 @@ void ServerDB::Init(bool create)
 		);"
 		:
 		L"															\
-		CREATE TABLE [dbo].[items]									\
+		CREATE TABLE items											\
 		(															\
 			[item_id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),		\
-			[data_sheet_id] INT,										\
+			[data_sheet_id] INT,									\
 			[count]	INT,											\
 			[slot]	INT,											\
 			[equipped] BIT,											\
