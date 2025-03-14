@@ -35,7 +35,8 @@ void DoWorkerJob(SharedServerService& service)
 
 int main()
 {
-	ServerDB::Init();
+	ServerDB server_db;
+	server_db.Init();
 	ClientPacketHandler::Init();
 	SharedServerService _server_service = MakeShared<ServerService>(
 		NetAddress(L"127.0.0.1", 9999),
