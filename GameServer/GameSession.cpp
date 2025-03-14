@@ -13,6 +13,9 @@ GameSession::~GameSession()
 void GameSession::OnConnectCompleted()
 {
 	g_session_manager.Add(static_pointer_cast<GameSession>(shared_from_this()));
+
+	S_Connected connected_packet;
+	Send(ClientPacketHandler::MakeSendBuffer(connected_packet));
 }
 
 void GameSession::OnDisconnectCompleted()
