@@ -65,11 +65,12 @@ void GameSession::HandleLogin(C_Login& login_packet)
 	_lobby_players.clear();
 
 	DBConnection* conn = g_db_connection_pool->Pop();
-	auto query = L"														\
-		SELECT account_id, player_id, player_name,						\
-		level, hp, max_hp, attack, speed, total_exp						\
-		FROM accounts													\
-		LEFT JOIN players ON accounts.account_id = players.account_id	\
+	auto query = L"																		\
+		SELECT a.account_id as account_id, p.player_id as player_id, p.player_name as player_name,									\
+		s.level as level, s.hp as hp, s.max_hp as max_hp, s.attack, s.speed as speed, s.total_exp as total_exp	\
+		FROM accounts a																	\
+		LEFT JOIN players as p ON a.account_id = p.account_id				\
+		LEFT JOIN stats as s ON p.player_id = s.player_id						\
 		WHERE account_name = (?)";
 
 	int32 account_id = 0;
@@ -78,7 +79,7 @@ void GameSession::HandleLogin(C_Login& login_packet)
 	player_name.resize(128);
 	Stat stat;
 
-	DBBind<1, 3> db_bind(*conn, query);
+	DBBind<1, 9> db_bind(*conn, query);
 
 	db_bind.BindParam(0, login_packet.uniqueid().c_str());
 	db_bind.BindColumn(0, account_id);
@@ -131,6 +132,8 @@ void GameSession::HandleLogin(C_Login& login_packet)
 				SELECT SCOPE_IDENTITY() AS NewID;";
 
 		DBBind<1, 0> db_bind(*conn, query);
+		db_bind.BindParam(0, account_name.c_str());
+
 		db_bind.Execute();
 
 		int64 newId;
