@@ -20,10 +20,10 @@ enum
 	PKT_S_Die = 9,
 	PKT_S_Connected = 10,
 	PKT_C_Login = 11,
-	PKT_C_CreatePlayer = 12,
-	PKT_S_CreatePlayer = 13,
-	PKT_C_EnterGame = 14,
-	PKT_S_Login = 15,
+	PKT_S_Login = 12,
+	PKT_C_EnterGame = 13,
+	PKT_S_CreatePlayer = 14,
+	PKT_C_CreatePlayer = 15,
 	PKT_S_ItemList = 16,
 	PKT_S_AddItem = 17,
 	PKT_C_EquipItem = 18,
@@ -43,8 +43,8 @@ bool Handle_S_Skill(SharedPacketSession& session, Protocol::S_Skill& pkt);
 bool Handle_S_ChangeHp(SharedPacketSession& session, Protocol::S_ChangeHp& pkt);
 bool Handle_S_Die(SharedPacketSession& session, Protocol::S_Die& pkt);
 bool Handle_S_Connected(SharedPacketSession& session, Protocol::S_Connected& pkt);
-bool Handle_S_CreatePlayer(SharedPacketSession& session, Protocol::S_CreatePlayer& pkt);
 bool Handle_S_Login(SharedPacketSession& session, Protocol::S_Login& pkt);
+bool Handle_S_CreatePlayer(SharedPacketSession& session, Protocol::S_CreatePlayer& pkt);
 bool Handle_S_ItemList(SharedPacketSession& session, Protocol::S_ItemList& pkt);
 bool Handle_S_AddItem(SharedPacketSession& session, Protocol::S_AddItem& pkt);
 bool Handle_S_EquipItem(SharedPacketSession& session, Protocol::S_EquipItem& pkt);
@@ -68,8 +68,8 @@ public:
 		g_packet_handler[PKT_S_ChangeHp] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::S_ChangeHp>(Handle_S_ChangeHp, session, buffer, length); };
 		g_packet_handler[PKT_S_Die] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::S_Die>(Handle_S_Die, session, buffer, length); };
 		g_packet_handler[PKT_S_Connected] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::S_Connected>(Handle_S_Connected, session, buffer, length); };
-		g_packet_handler[PKT_S_CreatePlayer] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::S_CreatePlayer>(Handle_S_CreatePlayer, session, buffer, length); };
 		g_packet_handler[PKT_S_Login] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::S_Login>(Handle_S_Login, session, buffer, length); };
+		g_packet_handler[PKT_S_CreatePlayer] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::S_CreatePlayer>(Handle_S_CreatePlayer, session, buffer, length); };
 		g_packet_handler[PKT_S_ItemList] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::S_ItemList>(Handle_S_ItemList, session, buffer, length); };
 		g_packet_handler[PKT_S_AddItem] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::S_AddItem>(Handle_S_AddItem, session, buffer, length); };
 		g_packet_handler[PKT_S_EquipItem] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::S_EquipItem>(Handle_S_EquipItem, session, buffer, length); };
@@ -82,8 +82,8 @@ public:
 	static SharedSendBuffer MakeSendBuffer(Protocol::C_Move& pkt) { return MakeSendBuffer(pkt, PKT_C_Move); }
 	static SharedSendBuffer MakeSendBuffer(Protocol::C_Skill& pkt) { return MakeSendBuffer(pkt, PKT_C_Skill); }
 	static SharedSendBuffer MakeSendBuffer(Protocol::C_Login& pkt) { return MakeSendBuffer(pkt, PKT_C_Login); }
-	static SharedSendBuffer MakeSendBuffer(Protocol::C_CreatePlayer& pkt) { return MakeSendBuffer(pkt, PKT_C_CreatePlayer); }
 	static SharedSendBuffer MakeSendBuffer(Protocol::C_EnterGame& pkt) { return MakeSendBuffer(pkt, PKT_C_EnterGame); }
+	static SharedSendBuffer MakeSendBuffer(Protocol::C_CreatePlayer& pkt) { return MakeSendBuffer(pkt, PKT_C_CreatePlayer); }
 	static SharedSendBuffer MakeSendBuffer(Protocol::C_EquipItem& pkt) { return MakeSendBuffer(pkt, PKT_C_EquipItem); }
 	static SharedSendBuffer MakeSendBuffer(Protocol::C_Pong& pkt) { return MakeSendBuffer(pkt, PKT_C_Pong); }	
 
