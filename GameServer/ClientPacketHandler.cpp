@@ -32,7 +32,10 @@ bool Handle_C_Skill(SharedPacketSession& session, Protocol::C_Skill& pkt)
 
 bool Handle_C_Login(SharedPacketSession& session, Protocol::C_Login& pkt)
 {
-	return false;
+	shared_ptr<GameSession> game_session = static_pointer_cast<GameSession>(session);
+	game_session->HandleLogin(pkt);
+
+	return true;
 }
 
 bool Handle_C_CreatePlayer(SharedPacketSession& session, Protocol::C_CreatePlayer& pkt)
