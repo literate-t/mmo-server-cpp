@@ -60,12 +60,13 @@ public:
 		// char* to wchar_t*
 		size_t converted_chars;
 		mbstowcs_s(&converted_chars, nullptr, 0, value, 0);
-		wchar_t* dest = new wchar_t[converted_chars];
+
+		// TODO : delete magic number
+		wchar_t dest[50];
 		mbstowcs_s(&converted_chars, dest, converted_chars, value, _TRUNCATE);
 
 		_db_connection.BindParam(index + 1, dest, &_param_index[index]);
 		_param_flag |= (1LL << index);
-		delete[] dest;
 	}	
 
 	template<typename T, int32 N>
@@ -107,12 +108,13 @@ public:
 		// char* to wchar_t*
 		size_t converted_chars;
 		mbstowcs_s(&converted_chars, nullptr, 0, value, 0);
-		wchar_t* dest = new wchar_t[converted_chars];
+
+		// TODO : delete magic number
+		wchar_t dest[50];
 		mbstowcs_s(&converted_chars, dest, converted_chars, value, _TRUNCATE);
 
 		_db_connection.BindColumn(index + 1, dest, converted_chars, &_column_index[index]);
-		_column_flag |= (1LL << index);
-		delete[] dest;
+		_column_flag |= (1LL << index);		
 	}
 
 	template<typename T, int32 N>
