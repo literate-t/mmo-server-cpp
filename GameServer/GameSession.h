@@ -23,6 +23,7 @@ public:
 	inline weak_ptr<class Room>& GetRoom() { return _room; }
 
 	void HandleLogin(C_Login& login_packet);
+	void HandleCreatePlayer(C_CreatePlayer packet);
 
 private:
 	xvector<SharedPlayer> _players;

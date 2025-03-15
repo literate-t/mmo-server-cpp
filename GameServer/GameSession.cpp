@@ -150,3 +150,11 @@ void GameSession::HandleLogin(C_Login& login_packet)
 
 	g_db_connection_pool->Push(conn);
 }
+
+void GameSession::HandleCreatePlayer(C_CreatePlayer packet)
+{
+	if (_server_state != PlayerServerState::SERVER_STATE_LOBBY)
+		return;
+
+	// TODO
+}
