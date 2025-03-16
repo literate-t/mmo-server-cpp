@@ -57,7 +57,10 @@
     <ClCompile Include="Info.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="DataManager.cpp" />
+    <ClCompile Include="DataManager.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="ConfigManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -89,6 +92,12 @@
     </ClInclude>
     <ClInclude Include="ServerDB.h" />
     <ClInclude Include="Info.h" />
-    <ClInclude Include="DataManager.h" />
+    <ClInclude Include="DataManager.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="DataContents.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="ConfigManager.h" />
   </ItemGroup>
 </Project>
