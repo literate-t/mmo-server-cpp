@@ -1,5 +1,5 @@
 #pragma once
-class FileManager
+class JsonFileManager
 {
 public:
 	static string GetContent(string path);
