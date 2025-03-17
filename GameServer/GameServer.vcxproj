@@ -185,6 +185,7 @@
   <ItemGroup>
     <ClCompile Include="ConfigManager.cpp" />
     <ClCompile Include="DataManager.cpp" />
+    <ClCompile Include="FileManager.cpp" />
     <ClCompile Include="GameServer.cpp" />
     <ClCompile Include="GameSession.cpp" />
     <ClCompile Include="GameSessionManager.cpp" />
@@ -208,6 +209,7 @@
     <ClInclude Include="ConfigManager.h" />
     <ClInclude Include="DataContents.h" />
     <ClInclude Include="DataManager.h" />
+    <ClInclude Include="FileManager.h" />
     <ClInclude Include="GameSession.h" />
     <ClInclude Include="GameSessionManager.h" />
     <ClInclude Include="Info.h" />

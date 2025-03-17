@@ -22,6 +22,9 @@
     <Filter Include="Data">
       <UniqueIdentifier>{76e2cb2d-e20c-4d1d-ad68-d70c44591e04}</UniqueIdentifier>
     </Filter>
+    <Filter Include="File">
+      <UniqueIdentifier>{3e319f98-af58-471f-a630-97695602be88}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameServer.cpp">
@@ -60,7 +63,12 @@
     <ClCompile Include="DataManager.cpp">
       <Filter>Data</Filter>
     </ClCompile>
-    <ClCompile Include="ConfigManager.cpp" />
+    <ClCompile Include="ConfigManager.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="FileManager.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -90,14 +98,21 @@
     <ClInclude Include="Protocol.pb.h">
       <Filter>Protocol</Filter>
     </ClInclude>
-    <ClInclude Include="ServerDB.h" />
-    <ClInclude Include="Info.h" />
     <ClInclude Include="DataManager.h">
       <Filter>Data</Filter>
     </ClInclude>
     <ClInclude Include="DataContents.h">
       <Filter>Data</Filter>
     </ClInclude>
-    <ClInclude Include="ConfigManager.h" />
+    <ClInclude Include="FileManager.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="ConfigManager.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerDB.h" />
+    <ClInclude Include="Info.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
