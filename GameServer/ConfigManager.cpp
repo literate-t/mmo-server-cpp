@@ -1,31 +1,22 @@
 #include "pch.h"
 #include "ConfigManager.h"
-#include <filesystem>
+#include "FileManager.h"
 #include <fstream>
 #include <sstream>
 
-void ConfigManager::LoadConfig()
+ConfigManager::ConfigManager()
 {
-	filesystem::path file_path = "D:/SourceCode/GameSource/MMO_Basic_Cpp/Common/Config/config.json";
-
-	if (!filesystem::exists(file_path))
-	{
-		cerr << "No file: " << file_path << "\n";
-		return;
+	LoadConfig();
 	}
 
-	ifstream file(file_path);
-	if (!file)
+void ConfigManager::LoadConfig()
 	{
-		std::cerr << "File not open: " << file_path << "\n";
-		return;
-	}
+	string path = "D:/SourceCode/GameSource/MMO_Basic_Cpp/Common/Config/config.json";
 
-	stringstream buffer;
-	buffer << file.rdbuf();
-	string file_content = buffer.str();
+	string file_content = FileManager::GetContent(path);
 
-	_data_path = Deserialize("dataPath");
+	if (file_content.empty() == false)
+		Deserialize(file_content, "dataPath");
 }
 
 string ConfigManager::Deserialize(string key)
