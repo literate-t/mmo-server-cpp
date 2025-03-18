@@ -12,6 +12,7 @@
 #include "Room.h"
 #include "ServerDB.h"
 #include "ConfigManager.h"
+#include "DataManager.h"
 
 enum WorkerInfo
 {
@@ -36,7 +37,9 @@ void DoWorkerJob(SharedServerService& service)
 
 int main()
 {
-	ConfigManager::LoadConfig();
+	ConfigManager config_manager;
+	DataManager data_manager(&config_manager);
+
 	ServerDB server_db;
 	server_db.Init();
 	ClientPacketHandler::Init();
