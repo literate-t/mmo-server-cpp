@@ -94,7 +94,7 @@ void GameSession::HandleLogin(C_Login& login_packet)
 
 	db_bind.Execute();
 
-	int is_fetch_data = false;
+	bool is_fetch_data = false;
 	S_Login login_ok;
 	while (db_bind.Fetch())
 	{
@@ -136,7 +136,7 @@ void GameSession::HandleLogin(C_Login& login_packet)
 
 		db_bind.Execute();
 
-		int64 newId;
+		int32 newId;
 		db_bind.GetId(newId);
 		_account_id = newId;
 
