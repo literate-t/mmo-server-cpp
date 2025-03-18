@@ -124,7 +124,7 @@ public:
 		_column_flag |= (1LL << index);
 	}
 
-	bool GetId(OUT int64& id)
+	bool GetId(OUT int32& id)
 	{
 		return _db_connection.GetData(id);
 	}

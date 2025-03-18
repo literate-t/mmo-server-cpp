@@ -211,7 +211,7 @@ bool DBConnection::BindColumn(int32 column_index, BYTE* value, int32 size, SQLLE
 	return BindColumn(column_index, SQL_BINARY, size, value, index);
 }
 
-bool DBConnection::GetData(OUT int64& id)
+bool DBConnection::GetData(OUT int32& id)
 {
 	SQLRETURN ret = SQLMoreResults(_statement);
 	if (SQL_SUCCEEDED(ret))
