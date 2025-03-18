@@ -20,9 +20,8 @@ string JsonFileManager::GetContent(string path)
 		return string();
 	}
 
-	stringstream buffer;
-	buffer << file.rdbuf();
-	string file_content = buffer.str();
+	stringstream wss; 
+	wss << file.rdbuf();
 
-    return file_content;
+    return wss.str();
 }
