@@ -57,16 +57,13 @@
     <ClCompile Include="ServerDB.cpp">
       <Filter>DB</Filter>
     </ClCompile>
-    <ClCompile Include="Info.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="DataManager.cpp">
       <Filter>Data</Filter>
     </ClCompile>
     <ClCompile Include="ConfigManager.cpp">
       <Filter>Data</Filter>
     </ClCompile>
-    <ClCompile Include="FileManager.cpp">
+    <ClCompile Include="JsonFileManager.cpp">
       <Filter>File</Filter>
     </ClCompile>
   </ItemGroup>
@@ -104,7 +101,7 @@
     <ClInclude Include="DataContents.h">
       <Filter>Data</Filter>
     </ClInclude>
-    <ClInclude Include="FileManager.h">
+    <ClInclude Include="JsonFileManager.h">
       <Filter>File</Filter>
     </ClInclude>
     <ClInclude Include="ConfigManager.h">
