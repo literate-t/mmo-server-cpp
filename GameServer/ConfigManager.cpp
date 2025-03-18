@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "ConfigManager.h"
-#include "FileManager.h"
+#include "JsonFileManager.h"
 #include "nlohmann/json.hpp"
 
 ConfigManager::ConfigManager()
@@ -12,7 +12,7 @@ void ConfigManager::LoadConfig()
 {
 	string path = "D:/SourceCode/GameSource/MMO_Basic_Cpp/Common/Config/config.json";
 
-	string file_content = FileManager::GetContent(path);
+	string file_content = JsonFileManager::GetContent(path);
 
 	if (file_content.empty() == false)
 		Deserialize(file_content, "dataPath");
