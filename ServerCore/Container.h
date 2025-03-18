@@ -18,7 +18,7 @@ using xvector = vector<Type, StlAllocator<Type>>;
 template<typename Type>
 using xlist = list<Type, StlAllocator<Type>>;
 
-template<typename Key, typename Value, typename Pred = less<Key>, typename Alloc = StlAllocator<pair<Key, Value>>>
+template<typename Key, typename Value, typename Pred = less<Key>, typename Alloc = StlAllocator<pair<const Key, Value>>>
 using xmap = map<Key, Value, Pred, Alloc>;
 
 template<typename Key, typename Pred = less<Key>, typename Alloc = StlAllocator<Key>>
