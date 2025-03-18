@@ -18,7 +18,7 @@ void ConfigManager::LoadConfig()
 		Deserialize(file_content, "dataPath");
 }
 
-void ConfigManager::Deserialize(string json_content, string key)
+void ConfigManager::Deserialize(string& json_content, string key)
 {
 	using json = nlohmann::json;
 
