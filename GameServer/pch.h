@@ -14,3 +14,7 @@
 #include "CorePch.h"
 #include "Types.h"
 #include "Protocol.pb.h"
+
+// Global
+extern class ConfigManager* g_config_manager;
+extern class DataManager* g_data_manager;

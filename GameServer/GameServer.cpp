@@ -37,9 +37,6 @@ void DoWorkerJob(SharedServerService& service)
 
 int main()
 {
-	ConfigManager config_manager;
-	DataManager data_manager(&config_manager);
-
 	ServerDB server_db;
 	server_db.Init();
 	ClientPacketHandler::Init();
