@@ -9,6 +9,13 @@ class DataManager
 public:
 	DataManager(ConfigManager* config_manager);
 
+	const StatData& GetStatData(const int16 level) const { return _level_stat_table.at(level); }
+	const SkillData& GetSkillData(const int16 id) const { return _skill_table.at(id); }
+	const MonsterData& GetMonsterData(const int16 id) const { return _monster_table.at(id); }
+	const WeaponData& GetWeaponData(const int16 id) const { return _weapon_table.at(id); }
+	const ArmorData& GetArmorData(const int16 id) const { return _armor_table.at(id); }
+	const ConsumableData& GetConsumableData(const int16 id) const { return _cosumable_table.at(id); }
+
 private:
 	void LoadConfig();
 	void LoadData(string path);
