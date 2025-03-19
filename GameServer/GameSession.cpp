@@ -71,7 +71,7 @@ void GameSession::HandleLogin(C_Login& login_packet)
 		FROM accounts a																	\
 		LEFT JOIN players as p ON a.account_id = p.account_id				\
 		LEFT JOIN stats as s ON p.player_id = s.player_id						\
-		WHERE account_name = (?)";
+		WHERE a.account_name = (?)";
 
 	int32 account_id = 0;
 	int32 player_id = 0;
