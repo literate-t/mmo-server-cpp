@@ -15,7 +15,7 @@ template<int32 ParamCount, int32 ColumnCount>
 class DBBind
 {
 public:
-	DBBind(DBConnection& db_connnection, const wchar_t* query)
+	DBBind(DBConnection& db_connnection, const TCHAR* query)
 		: _db_connection(db_connnection), _query(query)
 	{
 		memset(_param_index, 0, sizeof(_param_index));
@@ -123,7 +123,7 @@ public:
 
 protected:
 	DBConnection& _db_connection;
-	const wchar_t* _query;
+	const TCHAR* _query;
 	SQLLEN _param_index[ParamCount > 0 ? ParamCount : 1];
 	SQLLEN _column_index[ColumnCount > 0 ? ColumnCount : 1];
 	uint64 _param_flag;

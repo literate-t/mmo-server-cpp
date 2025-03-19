@@ -44,9 +44,9 @@ void DBConnection::Clear()
 	}
 }
 
-bool DBConnection::Execute(const WCHAR* query)
+bool DBConnection::Execute(const TCHAR* query)
 {
-	SQLRETURN sql_return = SQLExecDirectW(_statement, (SQLWCHAR*)query, SQL_NTSL);
+	SQLRETURN sql_return = SQLExecDirect(_statement, (SQLTCHAR*)query, SQL_NTSL);
 	if (sql_return == SQL_SUCCESS || sql_return == SQL_SUCCESS_WITH_INFO)
 		return true;
 
@@ -134,15 +134,15 @@ bool DBConnection::BindParam(int32 param_index, TIMESTAMP_STRUCT* value, SQLLEN*
 	return BindParam(param_index, SQL_C_TYPE_TIMESTAMP, SQL_TIMESTAMP, sizeof(TIMESTAMP_STRUCT), value, index);
 }
 
-bool DBConnection::BindParam(int32 param_index, const WCHAR* string, SQLLEN* index)
+bool DBConnection::BindParam(int32 param_index, const TCHAR* string, SQLLEN* index)
 {
 	SQLLEN size = (wcslen(string) + 1) * 2;
 	*index = SQL_NTSL;
 
 	if (size > WVARCHAR_MAX)
-		return BindParam(param_index, SQL_C_WCHAR, SQL_WLONGVARCHAR, size, (SQLPOINTER)string, index);
+		return BindParam(param_index, SQL_C_TCHAR, SQL_WLONGVARCHAR, size, (SQLPOINTER)string, index);
 	else
-		return BindParam(param_index, SQL_C_WCHAR, SQL_WVARCHAR, size, (SQLPOINTER)string, index);
+		return BindParam(param_index, SQL_C_TCHAR, SQL_WVARCHAR, size, (SQLPOINTER)string, index);
 }
 
 bool DBConnection::BindParam(int32 param_index, const BYTE* bin, int32 size, SQLLEN* index)
@@ -201,7 +201,10 @@ bool DBConnection::BindColumn(int32 column_index, TIMESTAMP_STRUCT* value, SQLLE
 	return BindColumn(column_index, SQL_C_TYPE_TIMESTAMP, sizeof(TIMESTAMP_STRUCT), value, index);
 }
 
-bool DBConnection::BindColumn(int32 column_index, WCHAR* value, int32 size, SQLLEN* index)
+bool DBConnection::BindColumn(int32 column_index, TCHAR* value, int32 size, SQLLEN* index)
+{
+	return BindColumn(column_index, SQL_C_TCHAR, size, value, index);
+}
 {
 	return BindColumn(column_index, SQL_C_WCHAR, size, value, index);
 }
