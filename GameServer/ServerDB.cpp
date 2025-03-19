@@ -63,7 +63,7 @@ void ServerDB::Init(bool create)
 			[hp] INT,												\
 			[max_hp] INT,											\
 			[attack] INT,											\
-			[speed] INT,											\
+			[speed] FLOAT,											\
 			[total_exp] INT,											\
 			[player_id] INT UNIQUE,									\
 			CONSTRAINT FK_PLAYERS_STATS FOREIGN KEY(player_id) REFERENCES players(player_id) \
@@ -77,7 +77,7 @@ void ServerDB::Init(bool create)
 			[hp] INT,												\
 			[max_hp] INT,											\
 			[attack] INT,											\
-			[speed] INT,											\
+			[speed] FLOAT,											\
 			[total_exp] INT,											\
 			[player_id] INT UNIQUE,									\
 			CONSTRAINT FK_PLAYERS_STATS FOREIGN KEY(player_id) REFERENCES players(player_id) \
