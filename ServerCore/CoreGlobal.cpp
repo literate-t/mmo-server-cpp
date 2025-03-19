@@ -28,6 +28,7 @@ CoreGlobal::~CoreGlobal()
 	delete g_send_buffer_manager;
 	delete g_global_queue;
 	delete g_job_timer;
+	delete g_db_connection_pool;
 	SocketUtils::Clear();
 }
 
