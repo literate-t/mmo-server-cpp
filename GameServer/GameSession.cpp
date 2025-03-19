@@ -62,7 +62,7 @@ void GameSession::HandleLogin(C_Login& login_packet)
 	if (_server_state != PlayerServerState::SERVER_STATE_LOGIN)
 		return;
 
-	_lobby_players.clear();
+	ClearLobbyPlayer();	
 
 	DBConnection* conn = g_db_connection_pool->Pop();
 	auto query = L"																		\
@@ -157,4 +157,17 @@ void GameSession::HandleCreatePlayer(C_CreatePlayer packet)
 		return;
 
 	// TODO
+}
+
+void GameSession::ClearLobbyPlayer()
+{
+	for (auto player : _lobby_players)
+	{
+		StatInfo* stat_info = player->release_statinfo();
+		if (stat_info != nullptr)
+			delete stat_info;
+		
+		delete player;
+		player = nullptr;
+	}
 }
