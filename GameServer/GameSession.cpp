@@ -2,6 +2,7 @@
 #include "GameSession.h"
 #include "GameSessionManager.h"
 #include "ClientPacketHandler.h"
+#include "DataManager.h"
 #include "Room.h"
 #include "Info.h"
 
@@ -115,8 +116,7 @@ void GameSession::HandleLogin(C_Login& login_packet)
 
 		lobby_player_info->set_allocated_statinfo(stat_info);
 
-		_lobby_players.push_back(lobby_player_info);
-		
+		_lobby_players.push_back(lobby_player_info);		
 	}
 	if (is_fetch_data == true)
 	{
@@ -156,7 +156,56 @@ void GameSession::HandleCreatePlayer(C_CreatePlayer packet)
 	if (_server_state != PlayerServerState::SERVER_STATE_LOBBY)
 		return;
 
-	// TODO
+	// level 1 stat	
+	StatData stat_data = g_data_manager->GetStatData(1);
+
+	DBConnection* conn = g_db_connection_pool->Pop();
+	auto query = L"INSERT INTO players(player_name, account_id) VALUES (?, ?);\
+				   SELECT SCOPE_IDENTITY() as NewId;";
+
+	DBBind<2, 0> db_bind_select(*conn, query);
+	db_bind_select.BindParam(0, packet.name().c_str());
+	db_bind_select.BindParam(1, _account_id);
+
+	db_bind_select.Execute();
+
+	int32 new_player_id;
+	db_bind_select.GetId(new_player_id);
+
+	query = L"INSERT INTO stats(level, hp, max_hp, attack, speed, total_exp, player_id) VALUES (?, ?, ?, ?, ?, ?, ?);";
+	DBBind<7, 0> db_bind_insert(*conn, query);
+	db_bind_insert.BindParam(0, stat_data.level);
+	db_bind_insert.BindParam(1, stat_data.hp);
+	db_bind_insert.BindParam(2, stat_data.max_hp);
+	db_bind_insert.BindParam(3, stat_data.attack);
+	db_bind_insert.BindParam(4, stat_data.speed);
+	db_bind_insert.BindParam(5, stat_data.total_exp);
+	db_bind_insert.BindParam(6, new_player_id);
+
+	db_bind_insert.Execute();
+
+	g_db_connection_pool->Push(conn);
+
+	LobbyPlayerInfo* lobby_player_info = new LobbyPlayerInfo();
+	lobby_player_info->set_playerdbid(new_player_id);
+	lobby_player_info->set_name(packet.name());
+
+	StatInfo* stat_info = new StatInfo();
+	stat_info->set_level(stat_data.level);
+	stat_info->set_hp(stat_data.hp);
+	stat_info->set_maxhp(stat_data.max_hp);
+	stat_info->set_attack(stat_data.attack);
+	stat_info->set_speed(stat_data.speed);
+	stat_info->set_totalexp(stat_data.total_exp);
+
+	lobby_player_info->set_allocated_statinfo(stat_info);
+
+	_lobby_players.push_back(lobby_player_info);
+
+	// to client
+	S_CreatePlayer new_player;
+	new_player.set_allocated_player(lobby_player_info);
+	Send(ClientPacketHandler::MakeSendBuffer(new_player));
 }
 
 void GameSession::ClearLobbyPlayer()
