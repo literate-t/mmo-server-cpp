@@ -26,6 +26,9 @@ public:
 	void HandleCreatePlayer(C_CreatePlayer packet);
 
 private:
+	void ClearLobbyPlayer();
+
+private:
 	xvector<SharedPlayer> _players;
 	SharedPlayer _current_player;
 	weak_ptr<class Room> _room;
