@@ -105,15 +105,7 @@ public:
 
 	void BindColumn(int32 index, char* value, int32 len)
 	{
-		// char* to wchar_t*
-		size_t converted_chars;
-		mbstowcs_s(&converted_chars, nullptr, 0, value, 0);
-
-		// TODO : delete magic number
-		wchar_t dest[50];
-		mbstowcs_s(&converted_chars, dest, converted_chars, value, _TRUNCATE);
-
-		_db_connection.BindColumn(index + 1, dest, converted_chars, &_column_index[index]);
+		_db_connection.BindColumn(index + 1, value, len, &_column_index[index]);
 		_column_flag |= (1LL << index);		
 	}
 
