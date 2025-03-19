@@ -205,8 +205,10 @@ bool DBConnection::BindColumn(int32 column_index, TCHAR* value, int32 size, SQLL
 {
 	return BindColumn(column_index, SQL_C_TCHAR, size, value, index);
 }
+
+bool DBConnection::BindColumn(int32 column_index, CHAR* value, int32 size, SQLLEN* index)
 {
-	return BindColumn(column_index, SQL_C_WCHAR, size, value, index);
+	return BindColumn(column_index, SQL_C_CHAR, size, value, index);
 }
 
 bool DBConnection::BindColumn(int32 column_index, BYTE* value, int32 size, SQLLEN* index)

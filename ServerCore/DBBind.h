@@ -103,6 +103,13 @@ public:
 		_column_flag |= (1LL << index);
 	}
 
+	template<int32 N>
+	void BindColumn(int32 index, char(&value)[N])
+	{
+		_db_connection.BindColumn(index + 1, value, N, &_column_index[index]);
+		_column_flag |= (1LL << index);
+	}
+
 	void BindColumn(int32 index, char* value, int32 len)
 	{
 		_db_connection.BindColumn(index + 1, value, len, &_column_index[index]);

@@ -40,6 +40,7 @@ public:
 	bool BindColumn(int32 column_index, int64* value, SQLLEN* index);
 	bool BindColumn(int32 column_index, TIMESTAMP_STRUCT* value, SQLLEN* index);
 	bool BindColumn(int32 column_index, TCHAR* value, int32 size, SQLLEN* index);
+	bool BindColumn(int32 column_index, CHAR* value, int32 size, SQLLEN* index);
 	bool BindColumn(int32 column_index, BYTE* value, int32 size, SQLLEN* index);
 
 	bool GetData(OUT int32& id);
