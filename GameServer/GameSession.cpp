@@ -84,7 +84,7 @@ void GameSession::HandleLogin(C_Login& login_packet)
 	db_bind.BindParam(0, login_packet.uniqueid().c_str());
 	db_bind.BindColumn(0, account_id);
 	db_bind.BindColumn(1, player_id);
-	db_bind.BindColumn(2, &player_name[0], (int32)player_name.size() * sizeof(wchar_t));
+	db_bind.BindColumn(2, &player_name[0], (int32)player_name.size());
 	db_bind.BindColumn(3, stat.level);
 	db_bind.BindColumn(4, stat.hp);
 	db_bind.BindColumn(5, stat.max_hp);
