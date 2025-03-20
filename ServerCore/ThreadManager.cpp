@@ -60,11 +60,12 @@ void ThreadManager::WorkGlobalQueue()
 {
 	while (true)
 	{
-		uint64 now = GetTickCount64();
-		if (tls_end_tick_count < now)
-		{
-			break;
-		}
+		// TODO : 의미 없는 코드라고 생각하지만 아예 삭제하는 건 보류
+		//uint64 now = GetTickCount64();
+		//if (tls_end_tick_count < now)
+		//{
+		//	break;
+		//}
 
 		SharedJobQueue job_queue = g_global_queue->Pop();
 		if (nullptr == job_queue)
