@@ -3,8 +3,6 @@
 #include "Player.h"
 #include "GameSession.h"
 
-shared_ptr<Room> g_room = make_shared<Room>();
-
 void Room::Enter(SharedPlayer player)
 {
 	//WRITE_LOCK;

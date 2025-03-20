@@ -14,6 +14,3 @@ public:
 private:
 	map<uint64, SharedPlayer> _players;
 };
-
-// for simple test
-extern shared_ptr<Room> g_room;
