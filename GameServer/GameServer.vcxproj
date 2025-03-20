@@ -185,6 +185,7 @@
   <ItemGroup>
     <ClCompile Include="ConfigManager.cpp" />
     <ClCompile Include="DataManager.cpp" />
+    <ClCompile Include="DBSerializer.cpp" />
     <ClCompile Include="JsonFileManager.cpp" />
     <ClCompile Include="GameServer.cpp" />
     <ClCompile Include="GameSession.cpp" />
@@ -208,6 +209,7 @@
     <ClInclude Include="ConfigManager.h" />
     <ClInclude Include="DataContents.h" />
     <ClInclude Include="DataManager.h" />
+    <ClInclude Include="DBSerializer.h" />
     <ClInclude Include="JsonFileManager.h" />
     <ClInclude Include="GameSession.h" />
     <ClInclude Include="GameSessionManager.h" />

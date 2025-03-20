@@ -66,6 +66,9 @@
     <ClCompile Include="JsonFileManager.cpp">
       <Filter>File</Filter>
     </ClCompile>
+    <ClCompile Include="DBSerializer.cpp">
+      <Filter>DB</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -111,6 +114,9 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="ServerDB.h">
+      <Filter>DB</Filter>
+    </ClInclude>
+    <ClInclude Include="DBSerializer.h">
       <Filter>DB</Filter>
     </ClInclude>
   </ItemGroup>
