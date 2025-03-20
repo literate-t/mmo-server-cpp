@@ -3,6 +3,6 @@ class ServerDB
 {
 public:
 	ServerDB();
-	void Init(bool create = false);
+	void MakeTables(bool create = false);
 };
 
