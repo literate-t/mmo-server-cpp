@@ -9,12 +9,10 @@ class DataManager
 public:
 	DataManager(ConfigManager* config_manager);
 
-	const StatData& GetStatData(const int16 level) const { return _level_stat_table.at(level); }
-	const SkillData& GetSkillData(const int16 id) const { return _skill_table.at(id); }
-	const MonsterData& GetMonsterData(const int16 id) const { return _monster_table.at(id); }
-	const WeaponData& GetWeaponData(const int16 id) const { return _weapon_table.at(id); }
-	const ArmorData& GetArmorData(const int16 id) const { return _armor_table.at(id); }
-	const ConsumableData& GetConsumableData(const int16 id) const { return _cosumable_table.at(id); }
+	StatData& Stat(const int16 level) { return _level_stat_table.at(level); }
+	SkillData& Skill(const int16 id) { return _skill_table.at(id); }
+	MonsterData& Monster(const int16 id) { return _monster_table.at(id); }
+	ItemData& Item(const int16 id) { return _item_table.at(id); }
 
 private:
 	void LoadConfig();
@@ -31,9 +29,7 @@ private:
 	xmap<int16, StatData> _level_stat_table;
 	xmap<int16, SkillData> _skill_table;
 	xmap<int16, MonsterData> _monster_table;
-	xmap<int16, WeaponData> _weapon_table;
-	xmap<int16, ArmorData> _armor_table;
-	xmap<int16, ConsumableData> _cosumable_table;
+	xmap<int16, ItemData> _item_table;
 };
 
 void from_json(const json& j, StatData& stat);
