@@ -48,7 +48,10 @@ bool Handle_C_CreatePlayer(SharedPacketSession& session, Protocol::C_CreatePlaye
 
 bool Handle_C_EnterGame(SharedPacketSession& session, Protocol::C_EnterGame& pkt)
 {
-	return false;
+	shared_ptr<GameSession> game_session = static_pointer_cast<GameSession>(session);
+	game_session->HandleEnterGame(pkt);
+
+	return true;
 }
 
 bool Handle_C_EquipItem(SharedPacketSession& session, Protocol::C_EquipItem& pkt)
