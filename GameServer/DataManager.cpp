@@ -73,21 +73,21 @@ void DataManager::MakeItemTable(json& j)
 	for (auto& weapon : weapons)
 	{
 		weapon.itemType = ItemType::ITEM_TYPE_WEAPON;
-		_weapon_table[weapon.id] = weapon;
+		_item_table[weapon.id] = weapon;
 	}
 
 	xvector<ArmorData> armors = j.at("armors").get<xvector<ArmorData>>();
 	for (auto& armor : armors)
 	{
 		armor.itemType = ItemType::ITEM_TYPE_ARMOR;
-		_armor_table[armor.id] = armor;
+		_item_table[armor.id] = armor;
 	}
 
 	xvector<ConsumableData> consumables = j.at("consumables").get<xvector<ConsumableData>>();
 	for (auto& consumable : consumables)
 	{
 		consumable.itemType = ItemType::ITEM_TYPE_CONSUMABLE;
-		_cosumable_table[consumable.id] = consumable;
+		_item_table[consumable.id] = consumable;
 	}
 }
 
