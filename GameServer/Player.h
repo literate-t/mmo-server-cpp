@@ -1,6 +1,7 @@
 #pragma once
+#include "GameObject.h"
 
-class Player
+class Player : public GameObject
 {
 public:
 	uint64 PlayerDbId = 0;
