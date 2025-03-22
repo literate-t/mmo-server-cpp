@@ -5,6 +5,11 @@
 #include "DataManager.h"
 #include "Room.h"
 #include "Info.h"
+#include "ObjectManager.h"
+#include "Player.h"
+#include "DataModel.h"
+#include "Item.h"
+using namespace DataModel;
 
 GameSession::~GameSession()
 {
@@ -157,7 +162,7 @@ void GameSession::HandleCreatePlayer(C_CreatePlayer packet)
 		return;
 
 	// level 1 stat	
-	StatData stat_data = g_data_manager->GetStatData(1);
+	StatData stat_data = g_data_manager->Stat(1);
 
 	DBConnection* conn = g_db_connection_pool->Pop();
 	auto query = L"INSERT INTO players(player_name, account_id) VALUES (?, ?);\
@@ -206,6 +211,73 @@ void GameSession::HandleCreatePlayer(C_CreatePlayer packet)
 	S_CreatePlayer new_player;
 	new_player.set_allocated_player(lobby_player_info);
 	Send(ClientPacketHandler::MakeSendBuffer(new_player));
+}
+
+void GameSession::HandleEnterGame(C_EnterGame packet)
+{
+	if (_server_state != PlayerServerState::SERVER_STATE_LOBBY)
+		return;
+
+	string find_name = packet.name();
+	auto iter = std::find_if(_lobby_players.begin(), _lobby_players.end(), [&find_name](LobbyPlayerInfo* item) {
+		return item->name() == find_name;
+		});
+
+	if (iter == _lobby_players.end())
+		return;
+
+	_current_player = ObjectManager::Instance.Add<Player>();
+	{
+		LobbyPlayerInfo* find_player = *iter;
+		_current_player->PlayerDbId = find_player->playerdbid();
+		_current_player->ObjectInfo().set_name(find_player->name());
+
+		PositionInfo* position_info = new PositionInfo();
+		position_info->set_state(EntityState::IDLE);
+		position_info->set_movedir(MoveDir::DOWN);
+		position_info->set_posx(0);
+		position_info->set_posy(0);
+
+		_current_player->ObjectInfo().set_allocated_posinfo(position_info);
+		_current_player->StatInfo().MergeFrom(find_player->statinfo());
+		_current_player->OwnerSession = static_pointer_cast<GameSession>(shared_from_this());
+
+		S_ItemList item_list_packet;
+		// Get items
+		DBConnection* conn = g_db_connection_pool->Pop();
+		auto query = L"SELECT item_id, data_sheet_id, count, slot,\
+						equipped, owner_id FROM items WHERE owner_id = (?)";
+
+		DBBind<1, 6> db_bind_select(*conn, query);
+		ItemDB item_db;
+		int32 player_id = find_player->playerdbid();
+		db_bind_select.BindParam(0, player_id);
+		db_bind_select.BindColumn(0, item_db.ItemDbId);
+		db_bind_select.BindColumn(1, item_db.DataSheetId);
+		db_bind_select.BindColumn(2, item_db.Count);
+		db_bind_select.BindColumn(3, item_db.Slot);
+		db_bind_select.BindColumn(4, item_db.Equipped);
+		db_bind_select.BindColumn(5, item_db.OwnerId);
+
+		db_bind_select.Execute();
+		bool is_fetch = false;
+
+		xvector<ItemDB> item_list;
+		while (db_bind_select.Fetch())
+		{
+			is_fetch = true;
+
+			shared_ptr<Item> item = Item::MakeItem(item_db);
+			if (item == nullptr)
+				continue;
+
+			// TODO
+		}
+
+		g_db_connection_pool->Push(conn);
+	}
+
+	ClearLobbyPlayer();
 }
 
 void GameSession::ClearLobbyPlayer()

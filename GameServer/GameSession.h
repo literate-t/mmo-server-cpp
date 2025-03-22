@@ -24,6 +24,7 @@ public:
 
 	void HandleLogin(C_Login& login_packet);
 	void HandleCreatePlayer(C_CreatePlayer packet);
+	void HandleEnterGame(C_EnterGame packet);
 
 private:
 	void ClearLobbyPlayer();
