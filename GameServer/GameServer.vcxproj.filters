@@ -87,6 +87,9 @@
     <ClCompile Include="Item.cpp">
       <Filter>GameContents\Item</Filter>
     </ClCompile>
+    <ClCompile Include="Inventory.cpp">
+      <Filter>GameContents\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -148,6 +151,9 @@
     </ClInclude>
     <ClInclude Include="DataModel.h">
       <Filter>DB</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory.h">
+      <Filter>GameContents\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
