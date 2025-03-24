@@ -27,7 +27,9 @@ public:
 	bool Stackable() const { return _stackable; }
 	void Stackable(bool stackable) { _stackable = stackable; }
 
-	static shared_ptr<Item> MakeItem(ItemDB item_db);	
+	static shared_ptr<Item> MakeItem(ItemDB item_db);
+
+	const Protocol::ItemInfo& ItemInfo() { return _item_info; }
 
 protected:
 	Protocol::ItemType _item_type;
