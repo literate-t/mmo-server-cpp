@@ -6,7 +6,7 @@ class Inventory
 public:
 	xmap<int16, SharedItem>& Items() { return _items; }
 
-	void Add(const Item& item);
+	void Add(SharedItem item);
 	SharedItem Get(int32 itemDbId);
 	SharedItem Find(function<SharedItem(bool)> predicate);
 	int32 GetEmptySlot();
