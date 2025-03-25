@@ -120,9 +120,9 @@ void GameSession::HandleLogin(C_Login& login_packet)
 		stat_info->set_speed(stat.speed);
 		stat_info->set_totalexp(stat.total_exp);
 
-		lobby_player_info->set_allocated_statinfo(stat_info);
-
-		_lobby_players.push_back(lobby_player_info);		
+		LobbyPlayerInfo* info = new LobbyPlayerInfo();
+		info->MergeFrom(*lobby_player_info);
+		_lobby_players.push_back(info);
 	}
 	if (is_fetch_data == true)
 	{
