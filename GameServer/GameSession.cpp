@@ -112,7 +112,7 @@ void GameSession::HandleLogin(C_Login& login_packet)
 		lobby_player_info->set_playerdbid(player_id);
 		lobby_player_info->set_name(player_name.c_str());
 
-		StatInfo* stat_info = new StatInfo();
+		StatInfo* stat_info = lobby_player_info->mutable_statinfo();//new StatInfo();
 		stat_info->set_level(stat.level);
 		stat_info->set_hp(stat.hp);
 		stat_info->set_maxhp(stat.max_hp);
