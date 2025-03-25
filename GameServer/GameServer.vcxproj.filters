@@ -90,6 +90,9 @@
     <ClCompile Include="Inventory.cpp">
       <Filter>GameContents\Item</Filter>
     </ClCompile>
+    <ClCompile Include="RoomManager.cpp">
+      <Filter>GameContents\Room</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -154,6 +157,9 @@
     </ClInclude>
     <ClInclude Include="Inventory.h">
       <Filter>GameContents\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomManager.h">
+      <Filter>GameContents\Room</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
