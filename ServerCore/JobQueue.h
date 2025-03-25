@@ -14,13 +14,13 @@ public:
 		Push(ObjectPool<Job>::MakeShared(move(callback)));		
 	}
 
-	template<typename T, typename Return, typename...Args>
-	void PushJobAsync(Return(T::*member_func)(Args...), Args&&...args)
+	template<typename T, typename Return, typename...Args1, typename...Args2>
+	void PushJobAsync(Return(T::*member_func)(Args1...), Args2&&...args)
 	{
 		// 일감 요청이 발생하는 곳(ex.Room : public JobQueue)
 		// room->PushJob(&Room::Enter, move(player));
 		shared_ptr<T> owner = static_pointer_cast<T>(shared_from_this());
-		Push(ObjectPool<Job>::MakeShared(owner, member_func, forward<Args>(args)...));		
+		Push(ObjectPool<Job>::MakeShared(owner, member_func, forward<Args2>(args)...));		
 	}
 
 	// for lamda
@@ -30,11 +30,11 @@ public:
 		g_job_timer->ReserveJob(delay_time, shared_from_this(), job);
 	}
 
-	template<typename T, typename Return, typename...Args>
-	void PushTimerAsync(uint64 delay_time, Return(T::* member_func)(Args...), Args&&...args)
+	template<typename T, typename Return, typename...Args1, typename...Args2>
+	void PushTimerAsync(uint64 delay_time, Return(T::* member_func)(Args1...), Args2&&...args)
 	{
 		shared_ptr<T> owner = static_pointer_cast<T>(shared_from_this());
-		SharedJob job = ObjectPool<Job>::MakeShared(owner, member_func, forward<Args>(args)...);
+		SharedJob job = ObjectPool<Job>::MakeShared(owner, member_func, forward<Args2>(args)...);
 		g_job_timer->ReserveJob(delay_time, owner, job);
 	}
 

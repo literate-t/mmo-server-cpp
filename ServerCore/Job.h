@@ -7,8 +7,8 @@ class Job
 public:
 	Job(CallbackType&& callback) : _callback(move(callback)) {}
 
-	template<typename T, typename Return, typename...Args>
-	Job(shared_ptr<T> obj, Return(T::*member_func)(Args...), Args&&...args)
+	template<typename T, typename Return, typename...Args1, typename...Args2>
+	Job(shared_ptr<T> obj, Return(T::*member_func)(Args1...), Args2&&...args)
 	{
 		_callback = [obj, member_func, args...]()
 			{
