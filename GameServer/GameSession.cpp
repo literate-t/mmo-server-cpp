@@ -9,6 +9,8 @@
 #include "Player.h"
 #include "DataModel.h"
 #include "Item.h"
+#include "Inventory.h"
+#include "RoomManager.h"
 using namespace DataModel;
 
 GameSession::~GameSession()
@@ -263,7 +265,7 @@ void GameSession::HandleEnterGame(C_EnterGame packet)
 		db_bind_select.Execute();
 		bool is_fetch = false;
 
-		xvector<ItemDB> item_list;
+		S_ItemList item_list;
 		while (db_bind_select.Fetch())
 		{
 			is_fetch = true;
@@ -272,10 +274,21 @@ void GameSession::HandleEnterGame(C_EnterGame packet)
 			if (item == nullptr)
 				continue;
 
-			// TODO
+			_current_player->GetInventory().Add(item);
+			Protocol::ItemInfo* add_item = item_list.add_items();
+			add_item->MergeFrom(item->ItemInfo());
 		}
 
+		Send(ClientPacketHandler::MakeSendBuffer(item_list));
+
 		g_db_connection_pool->Push(conn);
+	}
+
+	_server_state = PlayerServerState::SERVER_STATE_GAME;
+
+	if (auto room = _room.lock())
+	{
+		room->PushJobAsync(&Room::Enter, _current_player);
 	}
 
 	ClearLobbyPlayer();
