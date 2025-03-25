@@ -11,6 +11,7 @@ public:
 	void Leave(SharedPlayer player);
 	void Broatcast(SharedSendBuffer send_buffer);
 
+	void Init(int32 map_id, int32 zone_cell_size);
 private:
 	map<uint64, SharedPlayer> _players;
 };

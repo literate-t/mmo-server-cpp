@@ -23,3 +23,7 @@ void Room::Broatcast(SharedSendBuffer send_buffer)
 		p.second->OwnerSession->Send(send_buffer);
 	}
 }
+
+void Room::Init(int32 map_id, int32 zone_cell_size)
+{
+}
