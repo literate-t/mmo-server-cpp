@@ -34,7 +34,7 @@ void GameSession::OnDisconnectCompleted()
 	{
 		if (auto room = _room.lock())
 		{
-			room->PushJobAsync(&Room::Leave, move(_current_player));
+			room->PushJobAsync(&Room::Leave, _current_player);
 		}
 	}
 
