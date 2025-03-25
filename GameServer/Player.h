@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "Inventory.h"
 
 class Player : public GameObject
 {
@@ -9,4 +10,7 @@ public:
 	// caution: cycle
 	SharedGameSession OwnerSession;
 
+	Inventory& GetInventory() { return _inventory; }
+private:
+	Inventory _inventory;
 };
