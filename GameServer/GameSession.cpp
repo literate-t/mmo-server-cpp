@@ -234,11 +234,11 @@ void GameSession::HandleEnterGame(C_EnterGame packet)
 		_current_player->PlayerDbId = find_player->playerdbid();
 		_current_player->GetObjectInfo().set_name(find_player->name());
 
-		PositionInfo* position_info = new PositionInfo();
-		position_info->set_state(EntityState::IDLE);
-		position_info->set_movedir(MoveDir::DOWN);
-		position_info->set_posx(0);
-		position_info->set_posy(0);
+		PositionInfo& position_info = _current_player->GetPositionInfo();
+		position_info.set_state(EntityState::IDLE);
+		position_info.set_movedir(MoveDir::DOWN);
+		position_info.set_posx(0);
+		position_info.set_posy(0);
 
 		_current_player->GetStatInfo().MergeFrom(find_player->statinfo());
 		_current_player->OwnerSession = static_pointer_cast<GameSession>(shared_from_this());
