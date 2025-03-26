@@ -1,8 +1,6 @@
 #include "pch.h"
 #include "ObjectManager.h"
 
-ObjectManager ObjectManager::Instance;
-
 int32 ObjectManager::GenerateId(GameObjectType type)
 {
 	WRITE_LOCK;

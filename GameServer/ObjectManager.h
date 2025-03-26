@@ -6,11 +6,6 @@ using namespace Protocol;
 class ObjectManager
 {
 public:
-	ObjectManager(const ObjectManager&) = delete;
-	ObjectManager& operator=(const ObjectManager&) = delete;
-
-	static ObjectManager Instance;
-
 	template<typename T>
 	shared_ptr<T> Add()
 	{
@@ -31,8 +26,6 @@ public:
 	static GameObjectType GetObjectTypeById(int32 object_id);
 
 private:
-	ObjectManager() = default;
-
 	// [UNUSED(1)|TYPE(7)][      ID(24)      ]
 	int32 _counter = 1;
 
