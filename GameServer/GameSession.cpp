@@ -228,7 +228,7 @@ void GameSession::HandleEnterGame(C_EnterGame packet)
 	if (iter == _lobby_players.end())
 		return;
 
-	_current_player = ObjectManager::Instance.Add<Player>();
+	_current_player = g_object_manager->Add<Player>();
 	{
 		LobbyPlayerInfo* find_player = *iter;
 		_current_player->PlayerDbId = find_player->playerdbid();
