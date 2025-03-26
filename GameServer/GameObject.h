@@ -4,11 +4,10 @@
 class GameObject : public enable_shared_from_this<GameObject>
 {
 public:
-	GameObject() = default;
-	~GameObject() = default;
+	GameObject();
 
-	int32 Id() const { return _id; }
-	void Id(int32 id) { _id = id; }
+	int32 Id() const { return _object_info.objectid(); }
+	void Id(int32 id) { _object_info.set_objectid(id); }
 
 	Protocol::ObjectInfo& GetObjectInfo() { return _object_info; }
 	Protocol::StatInfo& GetStatInfo() { return _stat_info; }	
@@ -17,7 +16,6 @@ public:
 
 protected:
 	Protocol::GameObjectType _object_type = Protocol::GameObjectType::NONE;
-	int32 _id;
 	Protocol::ObjectInfo _object_info;
 	Protocol::StatInfo _stat_info;
 };
