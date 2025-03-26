@@ -15,6 +15,7 @@ public:
 
 	Inventory& GetInventory() { return _inventory; }
 	void SetRoom(SharedRoom room) { _room = room; }
+	void RefreshStat();	
 private:
 	Inventory _inventory;
 	weak_ptr<class Room> _room;
