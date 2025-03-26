@@ -20,3 +20,4 @@ extern class ConfigManager* g_config_manager;
 extern class DataManager* g_data_manager;
 extern class RoomManager* g_room_manager;
 extern class ObjectManager* g_object_manager;
+extern class Map* g_map;
