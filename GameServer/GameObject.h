@@ -1,7 +1,7 @@
 #pragma once
 #include "Protocol.pb.h"
 
-class GameObject
+class GameObject : public enable_shared_from_this<GameObject>
 {
 public:
 	GameObject() = default;
