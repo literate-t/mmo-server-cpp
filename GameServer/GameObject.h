@@ -14,9 +14,15 @@ public:
 
 	Protocol::GameObjectType GetType() const { return _object_type; }
 
+	void SetCellPos(Vector2Int cell_pos);
+	Vector2Int GetCellPos();
+
+	Protocol::PositionInfo& GetPositionInfo();
+
 protected:
 	Protocol::GameObjectType _object_type = Protocol::GameObjectType::NONE;
 	Protocol::ObjectInfo _object_info;
 	Protocol::StatInfo _stat_info;
+	Protocol::PositionInfo _pos_info;
 };
 
