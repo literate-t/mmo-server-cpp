@@ -10,9 +10,8 @@ public:
 	int32 Id() const { return _id; }
 	void Id(int32 id) { _id = id; }
 
-	// cause: delete PositionInfo*
-	Protocol::ObjectInfo& ObjectInfo() { return _object_info; }
-	Protocol::StatInfo& StatInfo() { return _stat_info; }	
+	Protocol::ObjectInfo& GetObjectInfo() { return _object_info; }
+	Protocol::StatInfo& GetStatInfo() { return _stat_info; }	
 
 	Protocol::GameObjectType GetType() const { return _object_type; }
 
