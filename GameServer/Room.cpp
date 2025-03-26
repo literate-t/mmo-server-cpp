@@ -8,7 +8,7 @@
 #include "ClientPacketHandler.h"
 #include "ViewCube.h"
 
-void Room::Enter(SharedPlayer player)
+void Room::Enter(SharedObject object)
 {
 	if (object == nullptr)
 		return;
@@ -20,7 +20,7 @@ void Room::Enter(SharedPlayer player)
 	if (type == GameObjectType::PLAYER)
 	{
 		SharedPlayer player = static_pointer_cast<Player>(object);
-	_players[player->PlayerDbId] = player;
+		_players[player->PlayerDbId] = player;
 		
 		player->SetRoom(static_pointer_cast<Room>(shared_from_this()));
 		player->RefreshStat();
@@ -28,7 +28,7 @@ void Room::Enter(SharedPlayer player)
 		g_map->ApplyMove(player, Vector2Int(player->GetPositionInfo().posx(), player->GetPositionInfo().posy()));
 		GetZone(player->GetCellPos()).GetPlayers().insert(player);
 
-		// ì ‘ì† ë³¸ì¸ ì •ë³´ ì „ì†¡
+		// Á¢¼Ó º»ÀÎ Á¤º¸ Àü¼Û
 		{
 			S_EnterGame enter_game;
 			enter_game.set_allocated_player(&player->GetObjectInfo());
@@ -40,10 +40,9 @@ void Room::Enter(SharedPlayer player)
 	}
 }
 
-void Room::Leave(SharedPlayer player)
+void Room::Leave(SharedObject player)
 {
-	//WRITE_LOCK;
-	_players.erase(player->PlayerDbId);
+	//_players.erase(player->PlayerDbId);
 }
 
 void Room::Broatcast(SharedSendBuffer send_buffer)
@@ -53,6 +52,11 @@ void Room::Broatcast(SharedSendBuffer send_buffer)
 	{
 		p.second->OwnerSession->Send(send_buffer);
 	}
+}
+
+Zone Room::GetZone(Vector2Int cell_pos)
+{
+	return Zone();
 }
 
 void Room::Init(int32 map_id, int32 zone_cell_size)
