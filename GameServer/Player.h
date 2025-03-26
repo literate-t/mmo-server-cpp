@@ -14,7 +14,9 @@ public:
 	SharedGameSession OwnerSession;
 
 	Inventory& GetInventory() { return _inventory; }
+	void SetRoom(SharedRoom room) { _room = room; }
 private:
 	Inventory _inventory;
+	weak_ptr<class Room> _room;
 	SharedViewCube _view_cube;
 };
