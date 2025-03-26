@@ -194,6 +194,7 @@
     <ClCompile Include="GameSession.cpp" />
     <ClCompile Include="GameSessionManager.cpp" />
     <ClCompile Include="LockFreeStack.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -209,6 +210,8 @@
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="RoomManager.cpp" />
     <ClCompile Include="ServerDB.cpp" />
+    <ClCompile Include="ViewCube.cpp" />
+    <ClCompile Include="Zone.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConfigManager.h" />
@@ -224,6 +227,7 @@
     <ClInclude Include="GameSessionManager.h" />
     <ClInclude Include="Info.h" />
     <ClInclude Include="LockFreeStack.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
@@ -233,6 +237,8 @@
     <ClInclude Include="RoomManager.h" />
     <ClInclude Include="ServerDB.h" />
     <ClInclude Include="Types.h" />
+    <ClInclude Include="ViewCube.h" />
+    <ClInclude Include="Zone.h" />
   </ItemGroup>
   <ItemGroup>
     <UpToDateCheckInput Include="..\..\Protobuf\bin\Enum.proto" />
