@@ -232,7 +232,7 @@ void GameSession::HandleEnterGame(C_EnterGame packet)
 	{
 		LobbyPlayerInfo* find_player = *iter;
 		_current_player->PlayerDbId = find_player->playerdbid();
-		_current_player->ObjectInfo().set_name(find_player->name());
+		_current_player->GetObjectInfo().set_name(find_player->name());
 
 		PositionInfo* position_info = new PositionInfo();
 		position_info->set_state(EntityState::IDLE);
@@ -240,8 +240,7 @@ void GameSession::HandleEnterGame(C_EnterGame packet)
 		position_info->set_posx(0);
 		position_info->set_posy(0);
 
-		_current_player->ObjectInfo().set_allocated_posinfo(position_info);
-		_current_player->StatInfo().MergeFrom(find_player->statinfo());
+		_current_player->GetStatInfo().MergeFrom(find_player->statinfo());
 		_current_player->OwnerSession = static_pointer_cast<GameSession>(shared_from_this());
 
 		S_ItemList item_list_packet;
