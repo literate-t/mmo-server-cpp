@@ -5,6 +5,9 @@
 class Player : public GameObject
 {
 public:
+	Player();
+
+public:
 	uint64 PlayerDbId = 0;
 	string name;
 	// caution: cycle
@@ -13,4 +16,5 @@ public:
 	Inventory& GetInventory() { return _inventory; }
 private:
 	Inventory _inventory;
+	SharedViewCube _view_cube;
 };
