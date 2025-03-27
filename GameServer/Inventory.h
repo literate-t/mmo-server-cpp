@@ -4,7 +4,7 @@
 class Inventory
 {
 public:
-	xmap<int16, SharedItem>& Items() { return _items; }
+	xmap<int16, SharedItem>& GetItems() { return _items; }
 
 	void Add(SharedItem item);
 	SharedItem Get(int32 itemDbId);
