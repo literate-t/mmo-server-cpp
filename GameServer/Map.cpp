@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "Map.h"
 #include "GameObject.h"
+#include "StringReader.h"
+#include "Util.h"
 void Map::InitArrays(int32 row, int32 col)
 {
 	// _collisions
@@ -19,6 +21,28 @@ void Map::InitArrays(int32 row, int32 col)
 		_objects[i].resize(row);
 		for (int j = 0; j < _objects[i].size(); ++j)
 			_objects[i][j] = nullptr;
+	}
+}
+
+void Map::LoadMap(int32 map_id, string prefix_path)	
+{
+	string map_name = "Map_" + Util::ToString(map_id, 3);
+
+	StringReader reader(prefix_path + "/" + map_name + ".txt");
+	_minx = stoi(reader.ReadLine());
+	_maxx = stoi(reader.ReadLine());
+	_miny = stoi(reader.ReadLine());
+	_maxy = stoi(reader.ReadLine());
+
+	int32 size_x = GetSizeX();
+	int32 size_y = GetSizeY();
+	InitArrays(size_y, size_x);
+
+	for (int32 y = 0; y < size_y; ++y)
+	{
+		string line = reader.ReadLine();
+		for (int32 x = 0; x < size_x; ++x)
+			_collisions[y][x] = line[x] == '1' ? true : false;
 	}
 }
 
