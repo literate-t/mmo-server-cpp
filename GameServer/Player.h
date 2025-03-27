@@ -12,8 +12,7 @@ public:
 	// caution: cycle
 	SharedGameSession OwnerSession;	
 
-	Inventory& GetInventory() { return _inventory; }
-	void SetRoom(SharedRoom room) { _room = room; }
+	Inventory& GetInventory() { return _inventory; }	
 	void RefreshStat();	
 
 	SharedViewCube& GetView() { return _view_cube; }
@@ -24,7 +23,6 @@ public:
 
 private:
 	Inventory _inventory;
-	weak_ptr<class Room> _room;
 	SharedViewCube _view_cube;
 
 	int32 _weapon_damage;

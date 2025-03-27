@@ -19,10 +19,15 @@ public:
 
 	Protocol::PositionInfo& GetPositionInfo();
 
+	void SetRoom(SharedRoom room) { _room = room; }
+	SharedRoom GetRoom() { return _room.lock(); }
+
 protected:
 	Protocol::GameObjectType _object_type = Protocol::GameObjectType::NONE;
 	Protocol::ObjectInfo _object_info;
 	Protocol::StatInfo _stat_info;
 	Protocol::PositionInfo _pos_info;
+
+	weak_ptr<class Room> _room;
 };
 
