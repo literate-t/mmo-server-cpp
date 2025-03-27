@@ -8,6 +8,16 @@
 #include "ClientPacketHandler.h"
 #include "ViewCube.h"
 
+Room::Room()
+	:_map(MakeShared<Map>())
+{
+}
+
+void Room::Init(int32 map_id, int32 zone_cell_size)
+{
+	_map->LoadMap(map_id);
+}
+
 void Room::Enter(SharedObject object)
 {
 	if (object == nullptr)
@@ -26,7 +36,7 @@ void Room::Enter(SharedObject object)
 		player->RefreshStat();
 
 		g_map->ApplyMove(player, Vector2Int(player->GetPositionInfo().posx(), player->GetPositionInfo().posy()));
-		GetZone(player->GetCellPos()).GetPlayers().insert(player);
+		GetZone(player->GetCellPos())->GetPlayers().insert(player);
 
 		// 접속 본인 정보 전송
 		{
@@ -54,11 +64,7 @@ void Room::Broatcast(SharedSendBuffer send_buffer)
 	}
 }
 
-Zone Room::GetZone(Vector2Int cell_pos)
+SharedZone Room::GetZone(Vector2Int cell_pos)
 {
-	return Zone();
-}
-
-void Room::Init(int32 map_id, int32 zone_cell_size)
-{
+	return SharedZone();
 }
