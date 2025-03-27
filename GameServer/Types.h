@@ -9,6 +9,8 @@ using SharedWeapon = shared_ptr<class Weapon>;
 using SharedArmor = shared_ptr<class Armor>;
 using SharedInventory = shared_ptr<class Inventory>;
 using SharedViewCube = shared_ptr<class ViewCube>;
+using SharedMap = shared_ptr<class Map>;
+using SharedZone = shared_ptr<class Zone>;
 
 struct Vector2Int
 {
