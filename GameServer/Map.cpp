@@ -48,5 +48,19 @@ void Map::LoadMap(int32 map_id, string prefix_path)
 
 bool Map::ApplyMove(SharedObject object, Vector2Int dest, bool is_through_objects, bool apply_collision)
 {
+bool Map::CanGo(Vector2Int cell_pos, bool, bool is_through_objects)
+{
+	if (cell_pos.x < _minx || cell_pos.y > _maxx) return false;
+	if (cell_pos.y < _miny || cell_pos.y > _maxy) return false;
+
+	Vector2Int index_pos = GetCoordIndex(cell_pos);
+	
+	return !HasCollision(index_pos, is_through_objects);
+}
+
+bool Map::HasCollision(Vector2Int index_pos, bool is_through_objects)
+{	
+	return _collisions[index_pos.y][index_pos.x] || (!is_through_objects && _objects[index_pos.y][index_pos.x] != nullptr);
+}
 	return true;
 }
