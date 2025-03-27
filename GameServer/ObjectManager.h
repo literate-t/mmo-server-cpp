@@ -16,7 +16,7 @@ public:
 
 		{
 			WRITE_LOCK;
-			object->Id(GenerateId(object->GetType()));
+			object->SetObjectId(GenerateId(object->GetType()));
 		}
 		
 		return object;
