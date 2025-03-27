@@ -5,6 +5,8 @@ using SharedPlayer = shared_ptr<class Player>;
 using SharedObject = shared_ptr<class GameObject>;
 using SharedRoom = shared_ptr<class Room>;
 using SharedItem = shared_ptr<class Item>;
+using SharedWeapon = shared_ptr<class Weapon>;
+using SharedArmor = shared_ptr<class Armor>;
 using SharedInventory = shared_ptr<class Inventory>;
 using SharedViewCube = shared_ptr<class ViewCube>;
 
