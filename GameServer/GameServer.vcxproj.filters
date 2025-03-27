@@ -66,7 +66,7 @@
     <ClCompile Include="ConfigManager.cpp">
       <Filter>Data</Filter>
     </ClCompile>
-    <ClCompile Include="JsonFileManager.cpp">
+    <ClCompile Include="FileManager.cpp">
       <Filter>File</Filter>
     </ClCompile>
     <ClCompile Include="DBSerializer.cpp">
@@ -102,6 +102,12 @@
     <ClCompile Include="Zone.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="Util.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="StringReader.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -131,7 +137,7 @@
     <ClInclude Include="DataContents.h">
       <Filter>Data</Filter>
     </ClInclude>
-    <ClInclude Include="JsonFileManager.h">
+    <ClInclude Include="FileManager.h">
       <Filter>File</Filter>
     </ClInclude>
     <ClInclude Include="ConfigManager.h">
@@ -178,6 +184,12 @@
     </ClInclude>
     <ClInclude Include="Zone.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Util.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="StringReader.h">
+      <Filter>File</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

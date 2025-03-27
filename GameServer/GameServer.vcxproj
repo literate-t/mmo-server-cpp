@@ -189,7 +189,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Item.cpp" />
-    <ClCompile Include="JsonFileManager.cpp" />
+    <ClCompile Include="FileManager.cpp" />
     <ClCompile Include="GameServer.cpp" />
     <ClCompile Include="GameSession.cpp" />
     <ClCompile Include="GameSessionManager.cpp" />
@@ -210,6 +210,8 @@
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="RoomManager.cpp" />
     <ClCompile Include="ServerDB.cpp" />
+    <ClCompile Include="StringReader.cpp" />
+    <ClCompile Include="Util.cpp" />
     <ClCompile Include="ViewCube.cpp" />
     <ClCompile Include="Zone.cpp" />
   </ItemGroup>
@@ -222,7 +224,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Item.h" />
-    <ClInclude Include="JsonFileManager.h" />
+    <ClInclude Include="FileManager.h" />
     <ClInclude Include="GameSession.h" />
     <ClInclude Include="GameSessionManager.h" />
     <ClInclude Include="Info.h" />
@@ -236,7 +238,9 @@
     <ClInclude Include="Room.h" />
     <ClInclude Include="RoomManager.h" />
     <ClInclude Include="ServerDB.h" />
+    <ClInclude Include="StringReader.h" />
     <ClInclude Include="Types.h" />
+    <ClInclude Include="Util.h" />
     <ClInclude Include="ViewCube.h" />
     <ClInclude Include="Zone.h" />
   </ItemGroup>
