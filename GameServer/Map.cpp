@@ -3,6 +3,12 @@
 #include "GameObject.h"
 #include "StringReader.h"
 #include "Util.h"
+#include "Room.h"
+#include "Zone.h"
+#include "ObjectManager.h"
+#include "Player.h"
+#include "Protocol.pb.h"
+
 void Map::InitArrays(int32 row, int32 col)
 {
 	// _collisions
@@ -48,6 +54,32 @@ void Map::LoadMap(int32 map_id, string prefix_path)
 
 bool Map::ApplyMove(SharedObject object, Vector2Int dest, bool is_through_objects, bool apply_collision)
 {
+	if (object->GetRoom() != nullptr) return false;
+	if (!CanGo(dest, is_through_objects)) return false;
+
+	Protocol::PositionInfo& pos = object->GetPositionInfo();
+	if (IsWithinBounds(pos.posx(), pos.posy()) == false)
+		return false;
+
+	// 충돌을 적용하기 위해서는 _objects 배열에 정보를 넣어야 한다
+	if (apply_collision)
+	{
+		Vector2Int now = GetCoordIndex(object->GetCellPos());
+		if (_objects[now.y][now.x] == object)
+			_objects[now.y][now.x] = nullptr;
+
+		Vector2Int next = GetCoordIndex(dest);
+		_objects[next.y][next.x] = object;
+	}
+
+	// 현재 위치에 대한 Zone 처리
+	SetCurrentZone(object, dest);
+
+	object->SetCellPos(dest);
+
+	return true;
+}
+
 bool Map::CanGo(Vector2Int cell_pos, bool, bool is_through_objects)
 {
 	if (cell_pos.x < _minx || cell_pos.y > _maxx) return false;
