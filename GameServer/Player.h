@@ -19,8 +19,14 @@ public:
 	SharedViewCube& GetView() { return _view_cube; }
 	void MakeViewCube();
 
+	int32 GetWeaponDamage() const { return _weapon_damage; }
+	int32 GetArmorDamage() const { return _armor_defence; }
+
 private:
 	Inventory _inventory;
 	weak_ptr<class Room> _room;
 	SharedViewCube _view_cube;
+
+	int32 _weapon_damage;
+	int32 _armor_defence;
 };
