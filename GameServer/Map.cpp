@@ -68,3 +68,13 @@ bool Map::IsWithinBounds(int32 x, int32 y)
 	if (x < _minx || x > _maxx || y < _miny || y > _maxy) return false;
 	return true;
 }
+
+Vector2Int Map::GetCoordIndex(Vector2Int cell_pos)
+{
+	return GetCoordIndex(cell_pos.x, cell_pos.y);
+}
+
+Vector2Int Map::GetCoordIndex(int x, int y)
+{
+	return Vector2Int(x - _minx, _maxy - y);
+}
