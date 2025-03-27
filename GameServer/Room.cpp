@@ -15,7 +15,7 @@ void Room::Enter(SharedObject object)
 
 	// TODO: random position
 
-	GameObjectType type = g_object_manager->GetObjectTypeById(object->GetType());
+	GameObjectType type = g_object_manager->GetObjectTypeById(object->GetObjectId());
 
 	if (type == GameObjectType::PLAYER)
 	{
