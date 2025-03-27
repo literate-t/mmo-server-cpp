@@ -62,5 +62,9 @@ bool Map::HasCollision(Vector2Int index_pos, bool is_through_objects)
 {	
 	return _collisions[index_pos.y][index_pos.x] || (!is_through_objects && _objects[index_pos.y][index_pos.x] != nullptr);
 }
+
+bool Map::IsWithinBounds(int32 x, int32 y)
+{
+	if (x < _minx || x > _maxx || y < _miny || y > _maxy) return false;
 	return true;
 }
