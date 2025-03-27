@@ -69,6 +69,28 @@ bool Map::IsWithinBounds(int32 x, int32 y)
 	return true;
 }
 
+void Map::SetCurrentZone(SharedObject object, Vector2Int dest)
+{
+	auto room = object->GetRoom();
+	if (room)
+	{		
+		SharedZone before = room->GetZone(object->GetCellPos());
+		SharedZone after = room->GetZone(dest);
+
+		if (before != after)
+		{
+			GameObjectType type = g_object_manager->GetObjectTypeById(object->GetObjectId());
+			switch (type)
+			{
+				case GameObjectType::PLAYER:
+					SharedPlayer player = static_pointer_cast<Player>(object);
+					before->GetPlayers().erase(player);
+					after->GetPlayers().insert(player);
+			}
+		}
+	}
+}
+
 Vector2Int Map::GetCoordIndex(Vector2Int cell_pos)
 {
 	return GetCoordIndex(cell_pos.x, cell_pos.y);
