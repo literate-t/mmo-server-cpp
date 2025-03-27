@@ -1,10 +1,10 @@
 #include "pch.h"
-#include "JsonFileManager.h"
+#include "FileManager.h"
 #include <filesystem>
 #include <fstream>
 #include <sstream>
 
-string JsonFileManager::GetContent(string path)
+string FileManager::GetContent(string path)
 {
     filesystem::path file_path = path;
 	if (!filesystem::exists(file_path))

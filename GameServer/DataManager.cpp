@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "DataManager.h"
 #include "ConfigManager.h"
-#include "JsonFileManager.h"
+#include "FileManager.h"
 
 DataManager::DataManager(ConfigManager* config_manager)
 	:_config_manager(config_manager)
@@ -20,25 +20,25 @@ void DataManager::LoadData(string path)
 {
 	// stat
 	string data_path = path + "/StatData.json";
-	string data = JsonFileManager::GetContent(data_path);
+	string data = FileManager::GetContent(data_path);
 	json j = json::parse(data);
 	MakeStatTable(j);
 
 	// skill
 	data_path = path + "/SkillData.json";
-	data = JsonFileManager::GetContent(data_path);
+	data = FileManager::GetContent(data_path);
 	j = json::parse(data);
 	MakeSkillTable(j);
 
 	// monster
 	data_path = path + "/MonsterData.json";
-	data = JsonFileManager::GetContent(data_path);
+	data = FileManager::GetContent(data_path);
 	j = json::parse(data);
 	MakeMonsterTable(j);
 
 	// item
 	data_path = path + "/ItemData.json";
-	data = JsonFileManager::GetContent(data_path);
+	data = FileManager::GetContent(data_path);
 	j = json::parse(data);
 	MakeItemTable(j);
 }
