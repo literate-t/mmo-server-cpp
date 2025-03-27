@@ -3,5 +3,5 @@
 
 void Inventory::Add(SharedItem item)
 {
-	_items[item->ItemDbId()] = item;
+	_items[item->GetItemDbId()] = item;
 }

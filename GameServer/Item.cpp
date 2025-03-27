@@ -11,11 +11,11 @@ void Weapon::Init(int32 data_sheet_id)
 	ItemData& item_data = g_data_manager->Item(data_sheet_id);
 	WeaponData* data = reinterpret_cast<WeaponData*>(&item_data);	
 	
-	DataSheetId(data->id);
-	Count(1);
-	WeaponType(data->weaponType);
-	Damage(data->damage);
-	Stackable(false);
+	SetDataSheetId(data->id);
+	SetCount(1);
+	SetWeaponType(data->weaponType);
+	SetDamage(data->damage);
+	SetStackable(false);
 }
 
 Armor::Armor(int32 data_sheet_id)
@@ -28,11 +28,11 @@ void Armor::Init(int32 data_sheet_id)
 	ItemData& item_data = g_data_manager->Item(data_sheet_id);
 	ArmorData* data = reinterpret_cast<ArmorData*>(&item_data);
 
-	DataSheetId(data->id);
-	Count(1);
-	Defence(data->defence);
-	ArmorType(data->armorType);	
-	Stackable(false);
+	SetDataSheetId(data->id);
+	SetCount(1);
+	SetDefence(data->defence);
+	SetArmorType(data->armorType);	
+	SetStackable(false);
 }
 
 Consumable::Consumable(int32 data_sheet_id)
@@ -45,12 +45,12 @@ void Consumable::Init(int32 data_sheet_id)
 	ItemData& item_data = g_data_manager->Item(data_sheet_id);
 	ConsumableData* data = reinterpret_cast<ConsumableData*>(&item_data);
 
-	DataSheetId(data->id);
-	Count(1);
-	MaxCount(data->maxCount);
-	Damage(data->damage);
-	ConsumableType(data->consumableType);
-	Stackable(data->maxCount > 1);
+	SetDataSheetId(data->id);
+	SetCount(1);
+	SetMaxCount(data->maxCount);
+	SetDamage(data->damage);
+	SetConsumableType(data->consumableType);
+	SetStackable(data->maxCount > 1);
 }
 
 shared_ptr<Item> Item::MakeItem(ItemDB item_db)
@@ -71,11 +71,11 @@ shared_ptr<Item> Item::MakeItem(ItemDB item_db)
 		break;
 	}
 
-	item->ItemDbId(item_db.ItemDbId);
-	item->DataSheetId(item_db.DataSheetId);
-	item->Count(item_db.Count);
-	item->Slot(item_db.Slot);
-	item->Equipped(item_db.Equipped);
+	item->SetItemDbId(item_db.ItemDbId);
+	item->SetDataSheetId(item_db.DataSheetId);
+	item->SetCount(item_db.Count);
+	item->SetSlot(item_db.Slot);
+	item->SetEquipped(item_db.Equipped);
 
 	return item;
 }

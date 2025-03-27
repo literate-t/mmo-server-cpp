@@ -276,7 +276,7 @@ void GameSession::HandleEnterGame(C_EnterGame packet)
 
 			_current_player->GetInventory().Add(item);
 			Protocol::ItemInfo* add_item = item_list.add_items();
-			add_item->MergeFrom(item->ItemInfo());
+			add_item->MergeFrom(item->GetItemInfo());
 		}
 
 		Send(ClientPacketHandler::MakeSendBuffer(item_list));

@@ -14,20 +14,20 @@ void Player::RefreshStat()
 
 	for (auto& [key, value] : _inventory.GetItems())
 	{
-		if (value->Equipped())
+		if (value->GetEquipped())
 			continue;
 
-		switch (value->ItemType())
+		switch (value->GetItemType())
 		{
 		case ItemType::ITEM_TYPE_WEAPON:
 		{
 			SharedWeapon weapon = static_pointer_cast<Weapon>(value);
-			_weapon_damage += weapon->Damage();
+			_weapon_damage += weapon->GetDamage();
 			break;
 		}
 		case ItemType::ITEM_TYPE_ARMOR:
 			SharedArmor armor = static_pointer_cast<Armor>(value);
-			_armor_defence += armor->Defence();
+			_armor_defence += armor->GetDefence();
 			break;
 		}
 	}
