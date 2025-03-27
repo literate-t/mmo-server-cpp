@@ -9,7 +9,6 @@ public:
 
 public:
 	uint64 PlayerDbId = 0;
-	string name;
 	// caution: cycle
 	SharedGameSession OwnerSession;	
 
@@ -18,6 +17,7 @@ public:
 	void RefreshStat();	
 
 	SharedViewCube& GetView() { return _view_cube; }
+	void MakeViewCube();
 
 private:
 	Inventory _inventory;

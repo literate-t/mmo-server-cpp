@@ -230,6 +230,8 @@ void GameSession::HandleEnterGame(C_EnterGame packet)
 
 	_current_player = g_object_manager->Add<Player>();
 	{
+		_current_player->MakeViewCube();
+
 		LobbyPlayerInfo* find_player = *iter;
 		_current_player->PlayerDbId = find_player->playerdbid();
 		_current_player->GetObjectInfo().set_name(find_player->name());
