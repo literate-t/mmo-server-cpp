@@ -210,7 +210,7 @@ xvector<Vector2Int>& Map::FindPath(Vector2Int start, Vector2Int dest, bool is_th
 			if (Heuristic(next_pos, dest) > max_distance)
 				continue;
 
-			if (!CanGo(next_pos))
+			if (!CanGo(next_pos, is_through_objects))
 				continue;
 
 			if (close_list.count(next_pos))

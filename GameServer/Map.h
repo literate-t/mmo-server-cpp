@@ -22,7 +22,7 @@ public:
 	int32 GetSizeX() const { return _maxx - _minx + 1; }
 	int32 GetSizeY() const { return _maxy - _miny + 1; }
 
-	xvector<Vector2Int>& FindPath(Vector2Int start, Vector2Int dest, bool is_through_objects = true, int32 max_distance = 10);
+	xvector<Vector2Int>& FindPath(Vector2Int start, Vector2Int dest, bool is_through_objects = false, int32 max_distance = 10);
 
 private:
 	void InitArrays(int32 row, int32 col);
