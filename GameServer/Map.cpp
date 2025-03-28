@@ -80,7 +80,25 @@ bool Map::ApplyMove(SharedObject object, Vector2Int dest, bool is_through_object
 	return true;
 }
 
-bool Map::CanGo(Vector2Int cell_pos, bool, bool is_through_objects)
+bool Map::ApplyLeave(SharedObject object)
+{
+	if (object->GetRoom() == nullptr) return false;
+
+	SharedRoom room = object->GetRoom();
+	Vector2Int cell_pos = object->GetCellPos();
+	
+	if (!IsWithinBounds(cell_pos.x, cell_pos.y))
+		return false;
+
+	room->GetZone(cell_pos)->Remove(object);
+
+	Vector2Int index_pos = GetCoordIndex(cell_pos);
+	if (_objects[index_pos.y][index_pos.x] == object)
+		_objects[index_pos.y][index_pos.x] = nullptr;
+
+	return true;
+}
+
 bool Map::CanGo(Vector2Int cell_pos, bool is_through_objects)
 {
 	if (cell_pos.x < _minx || cell_pos.y > _maxx) return false;
