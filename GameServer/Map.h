@@ -1,4 +1,6 @@
 #pragma once
+
+using SharedNode = shared_ptr<struct Node>;
 class Map
 {
 public:
@@ -33,3 +35,40 @@ private:
 	xvector<xvector<SharedObject>> _objects;
 };
 
+struct Node
+{
+	Node(Vector2Int pos, int32 g, int32 h, SharedNode parent = nullptr)
+		: cell_pos(pos), g(g), h(h), parent(parent)
+	{
+	}
+
+	Vector2Int cell_pos;
+	int32 g;
+	int32 h;
+	SharedNode parent;
+
+	int32 calc() const { return g + h; }
+};
+
+struct NodePredicate
+{
+	bool operator()(const SharedNode& a, const SharedNode& b)
+	{
+		return a->calc() > b->calc();
+	}
+};
+
+namespace std
+{
+	template<>
+	struct hash<Vector2Int>
+	{
+		size_t operator()(const Vector2Int& item) const
+		{
+			size_t h1 = hash<int32>()(item.x);
+			size_t h2 = hash<int32>()(item.y);
+
+			return h1 ^ (h2 << 1);
+		}
+	};
+}
