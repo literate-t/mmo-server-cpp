@@ -132,3 +132,83 @@ Vector2Int Map::GetCoordIndex(int x, int y)
 {
 	return Vector2Int(x - _minx, _maxy - y);
 }
+
+#pragma region A* path finding
+int32 Map::Heuristic(const Vector2Int& start, const Vector2Int& dest)
+{
+	return abs(dest.x - start.x) + abs(dest.y - start.y);
+}
+
+xvector<Vector2Int>& Map::CalculatePath(SharedNode dest_node)
+{
+	while (dest_node)
+	{
+		_cell_path.push_back(dest_node->cell_pos);
+		SharedNode parent = dest_node->parent;
+		dest_node->parent = nullptr;
+		dest_node = parent;
+	}
+
+	reverse(_cell_path.begin(), _cell_path.end());
+
+	return _cell_path;
+}
+
+xvector<Vector2Int>& Map::FindPath(Vector2Int start, Vector2Int dest, bool is_through_objects, int32 max_distance)
+{
+	// all list
+	priority_queue<SharedNode, xvector<SharedNode>, NodePredicate> all_list;
+
+	// open list
+	priority_queue<SharedNode, xvector<SharedNode>, NodePredicate> open_list;
+
+	// close list
+	unordered_set<Vector2Int> close_list;
+
+	int32 direction_x[] = {1, 0, -1, 0};
+	int32 direction_y[] = {0, -1, 0, 1};
+
+	open_list.push(MakeShared<Node>(start, 0, Heuristic(start, dest)));
+
+	while (!open_list.empty())
+	{
+		SharedNode current_node = open_list.top();
+		open_list.pop();
+		
+		if (current_node->cell_pos == dest)
+			return CalculatePath(current_node);
+
+		close_list.insert(current_node->cell_pos);
+
+		for (int i = 0; i < 4; ++i)
+		{
+			int32 dir_x = direction_x[i];
+			int32 dir_y = direction_y[i];
+
+			Vector2Int& cell_pos = current_node->cell_pos;
+			Vector2Int next_pos = Vector2Int(cell_pos.x + dir_x, cell_pos.y + dir_y);
+
+			if (Heuristic(next_pos, dest) > max_distance)
+				continue;
+
+			if (!CanGo(next_pos))
+				continue;
+
+			if (close_list.count(next_pos))
+				continue;
+
+			int32 g = current_node->g + 1;
+			int32 h = Heuristic(next_pos, dest);
+			SharedNode next_node = MakeShared<Node>(next_pos, g, h, current_node);
+
+			open_list.push(next_node);
+			all_list.push(next_node);
+		}
+	}
+
+	// didn't visit the dest
+	// no dest in the close_list
+	auto& best = all_list.top();
+	return CalculatePath(best);
+}
+#pragma endregion

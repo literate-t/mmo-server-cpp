@@ -19,11 +19,16 @@ public:
 	int32 GetSizeX() const { return _maxx - _minx + 1; }
 	int32 GetSizeY() const { return _maxy - _miny + 1; }
 
+	xvector<Vector2Int>& FindPath(Vector2Int start, Vector2Int dest, bool is_through_objects = true, int32 max_distance = 10);
+
 private:
 	void InitArrays(int32 row, int32 col);
 	bool HasCollision(Vector2Int index_pos, bool is_through_objects);
 	bool IsWithinBounds(int32 x, int32 y);
 	void SetCurrentZone(SharedObject object, Vector2Int dest);
+	int32 Heuristic(const Vector2Int& start, const Vector2Int& dest);
+
+	xvector<Vector2Int>& CalculatePath(SharedNode dest_node);
 
 private:
 	int32 _minx;
@@ -33,6 +38,7 @@ private:
 
 	xvector<xvector<bool>> _collisions;
 	xvector<xvector<SharedObject>> _objects;
+	xvector<Vector2Int> _cell_path;
 };
 
 struct Node
