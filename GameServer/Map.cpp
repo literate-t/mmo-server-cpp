@@ -81,6 +81,7 @@ bool Map::ApplyMove(SharedObject object, Vector2Int dest, bool is_through_object
 }
 
 bool Map::CanGo(Vector2Int cell_pos, bool, bool is_through_objects)
+bool Map::CanGo(Vector2Int cell_pos, bool is_through_objects)
 {
 	if (cell_pos.x < _minx || cell_pos.y > _maxx) return false;
 	if (cell_pos.y < _miny || cell_pos.y > _maxy) return false;

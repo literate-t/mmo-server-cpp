@@ -7,6 +7,7 @@ public:
 	void LoadMap(int32 map_id, string prefix_path = "D:/SourceCode/GameSource/MMO_Basic_Cpp/Common/MapData");
 	bool ApplyMove(SharedObject object, Vector2Int dest, bool is_through_objects = false, bool apply_collision = true);
 	bool CanGo(Vector2Int cell_pos, bool, bool is_through_objects = false);
+	bool CanGo(Vector2Int cell_pos, bool is_through_objects = false);
 
 	Vector2Int GetCoordIndex(Vector2Int cell_pos);
 	Vector2Int GetCoordIndex(int x, int y);
