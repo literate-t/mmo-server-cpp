@@ -24,6 +24,14 @@ struct Vector2Int
 	static Vector2Int Left() { return Vector2Int(-1, 0); }
 	static Vector2Int Right() { return Vector2Int(1, 0); }
 
+	Vector2Int& operator=(const Vector2Int& rhs)
+	{
+		x = rhs.x;
+		y = rhs.y;
+
+		return *this;
+	}
+
 	Vector2Int operator+(const Vector2Int& rhs)
 	{
 		return Vector2Int(x + rhs.x, y + rhs.y);
@@ -32,6 +40,11 @@ struct Vector2Int
 	Vector2Int operator-(const Vector2Int& rhs)
 	{
 		return Vector2Int(x - rhs.x, y - rhs.y);
+	}
+
+	bool operator==(const Vector2Int& rhs) const
+	{
+		return x == rhs.x && y == rhs.y;
 	}
 
 	const int32 SquareMagnitude = x * x + y * y;
