@@ -4,6 +4,11 @@
 using namespace Protocol;
 #include "ObjectManager.h"
 
+Zone::Zone(int32 y, int32 x)
+    :_index_y(y), _index_x(x)
+{
+}
+
 unordered_set<SharedPlayer>& Zone::GetPlayers()
 {
     return _players;

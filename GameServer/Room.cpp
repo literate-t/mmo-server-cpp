@@ -16,6 +16,19 @@ Room::Room()
 void Room::Init(int32 map_id, int32 zone_cell_size)
 {
 	_map->LoadMap(map_id);
+	_zone_cell_size = zone_cell_size;
+
+	int32 count_x = (_map->GetSizeX() + zone_cell_size - 1) / zone_cell_size;
+	int32 count_y = (_map->GetSizeY() + zone_cell_size - 1) / zone_cell_size;
+
+	// set zones
+	_zones.resize(count_y);
+	for (int y = 0; y < count_y; ++y)
+	{
+		_zones[y].resize(count_x);
+		for (int x = 0; x < count_x; ++x)
+			_zones[y][x] = MakeShared<Zone>(y, x);
+	}
 }
 
 void Room::Enter(SharedObject object)
