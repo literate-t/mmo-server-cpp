@@ -78,6 +78,17 @@ void Room::Broatcast(SharedSendBuffer send_buffer)
 }
 
 SharedZone Room::GetZone(Vector2Int cell_pos)
+{	
+	int32 index_x = (cell_pos.x - _map->GetMinX()) / _zone_cell_size;
+	int32 index_y = (_map->GetMaxY() - cell_pos.y) / _zone_cell_size;
+
+	return GetZone(index_x, index_y);
+}
+
+SharedZone Room::GetZone(int32 index_x, int32 index_y)
 {
-	return SharedZone();
+	if (index_x < 0 || index_x >= _zones[0].size()) return nullptr;
+	if (index_y < 0 || index_y >= _zones.size()) return nullptr;
+	
+	return _zones[index_y][index_x];
 }

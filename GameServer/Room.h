@@ -14,6 +14,7 @@ public:
 
 	// Zone
 	SharedZone GetZone(Vector2Int cell_pos);
+	SharedZone GetZone(int32 index_x, int32 index_y);
 
 	int16 RoomId = 0;
 
@@ -22,4 +23,6 @@ public:
 private:
 	xmap<const uint64, SharedPlayer> _players;	
 	SharedMap _map;
+	int32 _zone_cell_size;
+	xvector<xvector<SharedZone>> _zones;
 };
