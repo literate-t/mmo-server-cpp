@@ -122,3 +122,36 @@ const xvector<SharedPlayer>& Room::GetAdjacentPlayers(Vector2Int cell_pos, int32
 
 	return _adjacent_players;
 }
+
+// TODO: proxy pattern
+const xvector<SharedZone>& Room::GetAdjacentZones(Vector2Int cell_pos, int32 range)
+{
+	_adjacent_zones.clear();
+
+	int32 min_x = cell_pos.x - range;
+	int32 min_y = cell_pos.y - range;
+	int32 max_x = cell_pos.x + range;
+	int32 max_y = cell_pos.y + range;
+
+	Vector2Int left_top = Vector2Int(min_x, max_y);
+	Vector2Int right_bottom = Vector2Int(max_x, min_y);
+
+	int32 left_top_x = (left_top.x - _map->GetMinX()) / _zone_cell_size;
+	int32 left_top_y = (_map->GetMaxY() - left_top.y) / _zone_cell_size;
+	int32 right_bottom_x = (right_bottom.x - _map->GetMinX()) / _zone_cell_size;
+	int32 right_bottom_y = (_map->GetMaxY() - right_bottom.y) / _zone_cell_size;
+
+	for (int32 y = left_top_y; y <= right_bottom_y; ++y)
+	{
+		for (int32 x = left_top_x; x <= right_bottom_x; ++x)
+		{
+			SharedZone zone = GetZone(x, y);
+			if (zone == nullptr)
+				continue;
+
+			_adjacent_zones.push_back(zone);
+		}
+	}
+
+	return _adjacent_zones;
+}
