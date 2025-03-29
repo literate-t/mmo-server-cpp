@@ -103,3 +103,22 @@ Vector2Int Room::GetZoneIndex(Vector2Int cell_pos)
 
 	return Vector2Int(index_x, index_y);
 }
+
+// TODO: proxy pattern
+const xvector<SharedPlayer>& Room::GetAdjacentPlayers(Vector2Int cell_pos, int32 range)
+{
+	const xvector<SharedZone>& zones = GetAdjacentZones(cell_pos, range);
+
+	xvector<SharedPlayer> players;
+	int32 total_size = 0;
+
+	for (auto& zone : zones)
+		total_size += zone->GetPlayers().size();
+
+	_adjacent_players.reserve(total_size);
+
+	for (auto& zone : zones)
+		players.insert(players.end(), zone->GetPlayers().begin(), zone->GetPlayers().end());
+
+	return _adjacent_players;
+}

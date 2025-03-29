@@ -21,9 +21,11 @@ public:
 
 	const SharedMap& GetMap() const { return _map; }
 
+	const xvector<SharedPlayer>& GetAdjacentPlayers(Vector2Int cell_pos, int32 range);
 private:
 	xmap<const uint64, SharedPlayer> _players;	
 	SharedMap _map;
 	int32 _zone_cell_size;
 	xvector<xvector<SharedZone>> _zones;
+	xvector<SharedPlayer> _adjacent_players;
 };
