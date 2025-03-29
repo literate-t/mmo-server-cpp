@@ -58,7 +58,3 @@ struct Vector2Int
 
 	const int32 SimpleDistance = abs(x) + abs(y);
 };
-
-// Operator
-template<typename T>
-using SharedCast = static_pointer_cast<T>;

@@ -3,6 +3,7 @@
 #include "Protocol.pb.h"
 using namespace Protocol;
 #include "ObjectManager.h"
+#include "Player.h"
 
 Zone::Zone(int32 y, int32 x)
     :_index_y(y), _index_x(x)
@@ -21,6 +22,6 @@ void Zone::Remove(SharedObject object)
     switch (type)
     {
     case GameObjectType::PLAYER:
-        _players.erase(SharedCast<Player>(object));
+        _players.erase(static_pointer_cast<Player>(object));
     }
 }
