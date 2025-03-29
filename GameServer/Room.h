@@ -25,6 +25,8 @@ public:
 	const xvector<SharedZone>& GetAdjacentZones(Vector2Int cell_pos, int32 range);
 
 	SharedPlayer FindClosestPlayer(Vector2Int base_pos, int32 range);
+	SharedPlayer FindPlayer(function<bool(SharedPlayer)> predicate);
+
 private:
 	xmap<const uint64, SharedPlayer> _players;	
 	SharedMap _map;

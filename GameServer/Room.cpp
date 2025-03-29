@@ -181,3 +181,14 @@ SharedPlayer Room::FindClosestPlayer(Vector2Int base_pos, int32 range)
 
 	return nullptr;
 }
+
+SharedPlayer Room::FindPlayer(function<bool(SharedPlayer)> predicate)
+{
+	for (auto& [key, player] : _players)
+	{
+		if (predicate(player))
+			return player;
+	}
+
+	return SharedPlayer();
+}
