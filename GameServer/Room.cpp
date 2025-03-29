@@ -155,3 +155,29 @@ const xvector<SharedZone>& Room::GetAdjacentZones(Vector2Int cell_pos, int32 ran
 
 	return _adjacent_zones;
 }
+
+SharedPlayer Room::FindClosestPlayer(Vector2Int base_pos, int32 range)
+{
+	xvector<SharedPlayer> players = GetAdjacentPlayers(base_pos, range);
+
+	sort(players.begin(), players.end(), [&base_pos](const SharedPlayer& a, const SharedPlayer& b)
+		{
+			int32 left_dist = (base_pos - a->GetCellPos()).SquareMagnitude;
+			int32 right_dist = (base_pos - b->GetCellPos()).SquareMagnitude;
+
+			return left_dist < right_dist;
+		});
+
+	// Even if simple distance exists
+	// it may not be accessible due to obstacles
+	for (auto& player : players)
+	{
+		auto& path_list = _map->FindPath(base_pos, player->GetCellPos(), false, range);
+		if (path_list.size() < 2 || path_list.size() > range)
+			continue;
+
+		return player;
+	}
+
+	return nullptr;
+}
