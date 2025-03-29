@@ -92,3 +92,14 @@ SharedZone Room::GetZone(int32 index_x, int32 index_y)
 	
 	return _zones[index_y][index_x];
 }
+
+Vector2Int Room::GetZoneIndex(Vector2Int cell_pos)
+{
+	int32 index_x = (cell_pos.x - _map->GetMinX()) / _zone_cell_size;
+	int32 index_y = (_map->GetMaxY() - cell_pos.y) / _zone_cell_size;
+
+	if (index_x < 0 || index_x >= _zones[0].size()) return Vector2Int();
+	if (index_y < 0 || index_y >= _zones.size()) return Vector2Int();
+
+	return Vector2Int(index_x, index_y);
+}

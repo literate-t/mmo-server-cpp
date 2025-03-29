@@ -15,6 +15,7 @@ public:
 	// Zone
 	SharedZone GetZone(Vector2Int cell_pos);
 	SharedZone GetZone(int32 index_x, int32 index_y);
+	Vector2Int GetZoneIndex(Vector2Int cell_pos);
 
 	int16 RoomId = 0;
 
