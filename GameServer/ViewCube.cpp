@@ -9,3 +9,9 @@ ViewCube::ViewCube(SharedPlayer player)
 void ViewCube::Update()
 {
 }
+
+const unordered_set<SharedObject>& ViewCube::GetObjects()
+{
+
+	return _objects;
+}
