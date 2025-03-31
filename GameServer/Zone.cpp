@@ -10,17 +10,17 @@ Zone::Zone(int32 y, int32 x)
 {
 }
 
-unordered_set<SharedPlayer>& Zone::GetPlayers()
+xhash_set<SharedPlayer>& Zone::GetPlayers()
 {
     return _players;
 }
 
-unordered_set<SharedMonster>& Zone::GetMonsters()
+xhash_set<SharedMonster>& Zone::GetMonsters()
 {
     return _monsters;
 }
 
-unordered_set<SharedProjectile>& Zone::GetProjectiles()
+xhash_set<SharedProjectile>& Zone::GetProjectiles()
 {
     return _projectiles;
 }
