@@ -21,8 +21,10 @@ public:
 
 	const SharedMap& GetMap() const { return _map; }
 
-	const xvector<SharedPlayer>& GetAdjacentPlayers(Vector2Int cell_pos, int32 range);
 	const xvector<SharedZone>& GetAdjacentZones(Vector2Int cell_pos, int32 range);
+	const xvector<SharedPlayer>& GetAdjacentPlayers(Vector2Int cell_pos, int32 range);
+	const xvector<SharedMonster>& GetAdjacentMonsters(Vector2Int cell_pos, int32 range);
+	const xvector<SharedProjectile>& GetAdjacentProjectiles(Vector2Int cell_pos, int32 range);
 
 	SharedPlayer FindClosestPlayer(Vector2Int base_pos, int32 range);
 	SharedPlayer FindPlayer(function<bool(SharedPlayer)> predicate);
@@ -34,4 +36,6 @@ private:
 	xvector<xvector<SharedZone>> _zones;
 	xvector<SharedZone> _adjacent_zones;
 	xvector<SharedPlayer> _adjacent_players;
+	xvector<SharedMonster> _adjacent_monsters;
+	xvector<SharedProjectile> _adjacent_projectiles;
 };

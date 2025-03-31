@@ -9,7 +9,7 @@
 #include "ViewCube.h"
 
 Room::Room()
-	:_map(MakeShared<Map>())
+	:_map(MakeShared<Map>()), _zone_cell_size(0)
 {
 }
 
@@ -109,8 +109,8 @@ const xvector<SharedPlayer>& Room::GetAdjacentPlayers(Vector2Int cell_pos, int32
 {
 	const xvector<SharedZone>& zones = GetAdjacentZones(cell_pos, range);
 
-	xvector<SharedPlayer> players;
-	int32 total_size = 0;
+	_adjacent_players.clear();
+	size_t total_size = 0;
 
 	for (auto& zone : zones)
 		total_size += zone->GetPlayers().size();
@@ -118,9 +118,45 @@ const xvector<SharedPlayer>& Room::GetAdjacentPlayers(Vector2Int cell_pos, int32
 	_adjacent_players.reserve(total_size);
 
 	for (auto& zone : zones)
-		players.insert(players.end(), zone->GetPlayers().begin(), zone->GetPlayers().end());
+		_adjacent_players.insert(_adjacent_players.end(), zone->GetPlayers().begin(), zone->GetPlayers().end());
 
 	return _adjacent_players;
+}
+
+const xvector<SharedMonster>& Room::GetAdjacentMonsters(Vector2Int cell_pos, int32 range)
+{
+	const xvector<SharedZone>& zones = GetAdjacentZones(cell_pos, range);
+
+	_adjacent_monsters.clear();
+	size_t total_size = 0;
+
+	for (auto& zone : zones)
+		total_size += zone->GetMonsters().size();
+
+	_adjacent_monsters.reserve(total_size);
+
+	for (auto& zone : zones)
+		_adjacent_monsters.insert(_adjacent_monsters.end(), zone->GetMonsters().begin(), zone->GetMonsters().end());
+
+	return _adjacent_monsters;
+}
+
+const xvector<SharedProjectile>& Room::GetAdjacentProjectiles(Vector2Int cell_pos, int32 range)
+{
+	const xvector<SharedZone>& zones = GetAdjacentZones(cell_pos, range);
+
+	_adjacent_projectiles.clear();
+	size_t total_size = 0;
+
+	for (auto& zone : zones)
+		total_size += zone->GetProjectiles().size();
+
+	_adjacent_projectiles.reserve(total_size);
+
+	for (auto& zone : zones)
+		_adjacent_projectiles.insert(_adjacent_projectiles.end(), zone->GetProjectiles().begin(), zone->GetProjectiles().end());
+
+	return _adjacent_projectiles;
 }
 
 // TODO: proxy pattern
