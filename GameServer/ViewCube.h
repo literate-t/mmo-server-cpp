@@ -12,7 +12,7 @@ public:
 
 private:
 	// caution: cycle
-	SharedPlayer _owner_player;
+	SharedPlayer _owner;
 	xhash_set<SharedObject> _prev_objects;
 	SharedJob _job;
 	xhash_set<SharedObject> _objects;
