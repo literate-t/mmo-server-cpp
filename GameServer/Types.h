@@ -1,8 +1,10 @@
 #pragma once
 
 using SharedGameSession = shared_ptr<class GameSession>;
-using SharedPlayer = shared_ptr<class Player>;
 using SharedObject = shared_ptr<class GameObject>;
+using SharedPlayer = shared_ptr<class Player>;
+using SharedMonster = shared_ptr<class Monster>;
+using SharedProjectile = shared_ptr<class Projectile>;
 using SharedRoom = shared_ptr<class Room>;
 using SharedItem = shared_ptr<class Item>;
 using SharedWeapon = shared_ptr<class Weapon>;
