@@ -47,7 +47,63 @@ void ViewCube::Update()
 
 	room->PushTimerAsync(100, [this](){ Update();});
 }
+
+const xhash_set<SharedObject>& ViewCube::GetObjects()
 {
+	SharedRoom room = _owner->GetRoom();
+	if (_owner == nullptr || room == nullptr)
+{
+		_objects.clear();
+		return _objects;
+	}
+
+	if (IsReset)
+	{
+		_prev_objects.clear();
+		IsReset = false;
+	}
+
+	const auto& zones = room->GetAdjacentZones(_owner->GetCellPos(), kViewRange);
+
+	// loop only during game objects count
+	for (const auto& zone : zones)
+	{
+		const auto& players = zone->GetPlayers();
+		for (auto& player : players)
+		{
+			Vector2Int dist = player->GetCellPos() - _owner->GetCellPos();
+			if (abs(dist.x) > kViewRange)
+				continue;
+			if (abs(dist.y) > kViewRange)
+				continue;
+
+			_objects.insert(player);
+		}
+
+		const auto& monsters = zone->GetMonsters();
+		for (auto& monster : monsters)
+		{
+			Vector2Int dist = monster->GetCellPos() - _owner->GetCellPos();
+			if (abs(dist.x) > kViewRange)
+				continue;
+			if (abs(dist.y) > kViewRange)
+				continue;
+
+			_objects.insert(monster);
+		}
+
+		const auto& projectiles = zone->GetProjectiles();
+		for (auto& projectile : projectiles)
+		{
+			Vector2Int dist = projectile->GetCellPos() - _owner->GetCellPos();
+			if (abs(dist.x) > kViewRange)
+				continue;
+			if (abs(dist.y) > kViewRange)
+				continue;
+
+			_objects.insert(projectile);
+		}
+	}
 
 	return _objects;
 }

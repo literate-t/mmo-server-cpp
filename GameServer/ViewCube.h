@@ -9,6 +9,7 @@ public:
 
 public:
 	bool IsReset;
+	static constexpr int32 kViewRange = 10;
 
 private:
 	// caution: cycle
