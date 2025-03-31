@@ -108,6 +108,12 @@
     <ClCompile Include="StringReader.cpp">
       <Filter>File</Filter>
     </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>GameContents\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>GameContents\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -190,6 +196,12 @@
     </ClInclude>
     <ClInclude Include="StringReader.h">
       <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>GameContents\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>GameContents\Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

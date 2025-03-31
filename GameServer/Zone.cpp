@@ -15,6 +15,16 @@ unordered_set<SharedPlayer>& Zone::GetPlayers()
     return _players;
 }
 
+unordered_set<SharedMonster>& Zone::GetMonsters()
+{
+    return _monsters;
+}
+
+unordered_set<SharedProjectile>& Zone::GetProjectiles()
+{
+    return _projectiles;
+}
+
 void Zone::Remove(SharedObject object)
 {
     GameObjectType type = g_object_manager->GetObjectTypeById(object->GetObjectId());

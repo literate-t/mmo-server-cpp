@@ -195,6 +195,7 @@
     <ClCompile Include="GameSessionManager.cpp" />
     <ClCompile Include="LockFreeStack.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Monster.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -204,6 +205,7 @@
     </ClCompile>
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="ClientPacketHandler.cpp" />
+    <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Protocol.pb.cc">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -230,10 +232,12 @@
     <ClInclude Include="Info.h" />
     <ClInclude Include="LockFreeStack.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="Monster.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ClientPacketHandler.h" />
+    <ClInclude Include="Projectile.h" />
     <ClInclude Include="Protocol.pb.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="RoomManager.h" />
