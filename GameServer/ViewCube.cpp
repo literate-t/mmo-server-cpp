@@ -1,5 +1,12 @@
 #include "pch.h"
 #include "ViewCube.h"
+#include "Monster.h"
+#include "Player.h"
+#include "Projectile.h"
+#include "Room.h"
+#include "Zone.h"
+#include "ClientPacketHandler.h"
+#include "GameSession.h"
 
 ViewCube::ViewCube(SharedPlayer player)
 	:_owner(player), IsReset(false)
@@ -39,7 +46,7 @@ void ViewCube::Update()
 			despawn_packet.add_objectids(item->GetObjectId());
 
 		_owner->OwnerSession->Send(ClientPacketHandler::MakeSendBuffer(despawn_packet));
-}
+	}
 
 	_prev_objects.clear();
 	for (const auto& item : current_objects)
@@ -52,7 +59,7 @@ const xhash_set<SharedObject>& ViewCube::GetObjects()
 {
 	SharedRoom room = _owner->GetRoom();
 	if (_owner == nullptr || room == nullptr)
-{
+	{
 		_objects.clear();
 		return _objects;
 	}
@@ -106,4 +113,18 @@ const xhash_set<SharedObject>& ViewCube::GetObjects()
 	}
 
 	return _objects;
+}
+
+const xvector<SharedObject>& ViewCube::Except(const xhash_set<SharedObject>& base, const xhash_set<SharedObject>& rhs)
+{
+	for (SharedObject object : rhs)
+	{
+		auto iter = base.find(object);
+		if (iter != base.end())
+			continue;
+
+		_excepts.push_back(*iter);
+	}
+
+	return _excepts;
 }
