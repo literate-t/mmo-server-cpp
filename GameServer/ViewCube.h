@@ -10,6 +10,7 @@ public:
 public:
 	bool IsReset;
 	static constexpr int32 kViewRange = 10;
+	SharedJob JobReserved;
 
 private:
 	const xvector<SharedObject>& Except(const xhash_set<SharedObject>& base, const xhash_set<SharedObject>& rhs);

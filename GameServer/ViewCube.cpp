@@ -52,7 +52,7 @@ void ViewCube::Update()
 	for (const auto& item : current_objects)
 		_prev_objects.insert(item);
 
-	room->PushTimerAsync(100, [this](){ Update();});
+	JobReserved = room->PushTimerAsync(100, [this](){ Update();});
 }
 
 const xhash_set<SharedObject>& ViewCube::GetObjects()
