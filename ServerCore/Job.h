@@ -21,6 +21,8 @@ public:
 		_callback();
 	}
 
+	void Cancel();
+
 private:
 	CallbackType _callback;
 };
