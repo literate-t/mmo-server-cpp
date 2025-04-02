@@ -114,6 +114,9 @@
     <ClCompile Include="Projectile.cpp">
       <Filter>GameContents\Object</Filter>
     </ClCompile>
+    <ClCompile Include="Heartbeat.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -202,6 +205,9 @@
     </ClInclude>
     <ClInclude Include="Projectile.h">
       <Filter>GameContents\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Heartbeat.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -3,6 +3,7 @@
 #include "GameSession.h"
 #include "Player.h"
 #include "Room.h"
+#include "Heartbeat.h"
 
 PacketHandlerFunc g_packet_handler[HANDLER_MAX];
 
@@ -66,8 +67,9 @@ bool Handle_C_EquipItem(SharedPacketSession& session, Protocol::C_EquipItem& pkt
 }
 
 bool Handle_C_Pong(SharedPacketSession& session, Protocol::C_Pong& pkt)
-{
-	return false;
+{	
+	g_shared_heart->HandlePong(static_pointer_cast<GameSession>(session));
+	return true;
 }
 
 

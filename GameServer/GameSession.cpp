@@ -8,10 +8,11 @@
 #include "ObjectManager.h"
 #include "Player.h"
 #include "DataModel.h"
+using namespace DataModel;
 #include "Item.h"
 #include "Inventory.h"
 #include "RoomManager.h"
-using namespace DataModel;
+#include "Heartbeat.h"
 
 GameSession::~GameSession()
 {
@@ -24,6 +25,9 @@ void GameSession::OnConnectCompleted()
 
 	S_Connected connected_packet;
 	Send(ClientPacketHandler::MakeSendBuffer(connected_packet));
+
+	HeartbeatTick = GetTickCount64();
+	g_shared_heart->PushTimerAsync(5000, &Heartbeat::Ping, static_pointer_cast<GameSession>(shared_from_this()));
 }
 
 void GameSession::OnDisconnectCompleted()
@@ -230,6 +234,7 @@ void GameSession::HandleEnterGame(C_EnterGame packet)
 
 	_current_player = g_object_manager->Add<Player>();
 	{
+		// TODO : automatically
 		_current_player->MakeViewCube();
 
 		LobbyPlayerInfo* find_player = *iter;

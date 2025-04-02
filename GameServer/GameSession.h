@@ -29,6 +29,9 @@ public:
 private:
 	void ClearLobbyPlayer();
 
+public:
+	uint64 HeartbeatTick = 0;
+
 private:
 	xvector<SharedPlayer> _players;
 	SharedPlayer _current_player;
