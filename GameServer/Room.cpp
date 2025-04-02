@@ -78,6 +78,15 @@ void Room::Broadcast(SharedSendBuffer send_buffer)
 
 void Room::Broadcast(Vector2Int pos, SharedSendBuffer send_buffer)
 {
+	const xvector<SharedPlayer> players = GetAdjacentPlayers(pos);
+	for (auto& player : players)
+	{
+		int32 dist_x = abs(pos.x - player->GetCellPos().x);
+		int32 dist_y = abs(pos.y - player->GetCellPos().y);
+
+		if (dist_x <= kRange && dist_y <= kRange)
+			player->OwnerSession->Send(send_buffer);
+	}
 }
 
 SharedZone Room::GetZone(Vector2Int cell_pos)
