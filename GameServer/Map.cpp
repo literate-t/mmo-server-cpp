@@ -42,7 +42,8 @@ void Map::LoadMap(int32 map_id, string prefix_path)
 
 	int32 size_x = GetSizeX();
 	int32 size_y = GetSizeY();
-	InitArrays(size_y, size_x);
+
+	InitArrays(size_x, size_y);
 
 	for (int32 y = 0; y < size_y; ++y)
 	{
