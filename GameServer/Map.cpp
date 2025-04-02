@@ -9,22 +9,22 @@
 #include "Player.h"
 #include "Protocol.pb.h"
 
-void Map::InitArrays(int32 row, int32 col)
+void Map::InitArrays(int32 size_x, int32 size_y)
 {
 	// _collisions
-	_collisions.resize(col);
+	_collisions.resize(size_y);
 	for (int i = 0; i < _collisions.size(); ++i)
 	{
-		_collisions[i].resize(row);
+		_collisions[i].resize(size_x);
 		for (int j = 0; j < _collisions[i].size(); ++j)
 			_collisions[i][j] = false;
 	}
 
 	// _objects
-	_objects.resize(col);
+	_objects.resize(size_y);
 	for (int i = 0; i < _objects.size(); ++i)
 	{
-		_objects[i].resize(row);
+		_objects[i].resize(size_x);
 		for (int j = 0; j < _objects[i].size(); ++j)
 			_objects[i][j] = nullptr;
 	}
