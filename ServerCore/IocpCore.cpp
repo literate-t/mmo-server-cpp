@@ -25,7 +25,7 @@ bool IocpCore::Dispatch(uint32 timeout_ms)
 	ULONG_PTR key = 0;	
 	IocpEvent* iocp_event = nullptr;
 
-	int32 result = GetQueuedCompletionStatus(_iocp_handle, OUT &number_of_bytes, OUT &key, OUT reinterpret_cast<LPOVERLAPPED*>(&iocp_event), INFINITE);
+	int32 result = GetQueuedCompletionStatus(_iocp_handle, OUT &number_of_bytes, OUT &key, OUT reinterpret_cast<LPOVERLAPPED*>(&iocp_event), timeout_ms);
 
 	if (result)
 	{
