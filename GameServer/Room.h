@@ -10,7 +10,8 @@ public:
 
 	void Enter(SharedObject object);
 	void Leave(SharedObject object);
-	void Broatcast(SharedSendBuffer send_buffer);
+	void Broadcast(SharedSendBuffer send_buffer);
+	void Broadcast(Vector2Int pos, SharedSendBuffer send_buffer);
 
 	// Zone
 	SharedZone GetZone(Vector2Int cell_pos);

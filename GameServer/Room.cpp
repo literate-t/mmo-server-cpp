@@ -68,13 +68,17 @@ void Room::Leave(SharedObject player)
 	//_players.erase(player->PlayerDbId);
 }
 
-void Room::Broatcast(SharedSendBuffer send_buffer)
+void Room::Broadcast(SharedSendBuffer send_buffer)
 {
 	//WRITE_LOCK;
 	for (auto& p : _players)
 	{
 		p.second->OwnerSession->Send(send_buffer);
 	}
+}
+
+void Room::Broadcast(Vector2Int pos, SharedSendBuffer send_buffer)
+{
 }
 
 SharedZone Room::GetZone(Vector2Int cell_pos)
