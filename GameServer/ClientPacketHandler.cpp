@@ -22,7 +22,13 @@ bool Handle_INVALID(SharedPacketSession& session, BYTE* buffer, int32 length)
 
 bool Handle_C_Move(SharedPacketSession& session, Protocol::C_Move& pkt)
 {
-	return false;
+	shared_ptr<GameSession> game_session = static_pointer_cast<GameSession>(session);
+	SharedPlayer player = game_session->GetPlayer();
+	SharedRoom room = player->GetRoom();
+
+	room->PushJobAsync(&Room::HandleMovePacket, player, pkt);
+
+	return true;
 }
 
 bool Handle_C_Skill(SharedPacketSession& session, Protocol::C_Skill& pkt)

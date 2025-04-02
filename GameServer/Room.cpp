@@ -228,3 +228,29 @@ SharedPlayer Room::FindPlayer(function<bool(SharedPlayer)> predicate)
 
 	return SharedPlayer();
 }
+
+void Room::HandleMovePacket(SharedPlayer player, const Protocol::C_Move& move_packet)
+{
+	const Protocol::PositionInfo& move_pos_info = move_packet.posinfo();
+	Protocol::ObjectInfo& player_info = player->GetObjectInfo();
+
+	if ((player_info.posinfo().posx() == move_pos_info.posx()) && (player_info.posinfo().posy() == move_pos_info.posy()))
+		return;
+	
+	Vector2Int move_pos = Vector2Int(move_pos_info.posx(), move_pos_info.posy());
+	if (!_map->CanGo(move_pos))
+		return;
+
+	// update my state
+	player->GetPositionInfo().set_state(move_pos_info.state());
+	player->GetPositionInfo().set_movedir(move_pos_info.movedir());
+	_map->ApplyMove(player, move_pos);
+
+	// broacast to others	
+	S_Move res_move_packet;
+	res_move_packet.set_objectid(player->GetObjectId());
+	Protocol::PositionInfo pos(move_packet.posinfo());
+	res_move_packet.set_allocated_posinfo(&pos);
+
+	Broadcast(player->GetCellPos(), ClientPacketHandler::MakeSendBuffer(res_move_packet));
+}

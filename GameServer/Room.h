@@ -29,6 +29,9 @@ public:
 	SharedPlayer FindClosestPlayer(Vector2Int base_pos, int32 range);
 	SharedPlayer FindPlayer(function<bool(SharedPlayer)> predicate);
 
+	// handle packet
+	void HandleMovePacket(SharedPlayer player, const Protocol::C_Move& move_packet);
+
 private:
 	xmap<const uint64, SharedPlayer> _players;	
 	SharedMap _map;
