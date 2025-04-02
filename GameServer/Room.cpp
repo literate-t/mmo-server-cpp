@@ -70,7 +70,6 @@ void Room::Leave(SharedObject player)
 
 void Room::Broadcast(SharedSendBuffer send_buffer)
 {
-	//WRITE_LOCK;
 	for (auto& p : _players)
 	{
 		p.second->OwnerSession->Send(send_buffer);
