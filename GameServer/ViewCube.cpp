@@ -123,7 +123,7 @@ const xvector<SharedObject>& ViewCube::Except(const xhash_set<SharedObject>& bas
 		if (iter != base.end())
 			continue;
 
-		_excepts.push_back(*iter);
+		_excepts.push_back(object);
 	}
 
 	return _excepts;
