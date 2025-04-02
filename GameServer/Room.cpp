@@ -54,7 +54,8 @@ void Room::Enter(SharedObject object)
 		// 접속 본인 정보 전송
 		{
 			S_EnterGame enter_game;
-			enter_game.set_allocated_player(&player->GetObjectInfo());
+			ObjectInfo* info = enter_game.mutable_player();
+			info->MergeFrom(player->GetObjectInfo());
 			player->OwnerSession->Send(ClientPacketHandler::MakeSendBuffer(enter_game));
 		}
 
@@ -261,8 +262,8 @@ void Room::HandleMovePacket(SharedPlayer player, const Protocol::C_Move& move_pa
 	// broacast to others	
 	S_Move res_move_packet;
 	res_move_packet.set_objectid(player->GetObjectId());
-	Protocol::PositionInfo pos(move_packet.posinfo());
-	res_move_packet.set_allocated_posinfo(&pos);
+	PositionInfo* pos = res_move_packet.mutable_posinfo();
+	pos->MergeFrom(move_packet.posinfo());
 
 	Broadcast(player->GetCellPos(), ClientPacketHandler::MakeSendBuffer(res_move_packet));
 }
