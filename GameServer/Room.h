@@ -22,16 +22,19 @@ public:
 
 	const SharedMap& GetMap() const { return _map; }
 
-	const xvector<SharedZone>& GetAdjacentZones(Vector2Int cell_pos, int32 range);
-	const xvector<SharedPlayer>& GetAdjacentPlayers(Vector2Int cell_pos, int32 range);
-	const xvector<SharedMonster>& GetAdjacentMonsters(Vector2Int cell_pos, int32 range);
-	const xvector<SharedProjectile>& GetAdjacentProjectiles(Vector2Int cell_pos, int32 range);
+	const xvector<SharedZone>& GetAdjacentZones(Vector2Int cell_pos, int32 range = kRange);
+	const xvector<SharedPlayer>& GetAdjacentPlayers(Vector2Int cell_pos, int32 range = kRange);
+	const xvector<SharedMonster>& GetAdjacentMonsters(Vector2Int cell_pos, int32 range = kRange);
+	const xvector<SharedProjectile>& GetAdjacentProjectiles(Vector2Int cell_pos, int32 range = kRange);
 
 	SharedPlayer FindClosestPlayer(Vector2Int base_pos, int32 range);
 	SharedPlayer FindPlayer(function<bool(SharedPlayer)> predicate);
 
 	// handle packet
 	void HandleMovePacket(SharedPlayer player, const Protocol::C_Move& move_packet);
+
+public:
+	static constexpr int32 kRange = 10;
 
 private:
 	xmap<const uint64, SharedPlayer> _players;	
