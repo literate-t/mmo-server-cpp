@@ -291,7 +291,8 @@ void GameSession::HandleEnterGame(C_EnterGame packet)
 
 	_server_state = PlayerServerState::SERVER_STATE_GAME;
 
-	auto room = g_room_manager->Find(1);
+	_room = g_room_manager->Find(1);
+	auto room = _room.lock();
 	room->PushJobAsync(&Room::Enter, _current_player);
 
 	ClearLobbyPlayer();
