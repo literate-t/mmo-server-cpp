@@ -38,17 +38,18 @@ void Room::Enter(SharedObject object)
 
 	// TODO: random position
 
-	GameObjectType type = g_object_manager->GetObjectTypeById(object->GetObjectId());
+	int32 object_id = object->GetObjectId();
+	GameObjectType type = g_object_manager->GetObjectTypeById(object_id);
 
 	if (type == GameObjectType::PLAYER)
 	{
 		SharedPlayer player = static_pointer_cast<Player>(object);
-		_players[player->PlayerDbId] = player;
+		_players[object_id] = player;
 		
 		player->SetRoom(static_pointer_cast<Room>(shared_from_this()));
 		player->RefreshStat();
 
-		g_map->ApplyMove(player, Vector2Int(player->GetPositionInfo().posx(), player->GetPositionInfo().posy()));
+		_map->ApplyMove(player, Vector2Int(player->GetPositionInfo().posx(), player->GetPositionInfo().posy()));
 		GetZone(player->GetCellPos())->GetPlayers().insert(player);
 
 		// 접속 본인 정보 전송
