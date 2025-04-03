@@ -64,7 +64,7 @@ void Room::Enter(SharedObject object)
 	}
 }
 
-void Room::Leave(SharedObject player)
+void Room::Leave(int32 object_id)
 {
 	//_players.erase(player->PlayerDbId);
 }
