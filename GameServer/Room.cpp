@@ -66,7 +66,33 @@ void Room::Enter(SharedObject object)
 
 void Room::Leave(int32 object_id)
 {
-	//_players.erase(player->PlayerDbId);
+	GameObjectType type =  g_object_manager->GetObjectTypeById(object_id);
+	Vector2Int pos;
+
+	if (type == GameObjectType::PLAYER)
+	{
+		SharedPlayer player = _players[object_id];
+		if (0 == _players.erase(object_id))
+			return;
+
+		// DB save
+		// player->OnLeaveGame();
+
+		pos = player->GetCellPos();
+
+		_map->ApplyLeave(player);
+		player->GetView()->JobReserved->Cancel();
+		player->ReleaseViewCube();
+
+		// to me
+		S_LeaveGame leave;
+		player->OwnerSession->Send(ClientPacketHandler::MakeSendBuffer(leave));
+	}
+
+	// to others
+	S_Despawn despawn;
+	despawn.add_objectids(object_id);
+	Broadcast(pos, ClientPacketHandler::MakeSendBuffer(despawn));
 }
 
 void Room::Broadcast(SharedSendBuffer send_buffer)
