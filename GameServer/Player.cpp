@@ -7,6 +7,11 @@ Player::Player()
 	_object_type = GameObjectType::PLAYER;
 }
 
+Player::~Player()
+{
+	cout << "~Player()" << endl;
+}
+
 void Player::RefreshStat()
 {
 	_weapon_damage = 0;

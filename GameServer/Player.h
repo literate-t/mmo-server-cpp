@@ -6,6 +6,7 @@ class Player : public GameObject
 {
 public:
 	Player();
+	~Player();
 
 public:
 	uint64 PlayerDbId = 0;
