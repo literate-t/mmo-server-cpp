@@ -38,6 +38,9 @@ public:
 
 private:
 	xmap<const uint64, SharedPlayer> _players;	
+	xmap<const uint64, SharedMonster> _monsters;
+	xmap<const uint64, SharedProjectile> _projectile;
+
 	SharedMap _map;
 	int32 _zone_cell_size;
 	xvector<xvector<SharedZone>> _zones;
