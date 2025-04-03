@@ -55,7 +55,7 @@ void Map::LoadMap(int32 map_id, string prefix_path)
 
 bool Map::ApplyMove(SharedObject object, Vector2Int dest, bool is_through_objects, bool apply_collision)
 {
-	if (object->GetRoom() != nullptr) return false;
+	if (object->GetRoom() == nullptr) return false;
 	if (!CanGo(dest, is_through_objects)) return false;
 
 	Protocol::PositionInfo& pos = object->GetPositionInfo();
