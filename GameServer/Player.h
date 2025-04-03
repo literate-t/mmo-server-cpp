@@ -18,6 +18,7 @@ public:
 
 	SharedViewCube& GetView() { return _view_cube; }
 	void MakeViewCube();
+	void ReleaseViewCube();
 
 	int32 GetWeaponDamage() const { return _weapon_damage; }
 	int32 GetArmorDamage() const { return _armor_defence; }
