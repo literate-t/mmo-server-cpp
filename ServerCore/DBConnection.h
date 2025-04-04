@@ -27,6 +27,7 @@ public:
 	bool BindParam(int32 param_index, int16* value, SQLLEN* index);
 	bool BindParam(int32 param_index, int32* value, SQLLEN* index);
 	bool BindParam(int32 param_index, int64* value, SQLLEN* index);
+	bool BindParam(int32 param_index, uint64* value, SQLLEN* index);
 	bool BindParam(int32 param_index, TIMESTAMP_STRUCT* value, SQLLEN* index);
 	bool BindParam(int32 param_index, const TCHAR* string, SQLLEN* index);
 	bool BindParam(int32 param_index, const BYTE* bin, int32 size, SQLLEN* index);

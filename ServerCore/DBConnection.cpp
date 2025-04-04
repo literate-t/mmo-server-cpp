@@ -129,6 +129,11 @@ bool DBConnection::BindParam(int32 param_index, int64* value, SQLLEN* index)
 	return BindParam(param_index, SQL_C_SBIGINT, SQL_BIGINT, sizeof(int64), value, index);
 }
 
+bool DBConnection::BindParam(int32 param_index, uint64* value, SQLLEN* index)
+{
+	return BindParam(param_index, SQL_C_UBIGINT, SQL_BIGINT, sizeof(uint64), value, index);
+}
+
 bool DBConnection::BindParam(int32 param_index, TIMESTAMP_STRUCT* value, SQLLEN* index)
 {
 	return BindParam(param_index, SQL_C_TYPE_TIMESTAMP, SQL_TIMESTAMP, sizeof(TIMESTAMP_STRUCT), value, index);
