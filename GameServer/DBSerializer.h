@@ -7,9 +7,9 @@ public:
 	DBSerializer(const DBSerializer&) = delete;
 	DBSerializer& operator=(const DBSerializer&) = delete;
 
-	static DBSerializer& Instance()
+	static shared_ptr<DBSerializer> Instance()
 	{
-		static DBSerializer instance;
+		static shared_ptr<DBSerializer> instance(new DBSerializer());
 		return instance;
 	}
 
