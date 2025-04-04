@@ -3,8 +3,11 @@
 #include "ViewCube.h"
 
 Player::Player()	
+	:GameObject(GameObjectType::PLAYER),
+	_weapon_damage(0),
+	_armor_defence(0)
+
 {
-	_object_type = GameObjectType::PLAYER;	
 }
 
 Player::~Player()
