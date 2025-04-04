@@ -13,6 +13,7 @@ using SharedInventory = shared_ptr<class Inventory>;
 using SharedViewCube = shared_ptr<class ViewCube>;
 using SharedMap = shared_ptr<class Map>;
 using SharedZone = shared_ptr<class Zone>;
+using SharedDBSerializer = shared_ptr<class DBSerializer>;
 
 struct Vector2Int
 {
