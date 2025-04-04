@@ -3,7 +3,7 @@
 #include "Player.h"
 #include "Room.h"
 
-void DBSerializer::SavePlayerStatusAll(SharedPlayer player, SharedRoom room)
+void DBSerializer::SavePlayerStatusAll(SharedPlayer player)
 {
 	if (player == nullptr || room == nullptr)
 		return;

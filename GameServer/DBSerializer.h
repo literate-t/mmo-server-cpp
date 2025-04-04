@@ -13,7 +13,7 @@ public:
 		return instance;
 	}
 
-	static void SavePlayerStatusAll(SharedPlayer player, SharedRoom room);
+	static void SavePlayerStatusAll(SharedPlayer player);
 
 private:
 	DBSerializer() = default;
