@@ -5,6 +5,7 @@ class GameObject : public enable_shared_from_this<GameObject>
 {
 public:
 	GameObject();
+	GameObject(Protocol::GameObjectType type);
 
 	int32 GetObjectId() const { return _object_info.objectid(); }
 	void SetObjectId(int32 id) { _object_info.set_objectid(id); }

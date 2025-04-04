@@ -2,9 +2,17 @@
 #include "GameObject.h"
 
 GameObject::GameObject()
+	:_pos_info(_object_info.mutable_posinfo()),
+	_stat_info(_object_info.mutable_statinfo()),
+	_object_type(Protocol::GameObjectType::NONE)
 {
-	_pos_info = _object_info.mutable_posinfo();
-	_stat_info = _object_info.mutable_statinfo();
+}
+
+GameObject::GameObject(Protocol::GameObjectType type)
+	:_pos_info(_object_info.mutable_posinfo()),
+	_stat_info(_object_info.mutable_statinfo()),
+	_object_type(type)
+{
 }
 
 Protocol::ObjectInfo& GameObject::GetObjectInfo()
