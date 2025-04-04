@@ -23,6 +23,9 @@ public:
 	int32 GetWeaponDamage() const { return _weapon_damage; }
 	int32 GetArmorDamage() const { return _armor_defence; }
 
+	// room
+	void OnLeaveGame();
+
 private:
 	Inventory _inventory;
 	SharedViewCube _view_cube;

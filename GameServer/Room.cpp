@@ -76,8 +76,7 @@ void Room::Leave(int32 object_id)
 		if (0 == _players.erase(object_id))
 			return;
 
-		// DB save
-		// player->OnLeaveGame();
+		player->OnLeaveGame();
 
 		pos = player->GetCellPos();
 

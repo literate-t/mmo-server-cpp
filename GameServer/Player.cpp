@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Player.h"
 #include "ViewCube.h"
+#include "DBSerializer.h"
 
 Player::Player()	
 	:GameObject(GameObjectType::PLAYER),
@@ -49,4 +50,13 @@ void Player::MakeViewCube()
 void Player::ReleaseViewCube()
 {
 	_view_cube = nullptr;
+}
+
+void Player::OnLeaveGame()
+{
+	SharedPlayer player = static_pointer_cast<Player>(shared_from_this());
+	if (player == nullptr)
+		return;
+
+	DBSerializer::SavePlayerStatusAll(player);
 }
