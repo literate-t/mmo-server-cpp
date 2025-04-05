@@ -5,6 +5,7 @@ using SharedObject = shared_ptr<class GameObject>;
 using SharedPlayer = shared_ptr<class Player>;
 using SharedMonster = shared_ptr<class Monster>;
 using SharedProjectile = shared_ptr<class Projectile>;
+using SharedArrow = shared_ptr<class Arrow>;
 using SharedRoom = shared_ptr<class Room>;
 using SharedItem = shared_ptr<class Item>;
 using SharedWeapon = shared_ptr<class Weapon>;
@@ -44,6 +45,14 @@ struct Vector2Int
 	Vector2Int operator+(const Vector2Int& rhs)
 	{
 		return Vector2Int(x + rhs.x, y + rhs.y);
+	}
+
+	Vector2Int& operator+=(const Vector2Int& rhs)
+	{
+		x += rhs.x;
+		y += rhs.y;
+
+		return *this;
 	}
 
 	Vector2Int operator-(const Vector2Int& rhs)
