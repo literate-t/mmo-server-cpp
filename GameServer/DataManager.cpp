@@ -108,6 +108,16 @@ void from_json(const json& j, SkillData& skill)
 	j.at("damage").get_to(skill.damage);
 	string type = j.at("skillType").get<string>();
 	skill.skillType = GetSkillTypeEnum(type);
+	if (j.contains("projectile"))
+		j.at("projectile").get_to<ProjectileData>(skill.projectile);
+}
+
+void from_json(const json& j, ProjectileData& projectile)
+{
+	j.at("name").get_to(projectile.name);
+	j.at("speed").get_to(projectile.speed);
+	j.at("range").get_to(projectile.range);
+	j.at("prefab").get_to(projectile.prefab);
 }
 
 void from_json(const json& j, MonsterData& monster)
@@ -157,7 +167,7 @@ SkillType GetSkillTypeEnum(string type)
 {
 	if (type == "SkillAuto")
 		return SkillType::SKILL_AUTO;
-	else if (type == "SkillProjectTile")
+	else if (type == "SkillProjectile")
 		return SkillType::SKILL_PROJECTILE;
 	else
 		return SkillType::SKILL_NONE;

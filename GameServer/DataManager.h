@@ -34,6 +34,7 @@ private:
 
 void from_json(const json& j, StatData& stat);
 void from_json(const json& j, SkillData& skill);
+void from_json(const json& j, ProjectileData& projectile);
 void from_json(const json& j, MonsterData& monster);
 void from_json(const json& j, RewardData& reward);
 void from_json(const json& j, WeaponData& weapon);
