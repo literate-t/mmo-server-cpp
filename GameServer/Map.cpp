@@ -153,6 +153,16 @@ Vector2Int Map::GetCoordIndex(int x, int y)
 	return Vector2Int(x - _minx, _maxy - y);
 }
 
+SharedObject Map::Find(Vector2Int cell_pos)
+{
+	if (false == IsWithinBounds(cell_pos.x, cell_pos.y))
+		return nullptr;
+
+	Vector2Int index_pos = GetCoordIndex(cell_pos);
+
+	return _objects[index_pos.y][index_pos.x];
+}
+
 #pragma region A* path finding
 int32 Map::Heuristic(const Vector2Int& start, const Vector2Int& dest)
 {

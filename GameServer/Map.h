@@ -23,6 +23,8 @@ public:
 	int32 GetSizeY() const { return _maxy - _miny + 1; }
 
 	xvector<Vector2Int>& FindPath(Vector2Int start, Vector2Int dest, bool is_through_objects = false, int32 max_distance = 10);
+	
+	SharedObject Find(Vector2Int cell_pos);
 
 private:
 	void InitArrays(int32 row, int32 col);
