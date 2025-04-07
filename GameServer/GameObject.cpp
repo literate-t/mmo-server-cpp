@@ -40,3 +40,31 @@ Vector2Int GameObject::GetCellPos()
 {
 	return Vector2Int(_pos_info->posx(), _pos_info->posy());
 }
+
+Vector2Int GameObject::GetFrontCellPosition()
+{
+	return GetFrontCellPosition(_pos_info->movedir());
+}
+
+Vector2Int GameObject::GetFrontCellPosition(Protocol::MoveDir dir)
+{
+	Vector2Int cell_pos = GetCellPos();
+
+	switch (dir)
+	{
+		case MoveDir::UP:
+			cell_pos += Vector2Int::Up();
+			break;
+		case MoveDir::DOWN:
+			cell_pos += Vector2Int::Down();
+			break;
+		case MoveDir::LEFT:
+			cell_pos += Vector2Int::Left();
+			break;
+		case MoveDir::RIGHT:
+			cell_pos += Vector2Int::Right();
+			break;
+	}
+
+	return cell_pos;
+}

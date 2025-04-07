@@ -18,6 +18,9 @@ public:
 	void SetCellPos(Vector2Int cell_pos);
 	Vector2Int GetCellPos();
 
+	Vector2Int GetFrontCellPosition();
+	Vector2Int GetFrontCellPosition(Protocol::MoveDir dir);
+
 	Protocol::PositionInfo& GetPositionInfo();
 
 	void SetRoom(SharedRoom room) { _room = room; }
