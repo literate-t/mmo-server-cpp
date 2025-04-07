@@ -71,6 +71,12 @@ void Room::Enter(SharedObject object)
 		projectile->Update();
 		_projectiles[object_id] = projectile;
 	}
+
+	// spwan info
+	S_Spawn spawn;
+	ObjectInfo* new_object = spawn.add_objects();
+	new_object->MergeFrom(object->GetObjectInfo());
+	Broadcast(pos_info, ClientPacketHandler::MakeSendBuffer(spawn));
 }
 
 void Room::Leave(int32 object_id)
