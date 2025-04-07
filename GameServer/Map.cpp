@@ -7,6 +7,7 @@
 #include "Zone.h"
 #include "ObjectManager.h"
 #include "Player.h"
+#include "Projectile.h"
 #include "Protocol.pb.h"
 
 void Map::InitArrays(int32 size_x, int32 size_y)
@@ -135,9 +136,19 @@ void Map::SetCurrentZone(SharedObject object, Vector2Int dest)
 			switch (type)
 			{
 				case GameObjectType::PLAYER:
+				{
 					SharedPlayer player = static_pointer_cast<Player>(object);
 					before->GetPlayers().erase(player);
 					after->GetPlayers().insert(player);
+					break;
+				}	
+				case GameObjectType::PROJECTILE:
+				{
+					SharedProjectile arrow = static_pointer_cast<Projectile>(object);
+					before->GetProjectiles().erase(arrow);
+					after->GetProjectiles().insert(arrow);
+					break;
+				}
 			}
 		}
 	}
