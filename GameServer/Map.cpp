@@ -102,7 +102,7 @@ bool Map::ApplyLeave(SharedObject object)
 
 bool Map::CanGo(Vector2Int cell_pos, bool is_through_objects)
 {
-	if (cell_pos.x < _minx || cell_pos.y > _maxx) return false;
+	if (cell_pos.x < _minx || cell_pos.x > _maxx) return false;
 	if (cell_pos.y < _miny || cell_pos.y > _maxy) return false;
 
 	Vector2Int index_pos = GetCoordIndex(cell_pos);
