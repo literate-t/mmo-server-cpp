@@ -63,6 +63,14 @@ void Room::Enter(SharedObject object)
 		player->GetView()->IsReset = true;
 		player->GetView()->Update();
 	}
+	else if (type == GameObjectType::PROJECTILE)
+	{
+		SharedProjectile projectile = static_pointer_cast<Projectile>(object);
+		projectile->SetRoom(static_pointer_cast<Room>(shared_from_this()));
+		GetZone(pos_info)->GetProjectiles().insert(projectile);
+		projectile->Update();
+		_projectiles[object_id] = projectile;
+	}
 }
 
 void Room::Leave(int32 object_id)
