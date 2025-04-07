@@ -4,6 +4,7 @@
 using namespace Protocol;
 #include "ObjectManager.h"
 #include "Player.h"
+#include "Projectile.h"
 
 Zone::Zone(int32 y, int32 x)
     :_index_y(y), _index_x(x)
@@ -33,5 +34,9 @@ void Zone::Remove(SharedObject object)
     {
     case GameObjectType::PLAYER:
         _players.erase(static_pointer_cast<Player>(object));
+        break;
+    case GameObjectType::PROJECTILE:
+        _projectiles.erase(static_pointer_cast<Projectile>(object));
+        break;
     }
 }
