@@ -10,7 +10,8 @@ void Arrow::Update()
 	if (Owner == nullptr || room == nullptr || Data == nullptr) return;
 
 	int32 tick = static_cast<int32>(1000 / Data->projectile.speed);
-	room->PushTimerAsync(tick, [this]() { Update(); });
+	auto this_shared = shared_from_this();
+	room->PushTimerAsync(tick, [this_shared]() { this_shared->Update(); });
 
 	Vector2Int dest_pos = GetFrontCellPosition();
 	if (room->GetMap()->ApplyMove(shared_from_this(), dest_pos, true))
@@ -27,7 +28,7 @@ void Arrow::Update()
 		if (target != nullptr)
 			target->OnDamaged(shared_from_this(), Owner->GetTotalAttack());
 
-		room->PushJobAsync(&Room::Leave, GetObjectId());
+		room->PushJobAsync(&Room::Leave, GetObjectId());		
 	}
 }
 
