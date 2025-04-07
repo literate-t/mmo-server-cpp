@@ -117,13 +117,12 @@ const xhash_set<SharedObject>& ViewCube::GetObjects()
 
 const xvector<SharedObject>& ViewCube::Except(const xhash_set<SharedObject>& base, const xhash_set<SharedObject>& rhs)
 {
-	for (SharedObject object : rhs)
+	_excepts.clear();
+	for (SharedObject object : base)
 	{
-		auto iter = base.find(object);
-		if (iter != base.end())
-			continue;
-
-		_excepts.push_back(object);
+		auto iter = rhs.find(object);
+		if (iter == rhs.end())
+			_excepts.push_back(object);
 	}
 
 	return _excepts;
