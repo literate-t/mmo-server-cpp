@@ -32,6 +32,7 @@ public:
 	float GetSpeed();
 	void SetSpeed(float speed);
 
+	virtual void Update();
 	virtual int32 GetTotalDefence();
 	virtual int32 GetTotalAttack();
 

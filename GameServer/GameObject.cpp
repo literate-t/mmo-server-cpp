@@ -55,6 +55,11 @@ void GameObject::SetSpeed(float speed)
 {
 	_stat_info->set_speed(speed);
 }
+
+void GameObject::Update()
+{
+}
+}
 int32 GameObject::GetTotalDefence()
 {
 	return int32();
