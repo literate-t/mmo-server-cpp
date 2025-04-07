@@ -36,6 +36,25 @@ Protocol::PositionInfo& GameObject::GetPositionInfo()
 	return *_pos_info;
 }
 
+int32 GameObject::GetHp()
+{
+	return _stat_info->hp();
+}
+
+void GameObject::SetHp(int32 hp)
+{
+	_stat_info->set_hp(hp);
+}
+
+float GameObject::GetSpeed()
+{
+	return _stat_info->speed();
+}
+
+void GameObject::SetSpeed(float speed)
+{
+	_stat_info->set_speed(speed);
+}
 Vector2Int GameObject::GetCellPos()
 {
 	return Vector2Int(_pos_info->posx(), _pos_info->posy());

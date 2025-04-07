@@ -26,6 +26,11 @@ public:
 	void SetRoom(SharedRoom room) { _room = room; }
 	SharedRoom GetRoom() { return _room.lock(); }
 
+	int32 GetHp();
+	void SetHp(int32 hp);
+
+	float GetSpeed();
+	void SetSpeed(float speed);
 protected:
 	Protocol::GameObjectType _object_type = Protocol::GameObjectType::NONE;
 	Protocol::ObjectInfo _object_info;
