@@ -302,8 +302,12 @@ void Room::HandleMovePacket(SharedPlayer player, const Protocol::C_Move& move_pa
 		return;
 	
 	Vector2Int move_pos = Vector2Int(move_pos_info.posx(), move_pos_info.posy());
+	// pass if two values are same
+	if ((player_info.posinfo().posx() != move_pos_info.posx()) || (player_info.posinfo().posy() != move_pos_info.posy()))
+	{	
 	if (!_map->CanGo(move_pos))
 		return;
+	}
 
 	// update my state
 	player->GetPositionInfo().set_state(move_pos_info.state());
