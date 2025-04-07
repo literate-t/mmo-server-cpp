@@ -33,6 +33,7 @@ public:
 	void SetSpeed(float speed);
 
 	virtual void Update();
+	virtual SharedObject GetOwner();
 	virtual int32 GetTotalDefence();
 	virtual int32 GetTotalAttack();
 

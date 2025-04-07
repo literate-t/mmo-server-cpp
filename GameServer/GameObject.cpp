@@ -59,6 +59,11 @@ void GameObject::SetSpeed(float speed)
 void GameObject::Update()
 {
 }
+
+SharedObject GameObject::GetOwner()
+{
+	return shared_from_this();
+}
 }
 int32 GameObject::GetTotalDefence()
 {
