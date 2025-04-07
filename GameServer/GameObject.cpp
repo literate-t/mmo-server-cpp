@@ -55,6 +55,16 @@ void GameObject::SetSpeed(float speed)
 {
 	_stat_info->set_speed(speed);
 }
+int32 GameObject::GetTotalDefence()
+{
+	return int32();
+}
+
+int32 GameObject::GetTotalAttack()
+{
+	return int32();
+}
+
 Vector2Int GameObject::GetCellPos()
 {
 	return Vector2Int(_pos_info->posx(), _pos_info->posy());

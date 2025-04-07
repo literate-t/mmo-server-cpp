@@ -31,6 +31,10 @@ public:
 
 	float GetSpeed();
 	void SetSpeed(float speed);
+
+	virtual int32 GetTotalDefence();
+	virtual int32 GetTotalAttack();
+
 protected:
 	Protocol::GameObjectType _object_type = Protocol::GameObjectType::NONE;
 	Protocol::ObjectInfo _object_info;
