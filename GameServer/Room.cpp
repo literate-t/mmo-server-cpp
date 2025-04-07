@@ -102,6 +102,17 @@ void Room::Leave(int32 object_id)
 		S_LeaveGame leave;
 		player->OwnerSession->Send(ClientPacketHandler::MakeSendBuffer(leave));
 	}
+	else if (type == GameObjectType::PROJECTILE)
+	{
+		SharedArrow arrow = static_pointer_cast<Arrow>(_projectiles[object_id]);
+		if (0 == _projectiles.erase(object_id))
+			return;
+
+		pos = arrow->GetCellPos();
+		_map->ApplyLeave(arrow);
+		arrow->SetRoom(nullptr);
+		arrow->Owner = nullptr;
+	}
 
 	// to others
 	S_Despawn despawn;
