@@ -183,6 +183,7 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Arrow.cpp" />
     <ClCompile Include="ConfigManager.cpp" />
     <ClCompile Include="DataManager.cpp" />
     <ClCompile Include="DBSerializer.cpp" />
@@ -219,6 +220,7 @@
     <ClCompile Include="Zone.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Arrow.h" />
     <ClInclude Include="ConfigManager.h" />
     <ClInclude Include="DataContents.h" />
     <ClInclude Include="DataManager.h" />
