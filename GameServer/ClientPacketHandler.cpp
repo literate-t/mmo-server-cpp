@@ -34,7 +34,13 @@ bool Handle_C_Move(SharedPacketSession& session, Protocol::C_Move& pkt)
 
 bool Handle_C_Skill(SharedPacketSession& session, Protocol::C_Skill& pkt)
 {
-	return false;
+	shared_ptr<GameSession> game_session = static_pointer_cast<GameSession>(session);
+	SharedPlayer player = game_session->GetPlayer();
+	SharedRoom room = player->GetRoom();
+
+	room->PushJobAsync(&Room::HandleSkillPacket, player, pkt);
+
+	return true;
 }
 
 bool Handle_C_Login(SharedPacketSession& session, Protocol::C_Login& pkt)
