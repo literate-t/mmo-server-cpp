@@ -20,8 +20,8 @@ public:
 	void MakeViewCube();
 	void ReleaseViewCube();
 
-	int32 GetWeaponDamage() const { return _weapon_damage; }
-	int32 GetArmorDamage() const { return _armor_defence; }
+	int32 GetTotalAttack() override;
+	int32 GetTotalDefence() override;
 
 	// room
 	void OnLeaveGame();

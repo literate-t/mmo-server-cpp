@@ -52,6 +52,16 @@ void Player::ReleaseViewCube()
 	_view_cube = nullptr;
 }
 
+int32 Player::GetTotalAttack()
+{
+	return _weapon_damage;
+}
+
+int32 Player::GetTotalDefence()
+{
+	return _armor_defence;
+}
+
 void Player::OnLeaveGame()
 {
 	SharedPlayer player = static_pointer_cast<Player>(shared_from_this());
