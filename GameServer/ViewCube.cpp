@@ -71,7 +71,7 @@ const xhash_set<SharedObject>& ViewCube::GetObjects()
 	}
 
 	const auto& zones = room->GetAdjacentZones(_owner->GetCellPos(), kViewRange);
-
+	_objects.clear();
 	// loop only during game objects count
 	for (const auto& zone : zones)
 	{
