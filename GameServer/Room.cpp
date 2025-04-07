@@ -322,3 +322,57 @@ void Room::HandleMovePacket(SharedPlayer player, const Protocol::C_Move& move_pa
 
 	Broadcast(player->GetCellPos(), ClientPacketHandler::MakeSendBuffer(res_move_packet));
 }
+
+void Room::HandleSkillPacket(SharedPlayer player, const Protocol::C_Skill& skill_packet)
+{
+	PositionInfo& pos_info = player->GetPositionInfo();
+	// skill only on idle
+	EntityState state = pos_info.state();
+	if (pos_info.state() != EntityState::IDLE)
+		return;
+
+	pos_info.set_state(EntityState::SKILL);
+	S_Skill skill;
+	skill.set_objectid(player->GetObjectId());
+	int32 skill_id = skill_packet.info().skillid();
+	SkillInfo* skill_info = skill.mutable_info();
+	skill_info->set_skillid(skill_id);
+
+	// skill and animation
+	Broadcast(player->GetCellPos(), ClientPacketHandler::MakeSendBuffer(skill));
+	
+	SkillData& skill_data = g_data_manager->Skill(skill_id);
+
+	switch (skill_data.skillType)
+	{
+		case SkillType::SKILL_AUTO:
+		{
+			// punch attack damage
+			Vector2Int front_cell = player->GetFrontCellPosition();
+			SharedObject target = _map->Find(front_cell);
+			if (nullptr == target)
+				return;
+
+			// TODO : hit
+
+			break;
+		}
+		case SkillType::SKILL_PROJECTILE:
+		{
+			SharedArrow arrow = g_object_manager->Add<Arrow>();
+			{
+				arrow->Owner = player;
+				arrow->Data = &skill_data;
+				PositionInfo& arrow_pos = arrow->GetPositionInfo();
+				arrow_pos.set_state(EntityState::MOVING);
+				arrow_pos.set_movedir(player->GetPositionInfo().movedir());
+				arrow_pos.set_posx(player->GetCellPos().x);
+				arrow_pos.set_posy(player->GetCellPos().y);
+				arrow->SetSpeed(skill_data.projectile.speed);
+
+				PushJobAsync(&Room::Enter, arrow);
+				break;
+			}
+		}
+	}
+}
