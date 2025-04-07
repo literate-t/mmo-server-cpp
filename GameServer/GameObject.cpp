@@ -1,5 +1,8 @@
 #include "pch.h"
 #include "GameObject.h"
+using namespace Protocol;
+#include "Room.h"
+#include "ClientPacketHandler.h"
 
 GameObject::GameObject()
 	:_pos_info(_object_info.mutable_posinfo()),
@@ -63,6 +66,23 @@ void GameObject::Update()
 SharedObject GameObject::GetOwner()
 {
 	return shared_from_this();
+}
+
+void GameObject::OnDamaged(SharedObject attacker, int32 damage)
+{
+	auto room = GetRoom();
+	if (room == nullptr) return;
+
+	int32 final_damage = damage - GetTotalDefence();
+	SetHp(max(0, GetHp() - final_damage));
+
+	S_ChangeHp change_hp;
+	change_hp.set_objectid(GetObjectId());
+	change_hp.set_hp(GetHp());
+	room->Broadcast(GetCellPos(), ClientPacketHandler::MakeSendBuffer(change_hp));
+
+	if (GetHp() == 0)
+		OnDead(attacker);
 }
 }
 int32 GameObject::GetTotalDefence()
