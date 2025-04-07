@@ -84,7 +84,29 @@ void GameObject::OnDamaged(SharedObject attacker, int32 damage)
 	if (GetHp() == 0)
 		OnDead(attacker);
 }
+
+void GameObject::OnDead(SharedObject attacker)
+{
+	auto room = GetRoom();
+	if (room == nullptr) return;
+
+	S_Die die_packet;
+	die_packet.set_attackerid(GetObjectId());
+	// can be necessary in client
+	die_packet.set_attackerid(attacker->GetObjectId());
+
+	room->Broadcast(GetCellPos(), ClientPacketHandler::MakeSendBuffer(die_packet));
+
+	room->Leave(GetObjectId());
+
+	SetHp(GetStatInfo().maxhp());
+	GetPositionInfo().set_state(EntityState::IDLE);
+	GetPositionInfo().set_movedir(MoveDir::DOWN);
+	SetCellPos(Vector2Int(0, 0));
+
+	room->Enter(shared_from_this());
 }
+
 int32 GameObject::GetTotalDefence()
 {
 	return int32();

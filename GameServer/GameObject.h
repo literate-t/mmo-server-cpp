@@ -36,6 +36,8 @@ public:
 	virtual SharedObject GetOwner();
 
 	virtual void OnDamaged(SharedObject attacker, int32 damage);
+	virtual void OnDead(SharedObject attacker);
+
 	virtual int32 GetTotalDefence();
 	virtual int32 GetTotalAttack();
 
