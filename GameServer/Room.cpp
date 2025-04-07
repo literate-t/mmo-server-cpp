@@ -3,10 +3,12 @@
 #include "Player.h"
 #include "GameSession.h"
 #include "ObjectManager.h"
+#include "DataManager.h"
 #include "Map.h"
 #include "Zone.h"
 #include "ClientPacketHandler.h"
 #include "ViewCube.h"
+#include "Arrow.h"
 
 Room::Room()
 	:_map(MakeShared<Map>()), _zone_cell_size(0)
@@ -41,6 +43,8 @@ void Room::Enter(SharedObject object)
 	int32 object_id = object->GetObjectId();
 	GameObjectType type = g_object_manager->GetObjectTypeById(object_id);
 
+	Vector2Int pos_info = object->GetCellPos();
+
 	if (type == GameObjectType::PLAYER)
 	{
 		SharedPlayer player = static_pointer_cast<Player>(object);
@@ -49,8 +53,8 @@ void Room::Enter(SharedObject object)
 		player->SetRoom(static_pointer_cast<Room>(shared_from_this()));
 		player->RefreshStat();
 
-		_map->ApplyMove(player, Vector2Int(player->GetPositionInfo().posx(), player->GetPositionInfo().posy()));
-		GetZone(player->GetCellPos())->GetPlayers().insert(player);
+		_map->ApplyMove(player, Vector2Int(pos_info.x, pos_info.y));
+		GetZone(pos_info)->GetPlayers().insert(player);
 
 		// 접속 본인 정보 전송
 		{
@@ -298,15 +302,12 @@ void Room::HandleMovePacket(SharedPlayer player, const Protocol::C_Move& move_pa
 	const Protocol::PositionInfo& move_pos_info = move_packet.posinfo();
 	Protocol::ObjectInfo& player_info = player->GetObjectInfo();
 
-	if ((player_info.posinfo().posx() == move_pos_info.posx()) && (player_info.posinfo().posy() == move_pos_info.posy()))
-		return;
-	
 	Vector2Int move_pos = Vector2Int(move_pos_info.posx(), move_pos_info.posy());
 	// pass if two values are same
 	if ((player_info.posinfo().posx() != move_pos_info.posx()) || (player_info.posinfo().posy() != move_pos_info.posy()))
 	{	
-	if (!_map->CanGo(move_pos))
-		return;
+		if (!_map->CanGo(move_pos))
+			return;
 	}
 
 	// update my state
