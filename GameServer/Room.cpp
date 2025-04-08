@@ -31,6 +31,14 @@ void Room::Init(int32 map_id, int32 zone_cell_size)
 		for (int x = 0; x < count_x; ++x)
 			_zones[y][x] = MakeShared<Zone>(y, x);
 	}
+
+	// monsters
+	for (int i = 0; i < 10; ++i)
+	{
+		SharedMonster monster = g_object_manager->Add<Monster>();
+		monster->Init(1);
+		PushJobAsync(&Room::Enter, monster, true);
+	}
 }
 
 void Room::Enter(SharedObject object, bool random_pos)
