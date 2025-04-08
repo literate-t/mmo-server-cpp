@@ -9,6 +9,8 @@
 #include "ClientPacketHandler.h"
 #include "ViewCube.h"
 #include "Arrow.h"
+#include "Monster.h"
+#include <random>
 
 Room::Room()
 	:_map(MakeShared<Map>()), _zone_cell_size(0)
@@ -84,6 +86,16 @@ void Room::Enter(SharedObject object, bool random_pos)
 		GetZone(pos_info)->GetProjectiles().insert(projectile);
 		projectile->Update();
 		_projectiles[object_id] = projectile;
+	}
+	else if (type == GameObjectType::MONSTER)
+	{
+		SharedMonster monster = static_pointer_cast<Monster>(object);
+		monster->SetRoom(static_pointer_cast<Room>(shared_from_this()));
+		GetZone(pos_info)->GetMonsters().insert(monster);
+		_map->ApplyMove(monster, monster->GetCellPos());
+		monster->SetObjectName(to_string(monster->GetObjectId()));
+		monster->Update();
+		_monsters[object_id] = monster;
 	}
 
 	// spwan info
@@ -275,7 +287,7 @@ SharedPlayer Room::FindClosestPlayer(Vector2Int base_pos, int32 range)
 	xvector<SharedPlayer> players = GetAdjacentPlayers(base_pos, range);
 	if (players.empty())
 		return nullptr;
-
+	
 	sort(players.begin(), players.end(), [&base_pos](const SharedPlayer& a, const SharedPlayer& b)
 		{
 			int32 left_dist = (base_pos - a->GetCellPos()).SquareMagnitude;
