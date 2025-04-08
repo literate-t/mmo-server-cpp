@@ -34,6 +34,8 @@ public:
 	void HandleMovePacket(SharedPlayer player, const Protocol::C_Move& move_packet);
 	void HandleSkillPacket(SharedPlayer player, const Protocol::C_Skill& skill_packet);
 
+	Vector2Int GetRandomPos();
+
 public:
 	static constexpr int32 kRange = 10;
 

@@ -379,3 +379,22 @@ void Room::HandleSkillPacket(SharedPlayer player, const Protocol::C_Skill& skill
 		}
 	}
 }
+
+Vector2Int Room::GetRandomPos()
+{
+	random_device rd;
+	mt19937 gen(rd());
+
+	while (true)
+	{
+		uniform_int_distribution<> random_dis_x(_map->GetMinX() + 1, _map->GetMaxX() - 1);
+		uniform_int_distribution<> random_dis_y(_map->GetMinY() + 1, _map->GetMaxY() - 1);
+
+		int32 random_x = random_dis_x(gen);
+		int32 random_y = random_dis_y(gen);
+
+		Vector2Int random_pos(random_x, random_y);
+		if (_map->CanGo(random_pos))
+			return random_pos;
+	}
+}
