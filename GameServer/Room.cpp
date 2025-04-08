@@ -381,7 +381,7 @@ void Room::HandleSkillPacket(SharedPlayer player, const Protocol::C_Skill& skill
 				arrow_pos.set_posy(player->GetCellPos().y);
 				arrow->SetSpeed(skill_data.projectile.speed);
 
-				PushJobAsync(&Room::Enter, arrow);
+				PushJobAsync(&Room::Enter, arrow, false);
 				break;
 			}
 		}
