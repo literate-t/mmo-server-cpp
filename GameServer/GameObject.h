@@ -1,5 +1,6 @@
 #pragma once
 #include "Protocol.pb.h"
+using namespace Protocol;
 
 class GameObject : public enable_shared_from_this<GameObject>
 {
@@ -48,6 +49,8 @@ public:
 
 	virtual int32 GetTotalDefence();
 	virtual int32 GetTotalAttack();
+
+	MoveDir GetDirFromVector2Int(Vector2Int diff);
 
 protected:
 	Protocol::GameObjectType _object_type = Protocol::GameObjectType::NONE;

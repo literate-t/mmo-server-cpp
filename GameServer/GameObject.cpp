@@ -40,7 +40,7 @@ Protocol::PositionInfo& GameObject::GetPositionInfo()
 }
 
 int32 GameObject::GetHp() const
-{
+{	
 	return _stat_info->hp();
 }
 
@@ -140,6 +140,18 @@ int32 GameObject::GetTotalDefence()
 int32 GameObject::GetTotalAttack()
 {
 	return int32();
+}
+
+MoveDir GameObject::GetDirFromVector2Int(Vector2Int diff)
+{
+	if (diff.x < 0)
+		return MoveDir::LEFT;
+	else if (diff.x > 0)
+		return MoveDir::RIGHT;
+	else if (diff.y < 0)
+		return MoveDir::DOWN;
+	else
+		return MoveDir::UP;	
 }
 
 Vector2Int GameObject::GetCellPos()
