@@ -59,6 +59,31 @@ void GameObject::SetSpeed(float speed)
 	_stat_info->set_speed(speed);
 }
 
+void GameObject::SetState(EntityState state)
+{
+	_pos_info->set_state(state);
+}
+
+EntityState GameObject::GetState() const
+{
+	return _pos_info->state();
+}
+
+void GameObject::SetDir(MoveDir dir)
+{
+	_pos_info->set_movedir(dir);
+}
+
+MoveDir GameObject::GetDir() const
+{
+	return _pos_info->movedir();
+}
+
+void GameObject::SetObjectName(string name)
+{
+	_object_info.set_name(name);
+}
+
 void GameObject::Update()
 {
 }

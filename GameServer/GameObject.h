@@ -32,6 +32,14 @@ public:
 	float GetSpeed() const;
 	void SetSpeed(float speed);
 
+	void SetState(EntityState state);
+	EntityState GetState() const;
+
+	void SetDir(MoveDir dir);
+	MoveDir GetDir() const;
+
+	void SetObjectName(string name);
+
 	virtual void Update();
 	virtual SharedObject GetOwner();
 
