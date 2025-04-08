@@ -33,12 +33,14 @@ void Room::Init(int32 map_id, int32 zone_cell_size)
 	}
 }
 
-void Room::Enter(SharedObject object)
+void Room::Enter(SharedObject object, bool random_pos)
 {
 	if (object == nullptr)
 		return;
 
-	// TODO: random position
+	// random position
+	if (random_pos)
+		object->SetCellPos(GetRandomPos());
 
 	int32 object_id = object->GetObjectId();
 	GameObjectType type = g_object_manager->GetObjectTypeById(object_id);

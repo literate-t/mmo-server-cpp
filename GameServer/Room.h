@@ -8,7 +8,7 @@ public:
 	
 	void Init(int32 map_id, int32 zone_cell_size);
 
-	void Enter(SharedObject object);
+	void Enter(SharedObject object, bool random_pos = true);
 	void Leave(int32 object_id);
 	void Broadcast(SharedSendBuffer send_buffer);
 	void Broadcast(Vector2Int pos, SharedSendBuffer send_buffer);
