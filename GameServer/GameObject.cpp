@@ -39,7 +39,7 @@ Protocol::PositionInfo& GameObject::GetPositionInfo()
 	return *_pos_info;
 }
 
-int32 GameObject::GetHp()
+int32 GameObject::GetHp() const
 {
 	return _stat_info->hp();
 }
@@ -49,7 +49,7 @@ void GameObject::SetHp(int32 hp)
 	_stat_info->set_hp(hp);
 }
 
-float GameObject::GetSpeed()
+float GameObject::GetSpeed() const
 {
 	return _stat_info->speed();
 }

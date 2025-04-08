@@ -42,7 +42,7 @@ struct Vector2Int
 		return *this;
 	}
 
-	Vector2Int operator+(const Vector2Int& rhs)
+	Vector2Int operator+(const Vector2Int& rhs) const
 	{
 		return Vector2Int(x + rhs.x, y + rhs.y);
 	}
@@ -55,7 +55,7 @@ struct Vector2Int
 		return *this;
 	}
 
-	Vector2Int operator-(const Vector2Int& rhs)
+	Vector2Int operator-(const Vector2Int& rhs) const
 	{
 		return Vector2Int(x - rhs.x, y - rhs.y);
 	}
