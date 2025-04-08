@@ -273,6 +273,8 @@ const xvector<SharedZone>& Room::GetAdjacentZones(Vector2Int cell_pos, int32 ran
 SharedPlayer Room::FindClosestPlayer(Vector2Int base_pos, int32 range)
 {
 	xvector<SharedPlayer> players = GetAdjacentPlayers(base_pos, range);
+	if (players.empty())
+		return nullptr;
 
 	sort(players.begin(), players.end(), [&base_pos](const SharedPlayer& a, const SharedPlayer& b)
 		{
