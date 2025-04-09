@@ -142,6 +142,13 @@ void Map::SetCurrentZone(SharedObject object, Vector2Int dest)
 					after->GetPlayers().insert(player);
 					break;
 				}	
+				case GameObjectType::MONSTER:
+				{
+					SharedMonster monster = static_pointer_cast<Monster>(object);
+					before->GetMonsters().erase(monster);
+					after->GetMonsters().insert(monster);
+					break;
+				}
 				case GameObjectType::PROJECTILE:
 				{
 					SharedProjectile arrow = static_pointer_cast<Projectile>(object);
