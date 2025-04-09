@@ -14,7 +14,7 @@ void Arrow::Update()
 	room->PushTimerAsync(tick, [this_shared]() { this_shared->Update(); });
 
 	Vector2Int dest_pos = GetFrontCellPosition();
-	if (room->GetMap()->ApplyMove(shared_from_this(), dest_pos, true))
+	if (room->GetMap()->ApplyMove(shared_from_this(), dest_pos, false))
 	{
 		S_Move move;
 		move.set_objectid(GetObjectId());
