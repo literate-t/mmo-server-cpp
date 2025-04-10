@@ -165,3 +165,13 @@ void Monster::UpdateSkill()
 void Monster::UpdateDead()
 {
 }
+
+void Monster::BroadcastState()
+{
+	S_Move move;
+	move.set_objectid(GetObjectId());
+	PositionInfo* pos = move.mutable_posinfo();
+	pos->MergeFrom(GetPositionInfo());
+
+	_room->Broadcast(GetCellPos(), ClientPacketHandler::MakeSendBuffer(move));
+}
