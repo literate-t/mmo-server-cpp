@@ -112,3 +112,52 @@ void Monster::UpdateMoving()
 	_room->GetMap()->ApplyMove(shared_from_this(), path[0]);
 	BroadcastState();
 }
+
+void Monster::UpdateSkill()
+{
+	if (_skill_tick == 0)
+	{
+		// TODO:? target nullptr check
+		if (_target->GetRoom() != _room)
+		{
+			StopTargeting();
+			BroadcastState();
+			return;
+		}
+
+		// can use skill
+		Vector2Int diff = _target->GetCellPos() - GetCellPos();
+		bool can_use = diff.SimpleDistance <= _skill_range && (diff.x == 0 || diff.y == 0);
+		if (can_use == false)
+		{
+			StopTargeting();
+			BroadcastState();
+			return;
+		}
+
+		MoveDir dir = GetDirFromVector2Int(diff);
+		if (dir != GetDir())
+		{
+			SetDir(dir);
+			BroadcastState();
+		}
+
+		// damage
+		_target->OnDamaged(shared_from_this(), GetStatInfo().attack() + _skill_data.damage);
+
+		// skill broadcast
+		{
+			S_Skill skill;
+			skill.set_objectid(GetObjectId());
+			SkillInfo* skill_info = skill.mutable_info();
+			skill_info->set_skillid(_skill_data.id);
+			_room->Broadcast(GetCellPos(), ClientPacketHandler::MakeSendBuffer(skill));
+		}
+
+		// skill cooltime
+		int64 skill_tick = static_cast<int64>(1000 * _skill_data.coolDown);
+		_skill_tick = GetTickCount64() + skill_tick;
+	}
+	else if (_skill_tick <= GetTickCount64())
+		_skill_tick = 0;
+}
