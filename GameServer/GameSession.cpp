@@ -293,7 +293,7 @@ void GameSession::HandleEnterGame(C_EnterGame packet)
 
 	_room = g_room_manager->Find(1);
 	auto room = _room.lock();
-	room->PushJobAsync(&Room::Enter, _current_player);
+	room->PushJobAsync(&Room::Enter, _current_player, true);
 
 	ClearLobbyPlayer();
 }
