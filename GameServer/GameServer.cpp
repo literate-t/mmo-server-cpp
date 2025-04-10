@@ -52,7 +52,7 @@ int main()
 
 	ASSERT_CRASH(_server_service->Start());
 
-	for (int32 i = 0; i < 5; ++i)
+	for (int32 i = 0; i < 12; ++i)
 	{
 		g_thread_manager->Launch([&_server_service]()
 			{
