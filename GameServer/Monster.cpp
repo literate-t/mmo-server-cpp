@@ -67,3 +67,48 @@ void Monster::UpdateIdle()
 	_target = target;
 	SetState(EntityState::MOVING);
 }
+
+void Monster::UpdateMoving()
+{	
+	if (_move_tick > GetTickCount64())
+		return;
+	_move_tick = GetTickCount64() + static_cast<int64>(1000 / GetSpeed());
+	
+	// TODO:? target nullptr check
+	if (_target->GetRoom() != _room)
+	{
+		StopTargeting();
+		BroadcastState();
+		return;
+	}
+
+	Vector2Int diff = _target->GetCellPos() - GetCellPos();
+	if (diff.SimpleDistance == 0 || diff.SimpleDistance > _chase_range)
+	{
+		StopTargeting();
+		BroadcastState();
+		return;
+	}
+
+	const auto& path = _room->GetMap()->FindPath(GetCellPos(), _target->GetCellPos());
+	if (path.size() < 1 || path.size() > _chase_range)
+	{
+		StopTargeting();
+		BroadcastState();
+		return;
+	}
+
+	if (diff.SimpleDistance <= _skill_range && (diff.x == 0 || diff.y == 0))
+	{
+		// TODO : set monster level
+		_skill_data = g_data_manager->Skill(1);
+		_skill_tick = 0;
+		SetState(EntityState::SKILL);
+		return;
+	}
+
+	// move
+	SetDir(GetDirFromVector2Int(path[0] - GetCellPos()));
+	_room->GetMap()->ApplyMove(shared_from_this(), path[0]);
+	BroadcastState();
+}
