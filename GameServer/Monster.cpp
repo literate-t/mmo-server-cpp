@@ -50,3 +50,20 @@ void Monster::Update()
 	auto shared_this = shared_from_this();
 	JobReserved = _room->PushTimerAsync(200, [shared_this]() { shared_this->Update(); });
 }
+
+void Monster::UpdateIdle()
+{	
+	if (_search_tick > GetTickCount64())
+		return;
+	_search_tick = GetTickCount64() + 1000;
+	
+	SharedPlayer target = _room->FindClosestPlayer(GetCellPos(), _search_range);
+	if (target == nullptr)
+	{
+		_target = nullptr;
+		return;
+	}
+
+	_target = target;
+	SetState(EntityState::MOVING);
+}
