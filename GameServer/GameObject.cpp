@@ -98,7 +98,7 @@ void GameObject::OnDamaged(SharedObject attacker, int32 damage)
 	auto room = GetRoom();
 	if (room == nullptr) return;
 
-	int32 final_damage = damage - GetTotalDefence();
+	int32 final_damage = max(0, damage - GetTotalDefence());
 	SetHp(max(0, GetHp() - final_damage));
 
 	S_ChangeHp change_hp;
