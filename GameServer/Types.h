@@ -60,6 +60,11 @@ struct Vector2Int
 		return x == rhs.x && y == rhs.y;
 	}
 
+	bool operator!=(const Vector2Int& rhs) const
+	{
+		return !operator==(rhs);
+	}
+
 	const int32 SquareMagnitude = x * x + y * y;
 	float Magnitude() { return static_cast<float>(sqrt(SquareMagnitude)); }
 
