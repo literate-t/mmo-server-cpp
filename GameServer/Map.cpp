@@ -204,8 +204,11 @@ xvector<Vector2Int>& Map::CalculatePath(SharedNode dest_node)
 
 xvector<Vector2Int>& Map::FindPath(Vector2Int start, Vector2Int dest, bool is_through_objects, int32 max_distance)
 {
-	// all list
-	priority_queue<SharedNode, xvector<SharedNode>, NodePredicate> all_list;
+	// parent
+	xhash_map<Vector2Int, Vector2Int> parent;
+
+	// heuristic check
+	xhash_map<Vector2Int, int32> h_list;
 
 	// open list
 	priority_queue<SharedNode, xvector<SharedNode>, NodePredicate> open_list;
@@ -218,13 +221,15 @@ xvector<Vector2Int>& Map::FindPath(Vector2Int start, Vector2Int dest, bool is_th
 
 	open_list.push(MakeShared<Node>(start, Heuristic(start, dest)));
 
+	parent[start] = start;
+
 	while (!open_list.empty())
 	{
 		SharedNode current_node = open_list.top();
 		open_list.pop();
 		
 		if (current_node->cell_pos == dest)
-			return CalculatePath(current_node);
+			break;
 
 		close_list.insert(current_node->cell_pos);
 
@@ -236,9 +241,16 @@ xvector<Vector2Int>& Map::FindPath(Vector2Int start, Vector2Int dest, bool is_th
 			Vector2Int& cell_pos = current_node->cell_pos;
 			Vector2Int next_pos = Vector2Int(cell_pos.x + dir_x, cell_pos.y + dir_y);
 
-			if (Heuristic(next_pos, dest) > max_distance)
+			int32 next_heuristic = Heuristic(next_pos, dest);
+
+			if (next_heuristic > max_distance)
 				continue;
 
+			auto iter = h_list.find(next_pos);
+			if (iter != h_list.end() && h_list[next_pos] <= next_heuristic)
+				continue;
+
+			if (dest != next_pos)
 			if (!CanGo(next_pos, is_through_objects))
 				continue;
 
@@ -248,13 +260,11 @@ xvector<Vector2Int>& Map::FindPath(Vector2Int start, Vector2Int dest, bool is_th
 			SharedNode next_node = MakeShared<Node>(next_pos, next_heuristic, current_node);
 
 			open_list.push(next_node);
-			all_list.push(next_node);
+			parent[next_pos] = cell_pos;
+			h_list[next_pos] = next_heuristic;
 		}
 	}
 
-	// didn't visit the dest
-	// no dest in the close_list
-	auto& best = all_list.top();
-	return CalculatePath(best);
+	return CalculatePath(parent, dest);
 }
 #pragma endregion
