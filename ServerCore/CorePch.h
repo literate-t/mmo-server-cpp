@@ -8,6 +8,7 @@
 #include <Windows.h>
 #include <utility>
 #include <chrono>
+#include <optional>
 using namespace std;
 using namespace chrono_literals;
 
