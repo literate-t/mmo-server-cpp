@@ -127,7 +127,6 @@ void GameObject::OnDead(SharedObject attacker)
 	SetHp(GetStatInfo().maxhp());
 	GetPositionInfo().set_state(EntityState::IDLE);
 	GetPositionInfo().set_movedir(MoveDir::DOWN);
-	SetCellPos(Vector2Int(0, 0));
 
 	room->Enter(shared_from_this());
 }
