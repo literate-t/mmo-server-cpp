@@ -8,6 +8,7 @@
 #include "ObjectManager.h"
 #include "Player.h"
 #include "Projectile.h"
+#include "Monster.h"
 #include "Protocol.pb.h"
 
 void Map::InitArrays(int32 size_x, int32 size_y)
@@ -187,14 +188,33 @@ int32 Map::Heuristic(const Vector2Int& start, const Vector2Int& dest)
 	return abs(dest.x - start.x) + abs(dest.y - start.y);
 }
 
-xvector<Vector2Int>& Map::CalculatePath(SharedNode dest_node)
+xvector<Vector2Int>& Map::CalculatePath(xhash_map<Vector2Int, Vector2Int>& parent, Vector2Int dest)
 {
-	while (dest_node)
+	_cell_path.clear();
+
+	// can't reach the dest
+	// find a second-best dest
+	if (0 == parent.count(dest))
 	{
-		_cell_path.push_back(dest_node->cell_pos);
-		SharedNode parent = dest_node->parent;
-		dest_node->parent = nullptr;
-		dest_node = parent;
+		int32 best = INT_MAX;
+		Vector2Int pos;
+		for (const auto& [key, value] : parent)
+		{
+			int32 dist = (dest - key).SimpleDistance;
+			if (dist < best)
+			{
+				best = dist;
+				pos = key;
+			}
+		}
+		dest = pos;
+	}
+	
+	//Vector2Int pos = dest;
+	while (parent[dest] != dest)
+	{
+		_cell_path.push_back(dest);
+		dest = parent[dest];
 	}
 
 	reverse(_cell_path.begin(), _cell_path.end());
