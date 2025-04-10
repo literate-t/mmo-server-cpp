@@ -3,6 +3,7 @@
 using namespace Protocol;
 #include "Room.h"
 #include "ClientPacketHandler.h"
+#include "Info.h"
 
 GameObject::GameObject()
 	:_pos_info(_object_info.mutable_posinfo()),
@@ -26,6 +27,16 @@ Protocol::ObjectInfo& GameObject::GetObjectInfo()
 Protocol::StatInfo& GameObject::GetStatInfo()
 {
 	return *_stat_info;
+}
+
+void GameObject::SetStatInfoWithStatData(StatData& stat_data)
+{
+	_stat_info->set_level(stat_data.level);
+	_stat_info->set_hp(stat_data.hp);
+	_stat_info->set_maxhp(stat_data.max_hp);
+	_stat_info->set_attack(stat_data.attack);
+	_stat_info->set_speed(stat_data.speed);
+	_stat_info->set_totalexp(stat_data.total_exp);
 }
 
 void GameObject::SetCellPos(Vector2Int cell_pos)

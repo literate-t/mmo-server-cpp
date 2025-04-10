@@ -13,6 +13,7 @@ public:
 
 	Protocol::ObjectInfo& GetObjectInfo();
 	Protocol::StatInfo& GetStatInfo();
+	void SetStatInfoWithStatData(StatData& stat_data);
 
 	Protocol::GameObjectType GetType() const { return _object_type; }
 

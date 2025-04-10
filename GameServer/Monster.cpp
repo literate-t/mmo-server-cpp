@@ -15,3 +15,11 @@ Monster::~Monster()
 {
 	cout << "~Monster()" << endl;
 }
+
+void Monster::Init(int32 data_sheet_id)
+{
+	_data_sheet_id = data_sheet_id;
+	MonsterData& data = g_data_manager->Monster(_data_sheet_id);
+	SetStatInfoWithStatData(data.stat);
+	SetState(EntityState::IDLE);
+}
