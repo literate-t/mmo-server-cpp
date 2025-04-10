@@ -175,3 +175,9 @@ void Monster::BroadcastState()
 
 	_room->Broadcast(GetCellPos(), ClientPacketHandler::MakeSendBuffer(move));
 }
+
+void Monster::StopTargeting()
+{
+	SetState(EntityState::IDLE);
+	_target = nullptr;
+}
