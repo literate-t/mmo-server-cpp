@@ -33,7 +33,7 @@ private:
 	void SetCurrentZone(SharedObject object, Vector2Int dest);
 	int32 Heuristic(const Vector2Int& start, const Vector2Int& dest);
 
-	xvector<Vector2Int>& CalculatePath(SharedNode dest_node);
+	xvector<Vector2Int>& CalculatePath(xhash_map<Vector2Int, Vector2Int>& parent, Vector2Int dest);
 
 private:
 	int32 _minx;
