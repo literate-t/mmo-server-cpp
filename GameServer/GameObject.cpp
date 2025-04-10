@@ -116,7 +116,7 @@ void GameObject::OnDead(SharedObject attacker)
 	if (room == nullptr) return;
 
 	S_Die die_packet;
-	die_packet.set_attackerid(GetObjectId());
+	die_packet.set_objectid(GetObjectId());
 	// can be necessary in client
 	die_packet.set_attackerid(attacker->GetObjectId());
 
