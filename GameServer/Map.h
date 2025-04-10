@@ -48,17 +48,16 @@ private:
 
 struct Node
 {
-	Node(Vector2Int pos, int32 g, int32 h, SharedNode parent = nullptr)
-		: cell_pos(pos), g(g), h(h), parent(parent)
+	Node(Vector2Int pos, int32 h, SharedNode parent = nullptr)
+		: cell_pos(pos), h(h), parent(parent)
 	{
 	}
 
 	Vector2Int cell_pos;
-	int32 g;
 	int32 h;
 	SharedNode parent;
 
-	int32 calc() const { return g + h; }
+	int32 calc() const { return h; }
 };
 
 struct NodePredicate

@@ -216,7 +216,7 @@ xvector<Vector2Int>& Map::FindPath(Vector2Int start, Vector2Int dest, bool is_th
 	int32 direction_x[] = {1, 0, -1, 0};
 	int32 direction_y[] = {0, -1, 0, 1};
 
-	open_list.push(MakeShared<Node>(start, 0, Heuristic(start, dest)));
+	open_list.push(MakeShared<Node>(start, Heuristic(start, dest)));
 
 	while (!open_list.empty())
 	{
@@ -245,9 +245,7 @@ xvector<Vector2Int>& Map::FindPath(Vector2Int start, Vector2Int dest, bool is_th
 			if (close_list.count(next_pos))
 				continue;
 
-			int32 g = current_node->g + 1;
-			int32 h = Heuristic(next_pos, dest);
-			SharedNode next_node = MakeShared<Node>(next_pos, g, h, current_node);
+			SharedNode next_node = MakeShared<Node>(next_pos, next_heuristic, current_node);
 
 			open_list.push(next_node);
 			all_list.push(next_node);
