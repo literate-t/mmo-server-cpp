@@ -161,3 +161,7 @@ void Monster::UpdateSkill()
 	else if (_skill_tick <= GetTickCount64())
 		_skill_tick = 0;
 }
+
+void Monster::UpdateDead()
+{
+}
