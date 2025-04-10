@@ -29,11 +29,6 @@ struct Vector2Int
 	static Vector2Int Left() { return Vector2Int(-1, 0); }
 	static Vector2Int Right() { return Vector2Int(1, 0); }
 
-	explicit operator bool() const
-	{
-		return x != -1 && y != -1;
-	}
-
 	Vector2Int& operator=(const Vector2Int& rhs)
 	{
 		x = rhs.x;
