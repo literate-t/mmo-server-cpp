@@ -7,7 +7,7 @@ public:
 	xmap<int16, SharedItem>& GetItems() { return _items; }
 
 	void Add(SharedItem item);
-	SharedItem Get(int32 itemDbId);
+	SharedItem& Get(int32 slot);
 	SharedItem Find(function<SharedItem(bool)> predicate);
 	optional<int32> GetEmptySlot();
 

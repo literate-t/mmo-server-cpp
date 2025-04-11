@@ -6,6 +6,10 @@ void Inventory::Add(SharedItem item)
 	_items[item->GetSlot()] = item;
 }
 
+SharedItem& Inventory::Get(int32 slot)
+{
+	return _items[slot];
+}
 optional<int32> Inventory::GetEmptySlot()
 {
 	for (int32 slot = 0; slot < kSlotCount; ++slot)
