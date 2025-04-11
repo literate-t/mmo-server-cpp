@@ -5,6 +5,7 @@
 #include "Map.h"
 #include "Player.h"
 #include "ClientPacketHandler.h"
+#include "Random.h"
 
 Monster::Monster()
 	:GameObject(GameObjectType::MONSTER)
@@ -180,4 +181,20 @@ void Monster::StopTargeting()
 {
 	SetState(EntityState::IDLE);
 	_target = nullptr;
+}
+
+optional<RewardData> Monster::GetRandomReward()
+{
+	MonsterData* monster_data = g_data_manager->Monster(_data_sheet_id);
+	int32 base = Random::GetRandom(10, 100);
+	int32 sum = 0;
+
+	for (auto& reward : monster_data->rewards)
+	{
+		sum += reward.probability;
+		if (sum >= base)
+			return reward;
+	}
+
+	return nullopt;
 }

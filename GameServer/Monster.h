@@ -20,10 +20,7 @@ protected:
 private:
 	void BroadcastState();
 	void StopTargeting();
-	RewardData GetRandomReward();
-
-public:
-	SharedJob JobReserved;
+	optional<RewardData> GetRandomReward();	
 
 private:
 	int32 _data_sheet_id;
