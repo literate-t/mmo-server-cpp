@@ -39,4 +39,6 @@ private:
 
 	SharedPlayer _target = nullptr;
 	SharedRoom _room;
+
+	SharedJob _job_reserved;
 };

@@ -48,7 +48,7 @@ void Monster::Update()
 	}
 
 	auto shared_this = shared_from_this();
-	JobReserved = _room->PushTimerAsync(200, [shared_this]() { shared_this->Update(); });
+	_job_reserved = _room->PushTimerAsync(200, [shared_this]() { shared_this->Update(); });
 }
 
 void Monster::UpdateIdle()
