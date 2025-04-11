@@ -94,7 +94,7 @@ void Room::Enter(SharedObject object, bool random_pos)
 		monster->SetRoom(static_pointer_cast<Room>(shared_from_this()));
 		GetZone(pos_info)->GetMonsters().insert(monster);
 		_map->ApplyMove(monster, monster->GetCellPos());
-		monster->SetObjectName(to_string(monster->GetObjectId()));
+		monster->SetObjectName(to_string(object_id));
 		monster->Update();
 		_monsters[object_id] = monster;
 	}
