@@ -10,6 +10,19 @@ SharedItem& Inventory::Get(int32 slot)
 {
 	return _items[slot];
 }
+
+SharedItem Inventory::FindIf(function<bool(const SharedItem&)> predicate)
+{	
+	for (auto& item : _items)
+	{
+		auto& [key, value] = item;
+		if (predicate(value))
+			return value;
+	}
+
+	return nullptr;
+}
+
 optional<int32> Inventory::GetEmptySlot()
 {
 	for (int32 slot = 0; slot < kSlotCount; ++slot)

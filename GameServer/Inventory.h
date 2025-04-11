@@ -8,7 +8,7 @@ public:
 
 	void Add(SharedItem item);
 	SharedItem& Get(int32 slot);
-	SharedItem Find(function<SharedItem(bool)> predicate);
+	SharedItem FindIf(function<bool(const SharedItem&)> predicate);
 	optional<int32> GetEmptySlot();
 
 private:
