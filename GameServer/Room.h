@@ -33,6 +33,7 @@ public:
 	// handle packet
 	void HandleMovePacket(SharedPlayer player, const Protocol::C_Move& move_packet);
 	void HandleSkillPacket(SharedPlayer player, const Protocol::C_Skill& skill_packet);
+	void HandleEquipItemPacket(SharedPlayer player, const Protocol::C_EquipItem& skill_packet);
 
 	Vector2Int GetRandomPos();
 

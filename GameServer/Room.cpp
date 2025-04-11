@@ -403,6 +403,11 @@ void Room::HandleSkillPacket(SharedPlayer player, const Protocol::C_Skill& skill
 	}
 }
 
+void Room::HandleEquipItemPacket(SharedPlayer player, const Protocol::C_EquipItem& skill_packet)
+{
+	player->HandleEquipItemPacket(skill_packet);
+}
+
 Vector2Int Room::GetRandomPos()
 {
 	random_device rd;
