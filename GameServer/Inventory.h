@@ -9,9 +9,10 @@ public:
 	void Add(SharedItem item);
 	SharedItem Get(int32 itemDbId);
 	SharedItem Find(function<SharedItem(bool)> predicate);
-	int32 GetEmptySlot();
+	optional<int32> GetEmptySlot();
 
 private:
 	xmap<int16, SharedItem> _items;
+	static constexpr int32 kSlotCount = 20;
 };
 
