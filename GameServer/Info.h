@@ -65,7 +65,7 @@ struct ArmorData : public ItemData
 	int32 defence;
 };
 
-struct ConsumableData : ItemData
+struct ConsumableData : public ItemData
 {
 	ConsumableType consumableType;
 	int32 maxCount;
