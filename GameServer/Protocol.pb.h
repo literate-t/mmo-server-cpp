@@ -3354,16 +3354,16 @@ class C_EquipItem final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kItemDbIdFieldNumber = 1,
+    kSlotFieldNumber = 1,
     kEquippedFieldNumber = 2,
   };
-  // int32 itemDbId = 1;
-  void clear_itemdbid();
-  int32_t itemdbid() const;
-  void set_itemdbid(int32_t value);
+  // int32 slot = 1;
+  void clear_slot();
+  int32_t slot() const;
+  void set_slot(int32_t value);
   private:
-  int32_t _internal_itemdbid() const;
-  void _internal_set_itemdbid(int32_t value);
+  int32_t _internal_slot() const;
+  void _internal_set_slot(int32_t value);
   public:
 
   // bool equipped = 2;
@@ -3383,7 +3383,7 @@ class C_EquipItem final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    int32_t itemdbid_;
+    int32_t slot_;
     bool equipped_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
@@ -3513,16 +3513,16 @@ class S_EquipItem final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kItemDbIdFieldNumber = 1,
+    kSlotFieldNumber = 1,
     kEquippedFieldNumber = 2,
   };
-  // int32 itemDbId = 1;
-  void clear_itemdbid();
-  int32_t itemdbid() const;
-  void set_itemdbid(int32_t value);
+  // int32 slot = 1;
+  void clear_slot();
+  int32_t slot() const;
+  void set_slot(int32_t value);
   private:
-  int32_t _internal_itemdbid() const;
-  void _internal_set_itemdbid(int32_t value);
+  int32_t _internal_slot() const;
+  void _internal_set_slot(int32_t value);
   public:
 
   // bool equipped = 2;
@@ -3542,7 +3542,7 @@ class S_EquipItem final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    int32_t itemdbid_;
+    int32_t slot_;
     bool equipped_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
@@ -6174,24 +6174,24 @@ S_AddItem::items() const {
 
 // C_EquipItem
 
-// int32 itemDbId = 1;
-inline void C_EquipItem::clear_itemdbid() {
-  _impl_.itemdbid_ = 0;
+// int32 slot = 1;
+inline void C_EquipItem::clear_slot() {
+  _impl_.slot_ = 0;
 }
-inline int32_t C_EquipItem::_internal_itemdbid() const {
-  return _impl_.itemdbid_;
+inline int32_t C_EquipItem::_internal_slot() const {
+  return _impl_.slot_;
 }
-inline int32_t C_EquipItem::itemdbid() const {
-  // @@protoc_insertion_point(field_get:Protocol.C_EquipItem.itemDbId)
-  return _internal_itemdbid();
+inline int32_t C_EquipItem::slot() const {
+  // @@protoc_insertion_point(field_get:Protocol.C_EquipItem.slot)
+  return _internal_slot();
 }
-inline void C_EquipItem::_internal_set_itemdbid(int32_t value) {
+inline void C_EquipItem::_internal_set_slot(int32_t value) {
   
-  _impl_.itemdbid_ = value;
+  _impl_.slot_ = value;
 }
-inline void C_EquipItem::set_itemdbid(int32_t value) {
-  _internal_set_itemdbid(value);
-  // @@protoc_insertion_point(field_set:Protocol.C_EquipItem.itemDbId)
+inline void C_EquipItem::set_slot(int32_t value) {
+  _internal_set_slot(value);
+  // @@protoc_insertion_point(field_set:Protocol.C_EquipItem.slot)
 }
 
 // bool equipped = 2;
@@ -6218,24 +6218,24 @@ inline void C_EquipItem::set_equipped(bool value) {
 
 // S_EquipItem
 
-// int32 itemDbId = 1;
-inline void S_EquipItem::clear_itemdbid() {
-  _impl_.itemdbid_ = 0;
+// int32 slot = 1;
+inline void S_EquipItem::clear_slot() {
+  _impl_.slot_ = 0;
 }
-inline int32_t S_EquipItem::_internal_itemdbid() const {
-  return _impl_.itemdbid_;
+inline int32_t S_EquipItem::_internal_slot() const {
+  return _impl_.slot_;
 }
-inline int32_t S_EquipItem::itemdbid() const {
-  // @@protoc_insertion_point(field_get:Protocol.S_EquipItem.itemDbId)
-  return _internal_itemdbid();
+inline int32_t S_EquipItem::slot() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_EquipItem.slot)
+  return _internal_slot();
 }
-inline void S_EquipItem::_internal_set_itemdbid(int32_t value) {
+inline void S_EquipItem::_internal_set_slot(int32_t value) {
   
-  _impl_.itemdbid_ = value;
+  _impl_.slot_ = value;
 }
-inline void S_EquipItem::set_itemdbid(int32_t value) {
-  _internal_set_itemdbid(value);
-  // @@protoc_insertion_point(field_set:Protocol.S_EquipItem.itemDbId)
+inline void S_EquipItem::set_slot(int32_t value) {
+  _internal_set_slot(value);
+  // @@protoc_insertion_point(field_set:Protocol.S_EquipItem.slot)
 }
 
 // bool equipped = 2;

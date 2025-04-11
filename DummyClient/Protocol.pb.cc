@@ -259,7 +259,7 @@ struct S_AddItemDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 S_AddItemDefaultTypeInternal _S_AddItem_default_instance_;
 PROTOBUF_CONSTEXPR C_EquipItem::C_EquipItem(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.itemdbid_)*/0
+    /*decltype(_impl_.slot_)*/0
   , /*decltype(_impl_.equipped_)*/false
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct C_EquipItemDefaultTypeInternal {
@@ -273,7 +273,7 @@ struct C_EquipItemDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 C_EquipItemDefaultTypeInternal _C_EquipItem_default_instance_;
 PROTOBUF_CONSTEXPR S_EquipItem::S_EquipItem(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.itemdbid_)*/0
+    /*decltype(_impl_.slot_)*/0
   , /*decltype(_impl_.equipped_)*/false
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct S_EquipItemDefaultTypeInternal {
@@ -556,7 +556,7 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::Protocol::C_EquipItem, _impl_.itemdbid_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::C_EquipItem, _impl_.slot_),
   PROTOBUF_FIELD_OFFSET(::Protocol::C_EquipItem, _impl_.equipped_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protocol::S_EquipItem, _internal_metadata_),
@@ -564,7 +564,7 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::Protocol::S_EquipItem, _impl_.itemdbid_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_EquipItem, _impl_.slot_),
   PROTOBUF_FIELD_OFFSET(::Protocol::S_EquipItem, _impl_.equipped_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protocol::S_ChangeStat, _internal_metadata_),
@@ -731,60 +731,60 @@ const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABL
   ".LobbyPlayerInfo\"\036\n\016C_CreatePlayer\022\014\n\004na"
   "me\030\001 \001(\t\"/\n\nS_ItemList\022!\n\005items\030\001 \003(\0132\022."
   "Protocol.ItemInfo\".\n\tS_AddItem\022!\n\005items\030"
-  "\001 \003(\0132\022.Protocol.ItemInfo\"1\n\013C_EquipItem"
-  "\022\020\n\010itemDbId\030\001 \001(\005\022\020\n\010equipped\030\002 \001(\010\"1\n\013"
-  "S_EquipItem\022\020\n\010itemDbId\030\001 \001(\005\022\020\n\010equippe"
-  "d\030\002 \001(\010\"4\n\014S_ChangeStat\022$\n\010statInfo\030\001 \001("
-  "\0132\022.Protocol.StatInfo\"\010\n\006S_Ping\"\010\n\006C_Pon"
-  "g\"{\n\nObjectInfo\022\020\n\010objectId\030\001 \001(\005\022\014\n\004nam"
-  "e\030\002 \001(\t\022\'\n\007posInfo\030\003 \001(\0132\026.Protocol.Posi"
-  "tionInfo\022$\n\010statInfo\030\004 \001(\0132\022.Protocol.St"
-  "atInfo\"Y\n\017LobbyPlayerInfo\022\022\n\nplayerDbId\030"
-  "\001 \001(\005\022\014\n\004name\030\002 \001(\t\022$\n\010statInfo\030\003 \001(\0132\022."
-  "Protocol.StatInfo\"t\n\014PositionInfo\022$\n\005sta"
-  "te\030\001 \001(\0162\025.Protocol.EntityState\022\"\n\007moveD"
-  "ir\030\002 \001(\0162\021.Protocol.MoveDir\022\014\n\004PosX\030\003 \001("
-  "\005\022\014\n\004PosY\030\004 \001(\005\"e\n\010StatInfo\022\r\n\005level\030\001 \001"
-  "(\005\022\n\n\002hp\030\002 \001(\005\022\r\n\005maxHp\030\003 \001(\005\022\016\n\006attack\030"
-  "\004 \001(\005\022\r\n\005speed\030\005 \001(\002\022\020\n\010totalExp\030\006 \001(\005\"\034"
-  "\n\tSkillInfo\022\017\n\007skillId\030\001 \001(\005\"`\n\010ItemInfo"
-  "\022\020\n\010itemDbId\030\001 \001(\005\022\023\n\013dataSheetId\030\002 \001(\005\022"
-  "\r\n\005count\030\003 \001(\005\022\014\n\004slot\030\004 \001(\005\022\020\n\010equipped"
-  "\030\005 \001(\010*\360\002\n\tMessageId\022\020\n\014S_ENTER_GAME\020\000\022\020"
-  "\n\014S_LEAVE_GAME\020\001\022\013\n\007S_SPAWN\020\002\022\r\n\tS_DESPA"
-  "WN\020\003\022\n\n\006C_MOVE\020\004\022\n\n\006S_MOVE\020\005\022\013\n\007C_SKILL\020"
-  "\006\022\013\n\007S_SKILL\020\007\022\017\n\013S_CHANGE_HP\020\010\022\t\n\005S_DIe"
-  "\020\t\022\017\n\013S_CONNECTED\020\n\022\013\n\007C_LOGIN\020\013\022\013\n\007S_LO"
-  "GIN\020\014\022\020\n\014C_ENTER_GAME\020\r\022\023\n\017S_CREATE_PLAY"
-  "ER\020\016\022\023\n\017C_CREATE_PLAYER\020\017\022\017\n\013S_ITEM_LIST"
-  "\020\020\022\016\n\nS_ADD_ITEM\020\021\022\020\n\014C_EQUIP_ITEM\020\022\022\020\n\014"
-  "S_EQUIP_ITEM\020\023\022\021\n\rS_CHANGE_STAT\020\024\022\n\n\006S_P"
-  "ING\020\025\022\n\n\006C_PONG\020\026*8\n\013EntityState\022\010\n\004IDLE"
-  "\020\000\022\n\n\006MOVING\020\001\022\t\n\005SKILL\020\002\022\010\n\004DEAD\020\003*0\n\007M"
-  "oveDir\022\006\n\002UP\020\000\022\010\n\004DOWN\020\001\022\010\n\004LEFT\020\002\022\t\n\005RI"
-  "GHT\020\003*C\n\016GameObjectType\022\010\n\004NONE\020\000\022\n\n\006PLA"
-  "YER\020\001\022\013\n\007MONSTER\020\002\022\016\n\nPROJECTILE\020\003*A\n\tSk"
-  "illType\022\016\n\nSKILL_NONE\020\000\022\016\n\nSKILL_AUTO\020\001\022"
-  "\024\n\020SKILL_PROJECTILE\020\002*Z\n\021PlayerServerSta"
-  "te\022\026\n\022SERVER_STATE_LOGIN\020\000\022\026\n\022SERVER_STA"
-  "TE_LOBBY\020\001\022\025\n\021SERVER_STATE_GAME\020\002*c\n\010Ite"
-  "mType\022\022\n\016ITEM_TYPE_NONE\020\000\022\024\n\020ITEM_TYPE_W"
-  "EAPON\020\001\022\023\n\017ITEM_TYPE_ARMOR\020\002\022\030\n\024ITEM_TYP"
-  "E_CONSUMABLE\020\003*N\n\nWeaponType\022\024\n\020WEAPON_T"
-  "YPE_NONE\020\000\022\025\n\021WEAPON_TYPE_SWORD\020\001\022\023\n\017WEA"
-  "PON_TYPE_BOW\020\002*h\n\tArmorType\022\023\n\017ARMOR_TYP"
-  "E_NONE\020\000\022\025\n\021ARMOR_TYPE_HELMET\020\001\022\031\n\025ARMOR"
-  "_TYPE_CHESTARMOR\020\002\022\024\n\020ARMOR_TYPE_BOOTS\020\003"
-  "*F\n\016ConsumableType\022\030\n\024CONSUMABLE_TYPE_NO"
-  "NE\020\000\022\032\n\026CONSUMABLE_TYPE_POTION\020\001B\035\252\002\032Goo"
-  "gle.Protobuf.MyProtocolb\006proto3"
+  "\001 \003(\0132\022.Protocol.ItemInfo\"-\n\013C_EquipItem"
+  "\022\014\n\004slot\030\001 \001(\005\022\020\n\010equipped\030\002 \001(\010\"-\n\013S_Eq"
+  "uipItem\022\014\n\004slot\030\001 \001(\005\022\020\n\010equipped\030\002 \001(\010\""
+  "4\n\014S_ChangeStat\022$\n\010statInfo\030\001 \001(\0132\022.Prot"
+  "ocol.StatInfo\"\010\n\006S_Ping\"\010\n\006C_Pong\"{\n\nObj"
+  "ectInfo\022\020\n\010objectId\030\001 \001(\005\022\014\n\004name\030\002 \001(\t\022"
+  "\'\n\007posInfo\030\003 \001(\0132\026.Protocol.PositionInfo"
+  "\022$\n\010statInfo\030\004 \001(\0132\022.Protocol.StatInfo\"Y"
+  "\n\017LobbyPlayerInfo\022\022\n\nplayerDbId\030\001 \001(\005\022\014\n"
+  "\004name\030\002 \001(\t\022$\n\010statInfo\030\003 \001(\0132\022.Protocol"
+  ".StatInfo\"t\n\014PositionInfo\022$\n\005state\030\001 \001(\016"
+  "2\025.Protocol.EntityState\022\"\n\007moveDir\030\002 \001(\016"
+  "2\021.Protocol.MoveDir\022\014\n\004PosX\030\003 \001(\005\022\014\n\004Pos"
+  "Y\030\004 \001(\005\"e\n\010StatInfo\022\r\n\005level\030\001 \001(\005\022\n\n\002hp"
+  "\030\002 \001(\005\022\r\n\005maxHp\030\003 \001(\005\022\016\n\006attack\030\004 \001(\005\022\r\n"
+  "\005speed\030\005 \001(\002\022\020\n\010totalExp\030\006 \001(\005\"\034\n\tSkillI"
+  "nfo\022\017\n\007skillId\030\001 \001(\005\"`\n\010ItemInfo\022\020\n\010item"
+  "DbId\030\001 \001(\005\022\023\n\013dataSheetId\030\002 \001(\005\022\r\n\005count"
+  "\030\003 \001(\005\022\014\n\004slot\030\004 \001(\005\022\020\n\010equipped\030\005 \001(\010*\360"
+  "\002\n\tMessageId\022\020\n\014S_ENTER_GAME\020\000\022\020\n\014S_LEAV"
+  "E_GAME\020\001\022\013\n\007S_SPAWN\020\002\022\r\n\tS_DESPAWN\020\003\022\n\n\006"
+  "C_MOVE\020\004\022\n\n\006S_MOVE\020\005\022\013\n\007C_SKILL\020\006\022\013\n\007S_S"
+  "KILL\020\007\022\017\n\013S_CHANGE_HP\020\010\022\t\n\005S_DIe\020\t\022\017\n\013S_"
+  "CONNECTED\020\n\022\013\n\007C_LOGIN\020\013\022\013\n\007S_LOGIN\020\014\022\020\n"
+  "\014C_ENTER_GAME\020\r\022\023\n\017S_CREATE_PLAYER\020\016\022\023\n\017"
+  "C_CREATE_PLAYER\020\017\022\017\n\013S_ITEM_LIST\020\020\022\016\n\nS_"
+  "ADD_ITEM\020\021\022\020\n\014C_EQUIP_ITEM\020\022\022\020\n\014S_EQUIP_"
+  "ITEM\020\023\022\021\n\rS_CHANGE_STAT\020\024\022\n\n\006S_PING\020\025\022\n\n"
+  "\006C_PONG\020\026*8\n\013EntityState\022\010\n\004IDLE\020\000\022\n\n\006MO"
+  "VING\020\001\022\t\n\005SKILL\020\002\022\010\n\004DEAD\020\003*0\n\007MoveDir\022\006"
+  "\n\002UP\020\000\022\010\n\004DOWN\020\001\022\010\n\004LEFT\020\002\022\t\n\005RIGHT\020\003*C\n"
+  "\016GameObjectType\022\010\n\004NONE\020\000\022\n\n\006PLAYER\020\001\022\013\n"
+  "\007MONSTER\020\002\022\016\n\nPROJECTILE\020\003*A\n\tSkillType\022"
+  "\016\n\nSKILL_NONE\020\000\022\016\n\nSKILL_AUTO\020\001\022\024\n\020SKILL"
+  "_PROJECTILE\020\002*Z\n\021PlayerServerState\022\026\n\022SE"
+  "RVER_STATE_LOGIN\020\000\022\026\n\022SERVER_STATE_LOBBY"
+  "\020\001\022\025\n\021SERVER_STATE_GAME\020\002*c\n\010ItemType\022\022\n"
+  "\016ITEM_TYPE_NONE\020\000\022\024\n\020ITEM_TYPE_WEAPON\020\001\022"
+  "\023\n\017ITEM_TYPE_ARMOR\020\002\022\030\n\024ITEM_TYPE_CONSUM"
+  "ABLE\020\003*N\n\nWeaponType\022\024\n\020WEAPON_TYPE_NONE"
+  "\020\000\022\025\n\021WEAPON_TYPE_SWORD\020\001\022\023\n\017WEAPON_TYPE"
+  "_BOW\020\002*h\n\tArmorType\022\023\n\017ARMOR_TYPE_NONE\020\000"
+  "\022\025\n\021ARMOR_TYPE_HELMET\020\001\022\031\n\025ARMOR_TYPE_CH"
+  "ESTARMOR\020\002\022\024\n\020ARMOR_TYPE_BOOTS\020\003*F\n\016Cons"
+  "umableType\022\030\n\024CONSUMABLE_TYPE_NONE\020\000\022\032\n\026"
+  "CONSUMABLE_TYPE_POTION\020\001B\035\252\002\032Google.Prot"
+  "obuf.MyProtocolb\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_Protocol_2eproto_deps[1] = {
   &::descriptor_table_google_2fprotobuf_2ftimestamp_2eproto,
 };
 static ::_pbi::once_flag descriptor_table_Protocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Protocol_2eproto = {
-    false, false, 2711, descriptor_table_protodef_Protocol_2eproto,
+    false, false, 2703, descriptor_table_protodef_Protocol_2eproto,
     "Protocol.proto",
     &descriptor_table_Protocol_2eproto_once, descriptor_table_Protocol_2eproto_deps, 1, 29,
     schemas, file_default_instances, TableStruct_Protocol_2eproto::offsets,
@@ -4280,14 +4280,14 @@ C_EquipItem::C_EquipItem(const C_EquipItem& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   C_EquipItem* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.itemdbid_){}
+      decltype(_impl_.slot_){}
     , decltype(_impl_.equipped_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  ::memcpy(&_impl_.itemdbid_, &from._impl_.itemdbid_,
+  ::memcpy(&_impl_.slot_, &from._impl_.slot_,
     static_cast<size_t>(reinterpret_cast<char*>(&_impl_.equipped_) -
-    reinterpret_cast<char*>(&_impl_.itemdbid_)) + sizeof(_impl_.equipped_));
+    reinterpret_cast<char*>(&_impl_.slot_)) + sizeof(_impl_.equipped_));
   // @@protoc_insertion_point(copy_constructor:Protocol.C_EquipItem)
 }
 
@@ -4296,7 +4296,7 @@ inline void C_EquipItem::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.itemdbid_){0}
+      decltype(_impl_.slot_){0}
     , decltype(_impl_.equipped_){false}
     , /*decltype(_impl_._cached_size_)*/{}
   };
@@ -4325,9 +4325,9 @@ void C_EquipItem::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  ::memset(&_impl_.itemdbid_, 0, static_cast<size_t>(
+  ::memset(&_impl_.slot_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&_impl_.equipped_) -
-      reinterpret_cast<char*>(&_impl_.itemdbid_)) + sizeof(_impl_.equipped_));
+      reinterpret_cast<char*>(&_impl_.slot_)) + sizeof(_impl_.equipped_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -4337,10 +4337,10 @@ const char* C_EquipItem::_InternalParse(const char* ptr, ::_pbi::ParseContext* c
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // int32 itemDbId = 1;
+      // int32 slot = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
-          _impl_.itemdbid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          _impl_.slot_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -4382,10 +4382,10 @@ uint8_t* C_EquipItem::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // int32 itemDbId = 1;
-  if (this->_internal_itemdbid() != 0) {
+  // int32 slot = 1;
+  if (this->_internal_slot() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_itemdbid(), target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_slot(), target);
   }
 
   // bool equipped = 2;
@@ -4410,9 +4410,9 @@ size_t C_EquipItem::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // int32 itemDbId = 1;
-  if (this->_internal_itemdbid() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_itemdbid());
+  // int32 slot = 1;
+  if (this->_internal_slot() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_slot());
   }
 
   // bool equipped = 2;
@@ -4438,8 +4438,8 @@ void C_EquipItem::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PR
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_itemdbid() != 0) {
-    _this->_internal_set_itemdbid(from._internal_itemdbid());
+  if (from._internal_slot() != 0) {
+    _this->_internal_set_slot(from._internal_slot());
   }
   if (from._internal_equipped() != 0) {
     _this->_internal_set_equipped(from._internal_equipped());
@@ -4464,9 +4464,9 @@ void C_EquipItem::InternalSwap(C_EquipItem* other) {
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(C_EquipItem, _impl_.equipped_)
       + sizeof(C_EquipItem::_impl_.equipped_)
-      - PROTOBUF_FIELD_OFFSET(C_EquipItem, _impl_.itemdbid_)>(
-          reinterpret_cast<char*>(&_impl_.itemdbid_),
-          reinterpret_cast<char*>(&other->_impl_.itemdbid_));
+      - PROTOBUF_FIELD_OFFSET(C_EquipItem, _impl_.slot_)>(
+          reinterpret_cast<char*>(&_impl_.slot_),
+          reinterpret_cast<char*>(&other->_impl_.slot_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata C_EquipItem::GetMetadata() const {
@@ -4491,14 +4491,14 @@ S_EquipItem::S_EquipItem(const S_EquipItem& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   S_EquipItem* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.itemdbid_){}
+      decltype(_impl_.slot_){}
     , decltype(_impl_.equipped_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  ::memcpy(&_impl_.itemdbid_, &from._impl_.itemdbid_,
+  ::memcpy(&_impl_.slot_, &from._impl_.slot_,
     static_cast<size_t>(reinterpret_cast<char*>(&_impl_.equipped_) -
-    reinterpret_cast<char*>(&_impl_.itemdbid_)) + sizeof(_impl_.equipped_));
+    reinterpret_cast<char*>(&_impl_.slot_)) + sizeof(_impl_.equipped_));
   // @@protoc_insertion_point(copy_constructor:Protocol.S_EquipItem)
 }
 
@@ -4507,7 +4507,7 @@ inline void S_EquipItem::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.itemdbid_){0}
+      decltype(_impl_.slot_){0}
     , decltype(_impl_.equipped_){false}
     , /*decltype(_impl_._cached_size_)*/{}
   };
@@ -4536,9 +4536,9 @@ void S_EquipItem::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  ::memset(&_impl_.itemdbid_, 0, static_cast<size_t>(
+  ::memset(&_impl_.slot_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&_impl_.equipped_) -
-      reinterpret_cast<char*>(&_impl_.itemdbid_)) + sizeof(_impl_.equipped_));
+      reinterpret_cast<char*>(&_impl_.slot_)) + sizeof(_impl_.equipped_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -4548,10 +4548,10 @@ const char* S_EquipItem::_InternalParse(const char* ptr, ::_pbi::ParseContext* c
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // int32 itemDbId = 1;
+      // int32 slot = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
-          _impl_.itemdbid_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          _impl_.slot_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -4593,10 +4593,10 @@ uint8_t* S_EquipItem::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // int32 itemDbId = 1;
-  if (this->_internal_itemdbid() != 0) {
+  // int32 slot = 1;
+  if (this->_internal_slot() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_itemdbid(), target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_slot(), target);
   }
 
   // bool equipped = 2;
@@ -4621,9 +4621,9 @@ size_t S_EquipItem::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // int32 itemDbId = 1;
-  if (this->_internal_itemdbid() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_itemdbid());
+  // int32 slot = 1;
+  if (this->_internal_slot() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_slot());
   }
 
   // bool equipped = 2;
@@ -4649,8 +4649,8 @@ void S_EquipItem::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PR
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_itemdbid() != 0) {
-    _this->_internal_set_itemdbid(from._internal_itemdbid());
+  if (from._internal_slot() != 0) {
+    _this->_internal_set_slot(from._internal_slot());
   }
   if (from._internal_equipped() != 0) {
     _this->_internal_set_equipped(from._internal_equipped());
@@ -4675,9 +4675,9 @@ void S_EquipItem::InternalSwap(S_EquipItem* other) {
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(S_EquipItem, _impl_.equipped_)
       + sizeof(S_EquipItem::_impl_.equipped_)
-      - PROTOBUF_FIELD_OFFSET(S_EquipItem, _impl_.itemdbid_)>(
-          reinterpret_cast<char*>(&_impl_.itemdbid_),
-          reinterpret_cast<char*>(&other->_impl_.itemdbid_));
+      - PROTOBUF_FIELD_OFFSET(S_EquipItem, _impl_.slot_)>(
+          reinterpret_cast<char*>(&_impl_.slot_),
+          reinterpret_cast<char*>(&other->_impl_.slot_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata S_EquipItem::GetMetadata() const {
