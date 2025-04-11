@@ -10,6 +10,6 @@ namespace DataModel
 		int32 Count;
 		int32 Slot;
 		bool Equipped;
-		int32 OwnerId;
+		int64 OwnerId;
 	};
 }
