@@ -69,7 +69,12 @@ bool Handle_C_EnterGame(SharedPacketSession& session, Protocol::C_EnterGame& pkt
 
 bool Handle_C_EquipItem(SharedPacketSession& session, Protocol::C_EquipItem& pkt)
 {
-	return false;
+	shared_ptr<GameSession> game_session = static_pointer_cast<GameSession>(session);
+	SharedPlayer player = game_session->GetPlayer();
+	SharedRoom room = player->GetRoom();
+
+	room->PushJobAsync(&Room::HandleEquipItemPacket, player, pkt);
+	return true;
 }
 
 bool Handle_C_Pong(SharedPacketSession& session, Protocol::C_Pong& pkt)
