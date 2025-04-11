@@ -49,7 +49,7 @@ void DataManager::MakeStatTable(json& j)
 	for (auto& stat : stats)
 	{
 		stat.hp = stat.max_hp;
-		_level_stat_table[(int16)stat.level] = stat;
+		_level_stat_table[(int16)stat.level] = new StatData(stat);
 	}
 }
 
@@ -57,14 +57,14 @@ void DataManager::MakeSkillTable(json& j)
 {
 	xvector<SkillData> skills = j.at("skills").get<xvector<SkillData>>();
 	for (auto& skill : skills)
-		_skill_table[skill.id] = skill;
+		_skill_table[skill.id] = new SkillData(skill);
 }
 
 void DataManager::MakeMonsterTable(json& j)
 {
 	xvector<MonsterData> monsters = j.at("monsters").get<xvector<MonsterData>>();
 	for (auto& monster : monsters)
-		_monster_table[monster.id] = monster;
+		_monster_table[monster.id] = new MonsterData(monster);
 }
 
 void DataManager::MakeItemTable(json& j)
@@ -73,21 +73,21 @@ void DataManager::MakeItemTable(json& j)
 	for (auto& weapon : weapons)
 	{
 		weapon.itemType = ItemType::ITEM_TYPE_WEAPON;
-		_item_table[weapon.id] = weapon;
+		_item_table[weapon.id] = new WeaponData(weapon);
 	}
 
 	xvector<ArmorData> armors = j.at("armors").get<xvector<ArmorData>>();
 	for (auto& armor : armors)
 	{
 		armor.itemType = ItemType::ITEM_TYPE_ARMOR;
-		_item_table[armor.id] = armor;
+		_item_table[armor.id] = new ArmorData(armor);
 	}
 
 	xvector<ConsumableData> consumables = j.at("consumables").get<xvector<ConsumableData>>();
 	for (auto& consumable : consumables)
 	{
 		consumable.itemType = ItemType::ITEM_TYPE_CONSUMABLE;
-		_item_table[consumable.id] = consumable;
+		_item_table[consumable.id] = new ConsumableData(consumable);
 	}
 }
 

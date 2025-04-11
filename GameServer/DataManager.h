@@ -9,10 +9,10 @@ class DataManager
 public:
 	DataManager(ConfigManager* config_manager);
 
-	StatData& Stat(const int16 level) { return _level_stat_table.at(level); }
-	SkillData& Skill(const int16 id) { return _skill_table.at(id); }
-	MonsterData& Monster(const int16 id) { return _monster_table.at(id); }
-	ItemData& Item(const int16 id) { return _item_table.at(id); }
+	StatData* Stat(const int16 level) { return _level_stat_table.at(level); }
+	SkillData* Skill(const int16 id) { return _skill_table.at(id); }
+	MonsterData* Monster(const int16 id) { return _monster_table.at(id); }
+	ItemData* Item(const int16 id) { return _item_table.at(id); }
 
 private:
 	void LoadConfig();
@@ -26,10 +26,10 @@ private:
 private:
 	ConfigManager* _config_manager;
 
-	xmap<int16, StatData> _level_stat_table;
-	xmap<int16, SkillData> _skill_table;
-	xmap<int16, MonsterData> _monster_table;
-	xmap<int16, ItemData> _item_table;
+	xmap<int16, StatData*> _level_stat_table;
+	xmap<int16, SkillData*> _skill_table;
+	xmap<int16, MonsterData*> _monster_table;
+	xmap<int16, ItemData*> _item_table;
 };
 
 void from_json(const json& j, StatData& stat);
