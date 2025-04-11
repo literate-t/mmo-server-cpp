@@ -81,3 +81,25 @@ void DBSerializer::SavePlayerReward(SharedPlayer player, SharedRoom room, Reward
 			});
 		});
 }
+
+void DBSerializer::EquipItemNoti(SharedPlayer player, SharedItem item)
+{
+	Instance()->PushJobAsync([player, item]() {
+		DBConnection* conn = g_db_connection_pool->Pop();
+		auto query = L"UPDATE items SET equipped = (?) WHERE owner_id = (?) and item_id = (?)";
+
+		DBBind<3, 0> db_bind(*conn, query);
+
+		bool equipped = item->GetEquipped();
+		int32 item_db_id = item->GetItemDbId();
+
+		db_bind.BindParam(0, equipped);
+		db_bind.BindParam(1, player->PlayerDbId);
+		db_bind.BindParam(2, item_db_id);
+
+		if (!db_bind.Execute())
+			throw new runtime_error("DB Failed: EquipItemNoti()");
+
+		g_db_connection_pool->Push(conn);
+		});
+}

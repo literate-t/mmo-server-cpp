@@ -16,6 +16,7 @@ public:
 
 	static void SavePlayerStatusNoti(SharedPlayer player);
 	static void SavePlayerReward(SharedPlayer player, SharedRoom room, RewardData reward);
+	static void EquipItemNoti(SharedPlayer player, SharedItem item);
 
 private:
 	DBSerializer() = default;
