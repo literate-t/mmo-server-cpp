@@ -367,9 +367,9 @@ void Room::HandleSkillPacket(SharedPlayer player, const Protocol::C_Skill& skill
 	// skill and animation
 	Broadcast(player->GetCellPos(), ClientPacketHandler::MakeSendBuffer(skill));
 	
-	SkillData& skill_data = g_data_manager->Skill(skill_id);
+	SkillData* skill_data = g_data_manager->Skill(skill_id);
 
-	switch (skill_data.skillType)
+	switch (skill_data->skillType)
 	{
 		case SkillType::SKILL_AUTO:
 		{
@@ -388,13 +388,13 @@ void Room::HandleSkillPacket(SharedPlayer player, const Protocol::C_Skill& skill
 			SharedArrow arrow = g_object_manager->Add<Arrow>();
 			{
 				arrow->Owner = player;
-				arrow->Data = &skill_data;
+				arrow->Data = skill_data;
 				PositionInfo& arrow_pos = arrow->GetPositionInfo();
 				arrow_pos.set_state(EntityState::MOVING);
 				arrow_pos.set_movedir(player->GetPositionInfo().movedir());
 				arrow_pos.set_posx(player->GetCellPos().x);
 				arrow_pos.set_posy(player->GetCellPos().y);
-				arrow->SetSpeed(skill_data.projectile.speed);
+				arrow->SetSpeed(skill_data->projectile.speed);
 
 				PushJobAsync(&Room::Enter, arrow, false);
 				break;

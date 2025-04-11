@@ -27,8 +27,8 @@ public:
 
 private:
 	int32 _data_sheet_id;
-	StatData _stat_data;
-	SkillData _skill_data;
+	StatData* _stat_data;
+	SkillData* _skill_data;
 	int16 _search_range = 10;
 	int16 _chase_range = 20;
 	int16 _skill_range = 1;

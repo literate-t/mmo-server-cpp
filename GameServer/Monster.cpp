@@ -19,8 +19,8 @@ Monster::~Monster()
 void Monster::Init(int32 data_sheet_id)
 {
 	_data_sheet_id = data_sheet_id;
-	MonsterData& data = g_data_manager->Monster(_data_sheet_id);
-	SetStatInfoWithStatData(data.stat);
+	MonsterData* data = g_data_manager->Monster(_data_sheet_id);
+	SetStatInfoWithStatData(data->stat);
 	SetState(EntityState::IDLE);
 }
 
@@ -143,19 +143,19 @@ void Monster::UpdateSkill()
 		}
 
 		// damage
-		_target->OnDamaged(shared_from_this(), GetStatInfo().attack() + _skill_data.damage);
+		_target->OnDamaged(shared_from_this(), GetStatInfo().attack() + _skill_data->damage);
 
 		// skill broadcast
 		{
 			S_Skill skill;
 			skill.set_objectid(GetObjectId());
 			SkillInfo* skill_info = skill.mutable_info();
-			skill_info->set_skillid(_skill_data.id);
+			skill_info->set_skillid(_skill_data->id);
 			_room->Broadcast(GetCellPos(), ClientPacketHandler::MakeSendBuffer(skill));
 		}
 
 		// skill cooltime
-		int64 skill_tick = static_cast<int64>(1000 * _skill_data.coolDown);
+		int64 skill_tick = static_cast<int64>(1000 * _skill_data->coolDown);
 		_skill_tick = GetTickCount64() + skill_tick;
 	}
 	else if (_skill_tick <= GetTickCount64())

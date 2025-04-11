@@ -8,8 +8,8 @@ Weapon::Weapon(int32 data_sheet_id)
 
 void Weapon::Init(int32 data_sheet_id)
 {
-	ItemData& item_data = g_data_manager->Item(data_sheet_id);
-	WeaponData* data = reinterpret_cast<WeaponData*>(&item_data);	
+	ItemData* item_data = g_data_manager->Item(data_sheet_id);
+	WeaponData* data = reinterpret_cast<WeaponData*>(item_data);	
 	
 	SetDataSheetId(data->id);
 	SetCount(1);
@@ -25,8 +25,8 @@ Armor::Armor(int32 data_sheet_id)
 
 void Armor::Init(int32 data_sheet_id)
 {
-	ItemData& item_data = g_data_manager->Item(data_sheet_id);
-	ArmorData* data = reinterpret_cast<ArmorData*>(&item_data);
+	ItemData* item_data = g_data_manager->Item(data_sheet_id);
+	ArmorData* data = reinterpret_cast<ArmorData*>(item_data);
 
 	SetDataSheetId(data->id);
 	SetCount(1);
@@ -42,8 +42,8 @@ Consumable::Consumable(int32 data_sheet_id)
 
 void Consumable::Init(int32 data_sheet_id)
 {
-	ItemData& item_data = g_data_manager->Item(data_sheet_id);
-	ConsumableData* data = reinterpret_cast<ConsumableData*>(&item_data);
+	ItemData* item_data = g_data_manager->Item(data_sheet_id);
+	ConsumableData* data = reinterpret_cast<ConsumableData*>(item_data);
 
 	SetDataSheetId(data->id);
 	SetCount(1);
@@ -56,9 +56,9 @@ void Consumable::Init(int32 data_sheet_id)
 shared_ptr<Item> Item::MakeItem(ItemDB item_db)
 {
 	shared_ptr<Item> item = nullptr;
-	const ItemData& item_data = g_data_manager->Item(item_db.DataSheetId);
+	const ItemData* item_data = g_data_manager->Item(item_db.DataSheetId);
 
-	switch (item_data.itemType)
+	switch (item_data->itemType)
 	{
 	case ItemType::ITEM_TYPE_WEAPON:
 		item = make_shared<Weapon>(item_db.DataSheetId);
