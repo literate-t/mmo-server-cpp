@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "ClientPacketHandler.h"
 #include "Random.h"
+#include "DBSerializer.h"
 
 Monster::Monster()
 	:GameObject(GameObjectType::MONSTER)
@@ -52,6 +53,25 @@ void Monster::Update()
 	_job_reserved = _room->PushTimerAsync(200, [shared_this]() { shared_this->Update(); });
 }
 
+void Monster::OnDead(SharedObject attacker)
+{
+	_job_reserved->Cancel();
+
+	GameObject::OnDead(attacker);
+
+	// weapon returns player, player return self;
+	SharedObject owner = attacker->GetOwner();
+	if (owner->GetType() == GameObjectType::PLAYER)
+	{
+		optional<RewardData> reward = GetRandomReward();
+		if (!reward)
+			return;
+
+		SharedPlayer player = static_pointer_cast<Player>(owner);
+		DBSerializer::SavePlayerReward(player, GetRoom(), reward.value());
+	}
+}
+
 void Monster::UpdateIdle()
 {	
 	if (_search_tick > GetTickCount64())
@@ -90,7 +110,7 @@ void Monster::UpdateMoving()
 		BroadcastState();
 		return;
 	}
-
+	
 	const auto& path = _room->GetMap()->FindPath(GetCellPos(), _target->GetCellPos());
 	if (path.size() < 1 || path.size() > _chase_range)
 	{

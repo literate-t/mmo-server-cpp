@@ -10,6 +10,7 @@ public:
 
 	void Init(int32 data_sheet_id);
 	void Update() override;
+	virtual void OnDead(SharedObject attacker) override;
 
 protected:
 	virtual void UpdateIdle();
