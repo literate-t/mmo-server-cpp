@@ -302,7 +302,7 @@ SharedPlayer Room::FindClosestPlayer(Vector2Int base_pos, int32 range)
 	for (auto& player : players)
 	{
 		auto& path_list = _map->FindPath(base_pos, player->GetCellPos(), false, range);
-		if (path_list.size() < 2 || path_list.size() > range)
+		if (path_list.size() < 1 || path_list.size() > range)
 			continue;
 
 		return player;
