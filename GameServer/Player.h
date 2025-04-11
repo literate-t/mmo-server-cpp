@@ -26,6 +26,9 @@ public:
 	// room
 	void OnLeaveGame();
 
+	// packet
+	void HandleEquipItemPacket(const C_EquipItem& pkt);
+
 private:
 	Inventory _inventory;
 	SharedViewCube _view_cube;
