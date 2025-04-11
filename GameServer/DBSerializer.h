@@ -14,7 +14,7 @@ public:
 		return instance;
 	}
 
-	static void SavePlayerStatusAll(SharedPlayer player);
+	static void SavePlayerStatusNoti(SharedPlayer player);
 	static void SavePlayerReward(SharedPlayer player, SharedRoom room, RewardData reward);
 
 private:

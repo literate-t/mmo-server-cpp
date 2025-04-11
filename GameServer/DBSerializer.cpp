@@ -7,7 +7,7 @@
 #include "GameSession.h"
 #include "ClientPacketHandler.h"
 
-void DBSerializer::SavePlayerStatusAll(SharedPlayer player)
+void DBSerializer::SavePlayerStatusNoti(SharedPlayer player)
 {
 	if (player == nullptr)
 		return;
