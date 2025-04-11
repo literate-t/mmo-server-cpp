@@ -211,6 +211,7 @@
     <ClCompile Include="Protocol.pb.cc">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Random.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="RoomManager.cpp" />
     <ClCompile Include="ServerDB.cpp" />
@@ -243,6 +244,7 @@
     <ClInclude Include="ClientPacketHandler.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Protocol.pb.h" />
+    <ClInclude Include="Random.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="RoomManager.h" />
     <ClInclude Include="ServerDB.h" />
