@@ -70,7 +70,9 @@ void Player::OnLeaveGame()
 	if (player == nullptr)
 		return;
 
-	DBSerializer::SavePlayerStatusAll(player);
+	DBSerializer::SavePlayerStatusNoti(player);
+}
+
 void Player::HandleEquipItemPacket(const C_EquipItem& equip_item)
 {	
 	SharedItem find_item = GetInventory().Get(equip_item.slot());
