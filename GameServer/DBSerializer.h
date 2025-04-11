@@ -1,5 +1,6 @@
 #pragma once
 
+struct RewardData;
 class DBSerializer : public JobQueue
 {
 public:	
@@ -14,6 +15,7 @@ public:
 	}
 
 	static void SavePlayerStatusAll(SharedPlayer player);
+	static void SavePlayerReward(SharedPlayer player, SharedRoom room, RewardData reward);
 
 private:
 	DBSerializer() = default;
