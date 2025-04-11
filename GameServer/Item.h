@@ -7,6 +7,8 @@ using namespace DataModel;
 class Item
 {
 public:
+	Item(ItemType item_type);
+
 	int32 GetItemDbId() const { return _item_info.itemdbid(); }
 	void SetItemDbId(int32 item_db_id) { _item_info.set_itemdbid(item_db_id); }
 	

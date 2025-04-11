@@ -2,6 +2,7 @@
 #include "Item.h"
 
 Weapon::Weapon(int32 data_sheet_id)
+	:Item(ItemType::ITEM_TYPE_WEAPON)
 {
 	Init(data_sheet_id);
 }
@@ -19,6 +20,7 @@ void Weapon::Init(int32 data_sheet_id)
 }
 
 Armor::Armor(int32 data_sheet_id)
+	:Item(ItemType::ITEM_TYPE_ARMOR)
 {
 	Init(data_sheet_id);
 }
@@ -36,6 +38,7 @@ void Armor::Init(int32 data_sheet_id)
 }
 
 Consumable::Consumable(int32 data_sheet_id)
+	:Item(ItemType::ITEM_TYPE_CONSUMABLE)
 {
 	Init(data_sheet_id);
 }
@@ -51,6 +54,11 @@ void Consumable::Init(int32 data_sheet_id)
 	SetDamage(data->damage);
 	SetConsumableType(data->consumableType);
 	SetStackable(data->maxCount > 1);
+}
+
+Item::Item(ItemType item_type)
+: _item_type(item_type)
+{
 }
 
 shared_ptr<Item> Item::MakeItem(ItemDB item_db)
