@@ -3,7 +3,7 @@
 
 ServerDB::ServerDB()
 {
-	ASSERT_CRASH(g_db_connection_pool->Connect(10, L"Driver={ODBC Driver 17 for SQL Server};Server=(localdb)\\MSSQLLocalDB;Database=ServerDB;Trusted_Connection=Yes;"));
+	ASSERT_CRASH(g_db_connection_pool->Connect(100, L"Driver={ODBC Driver 17 for SQL Server};Server=(localdb)\\MSSQLLocalDB;Database=ServerDB;Trusted_Connection=Yes;"));
 }
 
 void ServerDB::MakeTables(bool create)
