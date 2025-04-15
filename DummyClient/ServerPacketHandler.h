@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Protocol.pb.h"
+using namespace Protocol;
 
 constexpr int32 HANDLER_MAX = 0x2000;
 using PacketHandlerFunc = std::function<bool(SharedPacketSession&, BYTE*, int32)>;
