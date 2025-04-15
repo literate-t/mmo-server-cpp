@@ -11,9 +11,9 @@ int main()
 	ServerPacketHandler::Init();
 
 	SharedClientService client_service = MakeShared<ClientService>(
-	NetAddress(L"127.0.0.1", 9000),
+	NetAddress(L"127.0.0.1", 9999),
 	MakeShared<IocpCore>(),
-	MakeShared<User>,		
+	MakeShared<ServerSession>,
 	100);
 
 	ASSERT_CRASH(client_service->Start());
