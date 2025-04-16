@@ -12,4 +12,8 @@
 #endif
 
 #include "CorePch.h"
-#include "Enum.pb.h"
+#include "Protocol.pb.h"
+
+#include <memory>
+
+using SharedServerSession = std::shared_ptr<class ServerSession>;
