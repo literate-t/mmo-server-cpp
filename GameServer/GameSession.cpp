@@ -209,8 +209,6 @@ void GameSession::HandleCreatePlayer(C_CreatePlayer packet)
 	stat_info->set_speed(stat_data->speed);
 	stat_info->set_totalexp(stat_data->total_exp);
 
-	lobby_player_info->set_allocated_statinfo(stat_info);
-
 	_lobby_players.push_back(lobby_player_info);
 
 	// to client
