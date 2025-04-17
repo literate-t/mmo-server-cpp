@@ -168,7 +168,7 @@ void GameSession::HandleCreatePlayer(C_CreatePlayer packet)
 		return;
 
 	// level 1 stat	
-	StatData stat_data = g_data_manager->Stat(1);
+	StatData* stat_data = g_data_manager->Stat(1);
 
 	DBConnection* conn = g_db_connection_pool->Pop();
 	auto query = L"INSERT INTO players(player_name, account_id) VALUES (?, ?);\
@@ -185,12 +185,12 @@ void GameSession::HandleCreatePlayer(C_CreatePlayer packet)
 
 	query = L"INSERT INTO stats(level, hp, max_hp, attack, speed, total_exp, player_id) VALUES (?, ?, ?, ?, ?, ?, ?);";
 	DBBind<7, 0> db_bind_insert(*conn, query);
-	db_bind_insert.BindParam(0, stat_data.level);
-	db_bind_insert.BindParam(1, stat_data.hp);
-	db_bind_insert.BindParam(2, stat_data.max_hp);
-	db_bind_insert.BindParam(3, stat_data.attack);
-	db_bind_insert.BindParam(4, stat_data.speed);
-	db_bind_insert.BindParam(5, stat_data.total_exp);
+	db_bind_insert.BindParam(0, stat_data->level);
+	db_bind_insert.BindParam(1, stat_data->hp);
+	db_bind_insert.BindParam(2, stat_data->max_hp);
+	db_bind_insert.BindParam(3, stat_data->attack);
+	db_bind_insert.BindParam(4, stat_data->speed);
+	db_bind_insert.BindParam(5, stat_data->total_exp);
 	db_bind_insert.BindParam(6, new_player_id);
 
 	ASSERT_CRASH(db_bind_insert.Execute());
@@ -202,12 +202,12 @@ void GameSession::HandleCreatePlayer(C_CreatePlayer packet)
 	lobby_player_info->set_name(packet.name());
 
 	StatInfo* stat_info = new StatInfo();
-	stat_info->set_level(stat_data.level);
-	stat_info->set_hp(stat_data.hp);
-	stat_info->set_maxhp(stat_data.max_hp);
-	stat_info->set_attack(stat_data.attack);
-	stat_info->set_speed(stat_data.speed);
-	stat_info->set_totalexp(stat_data.total_exp);
+	stat_info->set_level(stat_data->level);
+	stat_info->set_hp(stat_data->hp);
+	stat_info->set_maxhp(stat_data->max_hp);
+	stat_info->set_attack(stat_data->attack);
+	stat_info->set_speed(stat_data->speed);
+	stat_info->set_totalexp(stat_data->total_exp);
 
 	lobby_player_info->set_allocated_statinfo(stat_info);
 
