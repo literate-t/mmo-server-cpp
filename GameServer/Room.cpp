@@ -77,14 +77,9 @@ void Room::Enter(SharedObject object, bool random_pos)
 			player->OwnerSession->Send(ClientPacketHandler::MakeSendBuffer(enter_game));
 		}
 
-		if (player->IsDummy() == false)
-		{
 		player->MakeViewCube();
 		player->GetView()->IsReset = true;
 		player->GetView()->Update();
-	}
-		else
-			player->Update();
 	}
 	else if (type == GameObjectType::PROJECTILE)
 	{
@@ -129,11 +124,8 @@ void Room::Leave(int32 object_id)
 
 		_map->ApplyLeave(player);
 
-		if (player->IsDummy() == false)
-		{
 		player->GetView()->JobReserved->Cancel();
 		player->ReleaseViewCube();
-		}
 
 		// to me
 		S_LeaveGame leave;

@@ -6,7 +6,6 @@ class Player : public GameObject
 {
 public:
 	Player();
-	Player(bool is_dummy);
 	~Player();
 
 public:
@@ -23,16 +22,12 @@ public:
 
 	int32 GetTotalAttack() override;
 	int32 GetTotalDefence() override;
-	bool IsDummy() const;
 
 	// room
 	void OnLeaveGame();
 
 	// packet
 	void HandleEquipItemPacket(const C_EquipItem& pkt);
-
-protected:
-	bool _is_dummy;
 
 private:
 	Inventory _inventory;

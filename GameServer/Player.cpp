@@ -7,16 +7,6 @@
 
 Player::Player()	
 	:GameObject(GameObjectType::PLAYER),
-	_is_dummy(false),
-	_weapon_damage(0),
-	_armor_defence(0)
-
-{
-}
-
-Player::Player(bool is_dummy)
-	:GameObject(GameObjectType::PLAYER),
-	_is_dummy(is_dummy),
 	_weapon_damage(0),
 	_armor_defence(0)
 {
@@ -73,11 +63,6 @@ int32 Player::GetTotalAttack()
 int32 Player::GetTotalDefence()
 {
 	return _armor_defence;
-}
-
-bool Player::IsDummy() const
-{
-	return _is_dummy;
 }
 
 void Player::OnLeaveGame()
