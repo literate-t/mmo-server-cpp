@@ -34,7 +34,7 @@ void Player::RefreshStat()
 
 	for (auto& [key, value] : _inventory.GetItems())
 	{
-		if (value->GetEquipped())
+		if (!value->GetEquipped())
 			continue;
 
 		switch (value->GetItemType())
