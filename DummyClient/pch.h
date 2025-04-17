@@ -13,6 +13,7 @@
 
 #include "CorePch.h"
 #include "Protocol.pb.h"
+using namespace Protocol;
 
 #include <memory>
 

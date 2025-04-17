@@ -14,6 +14,7 @@
 #include "CorePch.h"
 #include "Types.h"
 #include "Protocol.pb.h"
+using namespace Protocol;
 
 // Global
 extern class ConfigManager* g_config_manager;
