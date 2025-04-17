@@ -139,6 +139,16 @@ void Room::Leave(int32 object_id)
 		S_LeaveGame leave;
 		player->OwnerSession->Send(ClientPacketHandler::MakeSendBuffer(leave));
 	}
+	else if (type == GameObjectType::MONSTER)
+	{
+		SharedMonster monster = static_pointer_cast<Monster>(_monsters[object_id]);
+		if (0 == _monsters.erase(object_id))
+			return;
+
+		pos = monster->GetCellPos();
+		_map->ApplyLeave(monster);
+		monster->SetRoom(nullptr);
+	}
 	else if (type == GameObjectType::PROJECTILE)
 	{
 		SharedArrow arrow = static_pointer_cast<Arrow>(_projectiles[object_id]);
