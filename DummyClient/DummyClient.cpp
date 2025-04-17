@@ -4,6 +4,27 @@
 #include "ServerPacketHandler.h"
 #include "ServerSession.h"
 
+enum WorkerInfo
+{
+	// TODO : Job 처리가 충분한 시간이 아닐 때 자동 보정
+	TICK = 64,
+};
+
+void DoWorkerJob(SharedClientService& service)
+{
+	while (true)
+	{
+		// 네트워크 입출력 처리 + 패킷 핸들
+		service->GetIocpCore()->Dispatch(10);
+
+		ThreadManager::DistributeReservedJobs();
+
+		// Job
+		tls_end_tick_count = GetTickCount64() + WorkerInfo::TICK;
+		ThreadManager::WorkGlobalQueue();
+	}
+}
+
 int main()
 {
 	this_thread::sleep_for(1s);
@@ -14,18 +35,15 @@ int main()
 	NetAddress(L"127.0.0.1", 9999),
 	MakeShared<IocpCore>(),
 	MakeShared<ServerSession>,
-	100);
+	50);
 
 	ASSERT_CRASH(client_service->Start());
 
-	for (int32 i = 0; i < 2; ++i)
+	for (int32 i = 0; i < 6; ++i)
 	{
-		g_thread_manager->Launch([=]()
+		g_thread_manager->Launch([&client_service]()
 			{
-				while (true)
-				{
-					client_service->GetIocpCore()->Dispatch();
-				}
+				DoWorkerJob(client_service);
 			});
 	}
 
