@@ -264,7 +264,7 @@ void GameSession::HandleEnterGame(C_EnterGame packet)
 		db_bind_select.BindColumn(4, item_db.Equipped);
 		db_bind_select.BindColumn(5, item_db.OwnerId);
 
-		db_bind_select.Execute();
+		ASSERT_CRASH(db_bind_select.Execute());
 		bool is_fetch = false;
 
 		S_ItemList item_list;
