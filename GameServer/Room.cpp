@@ -316,6 +316,34 @@ SharedPlayer Room::FindClosestPlayer(Vector2Int base_pos, int32 range)
 	return nullptr;
 }
 
+SharedMonster Room::FindClosestMonster(Vector2Int base_pos, int32 range)
+{
+	xvector<SharedMonster> monsters = GetAdjacentMonsters(base_pos, range);
+	if (monsters.empty())
+		return nullptr;
+
+	sort(monsters.begin(), monsters.end(), [&base_pos](const SharedMonster& a, const SharedMonster& b)
+		{
+			int32 left_dist = (base_pos - a->GetCellPos()).SquareMagnitude;
+			int32 right_dist = (base_pos - b->GetCellPos()).SquareMagnitude;
+
+			return left_dist < right_dist;
+		});
+
+	// Even if simple distance exists
+	// it may not be accessible due to obstacles
+	for (auto& monster : monsters)
+	{
+		auto& path_list = _map->FindPath(base_pos, monster->GetCellPos(), false, range);
+		if (path_list.size() < 1 || path_list.size() > range)
+			continue;
+
+		return monster;
+	}
+
+	return nullptr;
+}
+
 SharedPlayer Room::FindPlayer(function<bool(SharedPlayer)> predicate)
 {
 	for (auto& [key, player] : _players)

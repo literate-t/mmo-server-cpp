@@ -28,6 +28,7 @@ public:
 	const xvector<SharedProjectile>& GetAdjacentProjectiles(Vector2Int cell_pos, int32 range = kRange);
 
 	SharedPlayer FindClosestPlayer(Vector2Int base_pos, int32 range);
+	SharedMonster FindClosestMonster(Vector2Int base_pos, int32 range);
 	SharedPlayer FindPlayer(function<bool(SharedPlayer)> predicate);
 
 	// handle packet
