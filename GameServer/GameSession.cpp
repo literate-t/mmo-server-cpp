@@ -201,7 +201,7 @@ void GameSession::HandleCreatePlayer(C_CreatePlayer packet)
 	lobby_player_info->set_playerdbid(new_player_id);
 	lobby_player_info->set_name(packet.name());
 
-	StatInfo* stat_info = new StatInfo();
+	StatInfo* stat_info = lobby_player_info->mutable_statinfo();
 	stat_info->set_level(stat_data->level);
 	stat_info->set_hp(stat_data->hp);
 	stat_info->set_maxhp(stat_data->max_hp);
@@ -214,9 +214,11 @@ void GameSession::HandleCreatePlayer(C_CreatePlayer packet)
 	_lobby_players.push_back(lobby_player_info);
 
 	// to client
-	S_CreatePlayer new_player;
-	new_player.set_allocated_player(lobby_player_info);
-	Send(ClientPacketHandler::MakeSendBuffer(new_player));
+	S_CreatePlayer new_player_pkt;
+	auto new_player = new_player_pkt.mutable_player();
+	new_player->MergeFrom(*lobby_player_info);
+
+	Send(ClientPacketHandler::MakeSendBuffer(new_player_pkt));
 }
 
 void GameSession::HandleEnterGame(C_EnterGame packet)
