@@ -451,9 +451,9 @@ void Room::HandleSkillPacket(SharedPlayer player, const Protocol::C_Skill& skill
 	}
 }
 
-void Room::HandleEquipItemPacket(SharedPlayer player, const Protocol::C_EquipItem& skill_packet)
+void Room::HandleEquipItemPacket(SharedPlayer player, const Protocol::C_EquipItem& equip_item)
 {
-	player->HandleEquipItemPacket(skill_packet);
+	player->HandleEquipItemPacket(equip_item);
 }
 
 Vector2Int Room::GetRandomPos()
