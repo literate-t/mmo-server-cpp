@@ -63,15 +63,11 @@ void Monster::OnDead(SharedObject attacker)
 	SharedObject owner = attacker->GetOwner();
 	if (owner->GetType() == GameObjectType::PLAYER)
 	{
-		// temp
-		SharedPlayer player = static_pointer_cast<Player>(owner);
-		if (player->IsDummy())
-			return;
-
 		optional<RewardData> reward = GetRandomReward();
 		if (!reward)
 			return;
 
+		SharedPlayer player = static_pointer_cast<Player>(owner);
 		DBSerializer::SavePlayerReward(player, GetRoom(), reward.value());
 	}
 }
