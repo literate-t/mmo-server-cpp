@@ -46,8 +46,8 @@ void DBSerializer::SavePlayerReward(SharedPlayer player, SharedRoom room, Reward
 	// Save hp to db for now
 	Instance()->PushJobAsync([player, slot_value, reward, room]() {
 		DBConnection* conn = g_db_connection_pool->Pop();
-		auto query = L"INSERT INTO items (data_sheet_id, count, slot, equipped, owner_id)	\
-			 VALUES (?, ?, ?, ?, ?);";
+		auto query = L"INSERT INTO items (data_sheet_id, count, slot, equipped, owner_id) VALUES (?, ?, ?, ?, ?);	\
+					   SELECT SCOPE_IDENTITY() AS NewID;";
 
 		DBBind<5, 0> db_bind(*conn, query);
 
@@ -66,6 +66,10 @@ void DBSerializer::SavePlayerReward(SharedPlayer player, SharedRoom room, Reward
 
 		if (!db_bind.Execute())
 			throw new runtime_error("DB Failed: SavePlayerReward()");
+
+		int32 newId;
+		db_bind.GetId(newId);
+		item_db.ItemDbId = newId;
 
 		g_db_connection_pool->Push(conn);
 
