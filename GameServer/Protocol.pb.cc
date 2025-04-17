@@ -195,7 +195,6 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORIT
 PROTOBUF_CONSTEXPR C_EnterGame::C_EnterGame(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.name_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.isdummy_)*/false
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct C_EnterGameDefaultTypeInternal {
   PROTOBUF_CONSTEXPR C_EnterGameDefaultTypeInternal()
@@ -523,7 +522,6 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::Protocol::C_EnterGame, _impl_.name_),
-  PROTOBUF_FIELD_OFFSET(::Protocol::C_EnterGame, _impl_.isdummy_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protocol::S_CreatePlayer, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -662,21 +660,21 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 79, -1, -1, sizeof(::Protocol::C_Login)},
   { 86, -1, -1, sizeof(::Protocol::S_Login)},
   { 94, -1, -1, sizeof(::Protocol::C_EnterGame)},
-  { 102, -1, -1, sizeof(::Protocol::S_CreatePlayer)},
-  { 109, -1, -1, sizeof(::Protocol::C_CreatePlayer)},
-  { 116, -1, -1, sizeof(::Protocol::S_ItemList)},
-  { 123, -1, -1, sizeof(::Protocol::S_AddItem)},
-  { 130, -1, -1, sizeof(::Protocol::C_EquipItem)},
-  { 138, -1, -1, sizeof(::Protocol::S_EquipItem)},
-  { 146, -1, -1, sizeof(::Protocol::S_ChangeStat)},
-  { 153, -1, -1, sizeof(::Protocol::S_Ping)},
-  { 159, -1, -1, sizeof(::Protocol::C_Pong)},
-  { 165, -1, -1, sizeof(::Protocol::ObjectInfo)},
-  { 175, -1, -1, sizeof(::Protocol::LobbyPlayerInfo)},
-  { 184, -1, -1, sizeof(::Protocol::PositionInfo)},
-  { 194, -1, -1, sizeof(::Protocol::StatInfo)},
-  { 206, -1, -1, sizeof(::Protocol::SkillInfo)},
-  { 213, -1, -1, sizeof(::Protocol::ItemInfo)},
+  { 101, -1, -1, sizeof(::Protocol::S_CreatePlayer)},
+  { 108, -1, -1, sizeof(::Protocol::C_CreatePlayer)},
+  { 115, -1, -1, sizeof(::Protocol::S_ItemList)},
+  { 122, -1, -1, sizeof(::Protocol::S_AddItem)},
+  { 129, -1, -1, sizeof(::Protocol::C_EquipItem)},
+  { 137, -1, -1, sizeof(::Protocol::S_EquipItem)},
+  { 145, -1, -1, sizeof(::Protocol::S_ChangeStat)},
+  { 152, -1, -1, sizeof(::Protocol::S_Ping)},
+  { 158, -1, -1, sizeof(::Protocol::C_Pong)},
+  { 164, -1, -1, sizeof(::Protocol::ObjectInfo)},
+  { 174, -1, -1, sizeof(::Protocol::LobbyPlayerInfo)},
+  { 183, -1, -1, sizeof(::Protocol::PositionInfo)},
+  { 193, -1, -1, sizeof(::Protocol::StatInfo)},
+  { 205, -1, -1, sizeof(::Protocol::SkillInfo)},
+  { 212, -1, -1, sizeof(::Protocol::ItemInfo)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -728,65 +726,65 @@ const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABL
   "erId\030\002 \001(\005\"\r\n\013S_Connected\"\033\n\007C_Login\022\020\n\010"
   "uniqueId\030\001 \001(\t\"F\n\007S_Login\022\017\n\007loginOk\030\001 \001"
   "(\005\022*\n\007players\030\002 \003(\0132\031.Protocol.LobbyPlay"
-  "erInfo\",\n\013C_EnterGame\022\014\n\004name\030\001 \001(\t\022\017\n\007i"
-  "sDummy\030\002 \001(\010\";\n\016S_CreatePlayer\022)\n\006player"
-  "\030\001 \001(\0132\031.Protocol.LobbyPlayerInfo\"\036\n\016C_C"
-  "reatePlayer\022\014\n\004name\030\001 \001(\t\"/\n\nS_ItemList\022"
-  "!\n\005items\030\001 \003(\0132\022.Protocol.ItemInfo\".\n\tS_"
-  "AddItem\022!\n\005items\030\001 \003(\0132\022.Protocol.ItemIn"
-  "fo\"-\n\013C_EquipItem\022\014\n\004slot\030\001 \001(\005\022\020\n\010equip"
-  "ped\030\002 \001(\010\"-\n\013S_EquipItem\022\014\n\004slot\030\001 \001(\005\022\020"
-  "\n\010equipped\030\002 \001(\010\"4\n\014S_ChangeStat\022$\n\010stat"
-  "Info\030\001 \001(\0132\022.Protocol.StatInfo\"\010\n\006S_Ping"
-  "\"\010\n\006C_Pong\"{\n\nObjectInfo\022\020\n\010objectId\030\001 \001"
-  "(\005\022\014\n\004name\030\002 \001(\t\022\'\n\007posInfo\030\003 \001(\0132\026.Prot"
-  "ocol.PositionInfo\022$\n\010statInfo\030\004 \001(\0132\022.Pr"
-  "otocol.StatInfo\"Y\n\017LobbyPlayerInfo\022\022\n\npl"
-  "ayerDbId\030\001 \001(\005\022\014\n\004name\030\002 \001(\t\022$\n\010statInfo"
-  "\030\003 \001(\0132\022.Protocol.StatInfo\"t\n\014PositionIn"
-  "fo\022$\n\005state\030\001 \001(\0162\025.Protocol.EntityState"
-  "\022\"\n\007moveDir\030\002 \001(\0162\021.Protocol.MoveDir\022\014\n\004"
-  "PosX\030\003 \001(\005\022\014\n\004PosY\030\004 \001(\005\"e\n\010StatInfo\022\r\n\005"
-  "level\030\001 \001(\005\022\n\n\002hp\030\002 \001(\005\022\r\n\005maxHp\030\003 \001(\005\022\016"
-  "\n\006attack\030\004 \001(\005\022\r\n\005speed\030\005 \001(\002\022\020\n\010totalEx"
-  "p\030\006 \001(\005\"\034\n\tSkillInfo\022\017\n\007skillId\030\001 \001(\005\"`\n"
-  "\010ItemInfo\022\020\n\010itemDbId\030\001 \001(\005\022\023\n\013dataSheet"
-  "Id\030\002 \001(\005\022\r\n\005count\030\003 \001(\005\022\014\n\004slot\030\004 \001(\005\022\020\n"
-  "\010equipped\030\005 \001(\010*\360\002\n\tMessageId\022\020\n\014S_ENTER"
-  "_GAME\020\000\022\020\n\014S_LEAVE_GAME\020\001\022\013\n\007S_SPAWN\020\002\022\r"
-  "\n\tS_DESPAWN\020\003\022\n\n\006C_MOVE\020\004\022\n\n\006S_MOVE\020\005\022\013\n"
-  "\007C_SKILL\020\006\022\013\n\007S_SKILL\020\007\022\017\n\013S_CHANGE_HP\020\010"
-  "\022\t\n\005S_DIe\020\t\022\017\n\013S_CONNECTED\020\n\022\013\n\007C_LOGIN\020"
-  "\013\022\013\n\007S_LOGIN\020\014\022\020\n\014C_ENTER_GAME\020\r\022\023\n\017S_CR"
-  "EATE_PLAYER\020\016\022\023\n\017C_CREATE_PLAYER\020\017\022\017\n\013S_"
-  "ITEM_LIST\020\020\022\016\n\nS_ADD_ITEM\020\021\022\020\n\014C_EQUIP_I"
-  "TEM\020\022\022\020\n\014S_EQUIP_ITEM\020\023\022\021\n\rS_CHANGE_STAT"
-  "\020\024\022\n\n\006S_PING\020\025\022\n\n\006C_PONG\020\026*8\n\013EntityStat"
-  "e\022\010\n\004IDLE\020\000\022\n\n\006MOVING\020\001\022\t\n\005SKILL\020\002\022\010\n\004DE"
-  "AD\020\003*0\n\007MoveDir\022\006\n\002UP\020\000\022\010\n\004DOWN\020\001\022\010\n\004LEF"
-  "T\020\002\022\t\n\005RIGHT\020\003*C\n\016GameObjectType\022\010\n\004NONE"
-  "\020\000\022\n\n\006PLAYER\020\001\022\013\n\007MONSTER\020\002\022\016\n\nPROJECTIL"
-  "E\020\003*A\n\tSkillType\022\016\n\nSKILL_NONE\020\000\022\016\n\nSKIL"
-  "L_AUTO\020\001\022\024\n\020SKILL_PROJECTILE\020\002*Z\n\021Player"
-  "ServerState\022\026\n\022SERVER_STATE_LOGIN\020\000\022\026\n\022S"
-  "ERVER_STATE_LOBBY\020\001\022\025\n\021SERVER_STATE_GAME"
-  "\020\002*c\n\010ItemType\022\022\n\016ITEM_TYPE_NONE\020\000\022\024\n\020IT"
-  "EM_TYPE_WEAPON\020\001\022\023\n\017ITEM_TYPE_ARMOR\020\002\022\030\n"
-  "\024ITEM_TYPE_CONSUMABLE\020\003*N\n\nWeaponType\022\024\n"
-  "\020WEAPON_TYPE_NONE\020\000\022\025\n\021WEAPON_TYPE_SWORD"
-  "\020\001\022\023\n\017WEAPON_TYPE_BOW\020\002*h\n\tArmorType\022\023\n\017"
-  "ARMOR_TYPE_NONE\020\000\022\025\n\021ARMOR_TYPE_HELMET\020\001"
-  "\022\031\n\025ARMOR_TYPE_CHESTARMOR\020\002\022\024\n\020ARMOR_TYP"
-  "E_BOOTS\020\003*F\n\016ConsumableType\022\030\n\024CONSUMABL"
-  "E_TYPE_NONE\020\000\022\032\n\026CONSUMABLE_TYPE_POTION\020"
-  "\001B\035\252\002\032Google.Protobuf.MyProtocolb\006proto3"
+  "erInfo\"\033\n\013C_EnterGame\022\014\n\004name\030\001 \001(\t\";\n\016S"
+  "_CreatePlayer\022)\n\006player\030\001 \001(\0132\031.Protocol"
+  ".LobbyPlayerInfo\"\036\n\016C_CreatePlayer\022\014\n\004na"
+  "me\030\001 \001(\t\"/\n\nS_ItemList\022!\n\005items\030\001 \003(\0132\022."
+  "Protocol.ItemInfo\".\n\tS_AddItem\022!\n\005items\030"
+  "\001 \003(\0132\022.Protocol.ItemInfo\"-\n\013C_EquipItem"
+  "\022\014\n\004slot\030\001 \001(\005\022\020\n\010equipped\030\002 \001(\010\"-\n\013S_Eq"
+  "uipItem\022\014\n\004slot\030\001 \001(\005\022\020\n\010equipped\030\002 \001(\010\""
+  "4\n\014S_ChangeStat\022$\n\010statInfo\030\001 \001(\0132\022.Prot"
+  "ocol.StatInfo\"\010\n\006S_Ping\"\010\n\006C_Pong\"{\n\nObj"
+  "ectInfo\022\020\n\010objectId\030\001 \001(\005\022\014\n\004name\030\002 \001(\t\022"
+  "\'\n\007posInfo\030\003 \001(\0132\026.Protocol.PositionInfo"
+  "\022$\n\010statInfo\030\004 \001(\0132\022.Protocol.StatInfo\"Y"
+  "\n\017LobbyPlayerInfo\022\022\n\nplayerDbId\030\001 \001(\005\022\014\n"
+  "\004name\030\002 \001(\t\022$\n\010statInfo\030\003 \001(\0132\022.Protocol"
+  ".StatInfo\"t\n\014PositionInfo\022$\n\005state\030\001 \001(\016"
+  "2\025.Protocol.EntityState\022\"\n\007moveDir\030\002 \001(\016"
+  "2\021.Protocol.MoveDir\022\014\n\004PosX\030\003 \001(\005\022\014\n\004Pos"
+  "Y\030\004 \001(\005\"e\n\010StatInfo\022\r\n\005level\030\001 \001(\005\022\n\n\002hp"
+  "\030\002 \001(\005\022\r\n\005maxHp\030\003 \001(\005\022\016\n\006attack\030\004 \001(\005\022\r\n"
+  "\005speed\030\005 \001(\002\022\020\n\010totalExp\030\006 \001(\005\"\034\n\tSkillI"
+  "nfo\022\017\n\007skillId\030\001 \001(\005\"`\n\010ItemInfo\022\020\n\010item"
+  "DbId\030\001 \001(\005\022\023\n\013dataSheetId\030\002 \001(\005\022\r\n\005count"
+  "\030\003 \001(\005\022\014\n\004slot\030\004 \001(\005\022\020\n\010equipped\030\005 \001(\010*\360"
+  "\002\n\tMessageId\022\020\n\014S_ENTER_GAME\020\000\022\020\n\014S_LEAV"
+  "E_GAME\020\001\022\013\n\007S_SPAWN\020\002\022\r\n\tS_DESPAWN\020\003\022\n\n\006"
+  "C_MOVE\020\004\022\n\n\006S_MOVE\020\005\022\013\n\007C_SKILL\020\006\022\013\n\007S_S"
+  "KILL\020\007\022\017\n\013S_CHANGE_HP\020\010\022\t\n\005S_DIe\020\t\022\017\n\013S_"
+  "CONNECTED\020\n\022\013\n\007C_LOGIN\020\013\022\013\n\007S_LOGIN\020\014\022\020\n"
+  "\014C_ENTER_GAME\020\r\022\023\n\017S_CREATE_PLAYER\020\016\022\023\n\017"
+  "C_CREATE_PLAYER\020\017\022\017\n\013S_ITEM_LIST\020\020\022\016\n\nS_"
+  "ADD_ITEM\020\021\022\020\n\014C_EQUIP_ITEM\020\022\022\020\n\014S_EQUIP_"
+  "ITEM\020\023\022\021\n\rS_CHANGE_STAT\020\024\022\n\n\006S_PING\020\025\022\n\n"
+  "\006C_PONG\020\026*8\n\013EntityState\022\010\n\004IDLE\020\000\022\n\n\006MO"
+  "VING\020\001\022\t\n\005SKILL\020\002\022\010\n\004DEAD\020\003*0\n\007MoveDir\022\006"
+  "\n\002UP\020\000\022\010\n\004DOWN\020\001\022\010\n\004LEFT\020\002\022\t\n\005RIGHT\020\003*C\n"
+  "\016GameObjectType\022\010\n\004NONE\020\000\022\n\n\006PLAYER\020\001\022\013\n"
+  "\007MONSTER\020\002\022\016\n\nPROJECTILE\020\003*A\n\tSkillType\022"
+  "\016\n\nSKILL_NONE\020\000\022\016\n\nSKILL_AUTO\020\001\022\024\n\020SKILL"
+  "_PROJECTILE\020\002*Z\n\021PlayerServerState\022\026\n\022SE"
+  "RVER_STATE_LOGIN\020\000\022\026\n\022SERVER_STATE_LOBBY"
+  "\020\001\022\025\n\021SERVER_STATE_GAME\020\002*c\n\010ItemType\022\022\n"
+  "\016ITEM_TYPE_NONE\020\000\022\024\n\020ITEM_TYPE_WEAPON\020\001\022"
+  "\023\n\017ITEM_TYPE_ARMOR\020\002\022\030\n\024ITEM_TYPE_CONSUM"
+  "ABLE\020\003*N\n\nWeaponType\022\024\n\020WEAPON_TYPE_NONE"
+  "\020\000\022\025\n\021WEAPON_TYPE_SWORD\020\001\022\023\n\017WEAPON_TYPE"
+  "_BOW\020\002*h\n\tArmorType\022\023\n\017ARMOR_TYPE_NONE\020\000"
+  "\022\025\n\021ARMOR_TYPE_HELMET\020\001\022\031\n\025ARMOR_TYPE_CH"
+  "ESTARMOR\020\002\022\024\n\020ARMOR_TYPE_BOOTS\020\003*F\n\016Cons"
+  "umableType\022\030\n\024CONSUMABLE_TYPE_NONE\020\000\022\032\n\026"
+  "CONSUMABLE_TYPE_POTION\020\001B\035\252\002\032Google.Prot"
+  "obuf.MyProtocolb\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_Protocol_2eproto_deps[1] = {
   &::descriptor_table_google_2fprotobuf_2ftimestamp_2eproto,
 };
 static ::_pbi::once_flag descriptor_table_Protocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Protocol_2eproto = {
-    false, false, 2720, descriptor_table_protodef_Protocol_2eproto,
+    false, false, 2703, descriptor_table_protodef_Protocol_2eproto,
     "Protocol.proto",
     &descriptor_table_Protocol_2eproto_once, descriptor_table_Protocol_2eproto_deps, 1, 29,
     schemas, file_default_instances, TableStruct_Protocol_2eproto::offsets,
@@ -3314,7 +3312,6 @@ C_EnterGame::C_EnterGame(const C_EnterGame& from)
   C_EnterGame* const _this = this; (void)_this;
   new (&_impl_) Impl_{
       decltype(_impl_.name_){}
-    , decltype(_impl_.isdummy_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
@@ -3326,7 +3323,6 @@ C_EnterGame::C_EnterGame(const C_EnterGame& from)
     _this->_impl_.name_.Set(from._internal_name(), 
       _this->GetArenaForAllocation());
   }
-  _this->_impl_.isdummy_ = from._impl_.isdummy_;
   // @@protoc_insertion_point(copy_constructor:Protocol.C_EnterGame)
 }
 
@@ -3336,7 +3332,6 @@ inline void C_EnterGame::SharedCtor(
   (void)is_message_owned;
   new (&_impl_) Impl_{
       decltype(_impl_.name_){}
-    , decltype(_impl_.isdummy_){false}
     , /*decltype(_impl_._cached_size_)*/{}
   };
   _impl_.name_.InitDefault();
@@ -3370,7 +3365,6 @@ void C_EnterGame::Clear() {
   (void) cached_has_bits;
 
   _impl_.name_.ClearToEmpty();
-  _impl_.isdummy_ = false;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -3387,14 +3381,6 @@ const char* C_EnterGame::_InternalParse(const char* ptr, ::_pbi::ParseContext* c
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
           CHK_(::_pbi::VerifyUTF8(str, "Protocol.C_EnterGame.name"));
-        } else
-          goto handle_unusual;
-        continue;
-      // bool isDummy = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
-          _impl_.isdummy_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
-          CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
@@ -3437,12 +3423,6 @@ uint8_t* C_EnterGame::_InternalSerialize(
         1, this->_internal_name(), target);
   }
 
-  // bool isDummy = 2;
-  if (this->_internal_isdummy() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteBoolToArray(2, this->_internal_isdummy(), target);
-  }
-
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -3466,11 +3446,6 @@ size_t C_EnterGame::ByteSizeLong() const {
         this->_internal_name());
   }
 
-  // bool isDummy = 2;
-  if (this->_internal_isdummy() != 0) {
-    total_size += 1 + 1;
-  }
-
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
@@ -3491,9 +3466,6 @@ void C_EnterGame::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PR
 
   if (!from._internal_name().empty()) {
     _this->_internal_set_name(from._internal_name());
-  }
-  if (from._internal_isdummy() != 0) {
-    _this->_internal_set_isdummy(from._internal_isdummy());
   }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
@@ -3518,7 +3490,6 @@ void C_EnterGame::InternalSwap(C_EnterGame* other) {
       &_impl_.name_, lhs_arena,
       &other->_impl_.name_, rhs_arena
   );
-  swap(_impl_.isdummy_, other->_impl_.isdummy_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata C_EnterGame::GetMetadata() const {

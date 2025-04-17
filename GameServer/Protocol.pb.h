@@ -2578,7 +2578,6 @@ class C_EnterGame final :
 
   enum : int {
     kNameFieldNumber = 1,
-    kIsDummyFieldNumber = 2,
   };
   // string name = 1;
   void clear_name();
@@ -2594,15 +2593,6 @@ class C_EnterGame final :
   std::string* _internal_mutable_name();
   public:
 
-  // bool isDummy = 2;
-  void clear_isdummy();
-  bool isdummy() const;
-  void set_isdummy(bool value);
-  private:
-  bool _internal_isdummy() const;
-  void _internal_set_isdummy(bool value);
-  public:
-
   // @@protoc_insertion_point(class_scope:Protocol.C_EnterGame)
  private:
   class _Internal;
@@ -2612,7 +2602,6 @@ class C_EnterGame final :
   typedef void DestructorSkippable_;
   struct Impl_ {
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
-    bool isdummy_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -5943,26 +5932,6 @@ inline void C_EnterGame::set_allocated_name(std::string* name) {
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   // @@protoc_insertion_point(field_set_allocated:Protocol.C_EnterGame.name)
-}
-
-// bool isDummy = 2;
-inline void C_EnterGame::clear_isdummy() {
-  _impl_.isdummy_ = false;
-}
-inline bool C_EnterGame::_internal_isdummy() const {
-  return _impl_.isdummy_;
-}
-inline bool C_EnterGame::isdummy() const {
-  // @@protoc_insertion_point(field_get:Protocol.C_EnterGame.isDummy)
-  return _internal_isdummy();
-}
-inline void C_EnterGame::_internal_set_isdummy(bool value) {
-  
-  _impl_.isdummy_ = value;
-}
-inline void C_EnterGame::set_isdummy(bool value) {
-  _internal_set_isdummy(value);
-  // @@protoc_insertion_point(field_set:Protocol.C_EnterGame.isDummy)
 }
 
 // -------------------------------------------------------------------
