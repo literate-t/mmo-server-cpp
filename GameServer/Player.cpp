@@ -51,6 +51,8 @@ void Player::RefreshStat()
 			break;
 		}
 	}
+
+	_weapon_damage += GetStatInfo().attack();	
 }
 
 void Player::MakeViewCube()
