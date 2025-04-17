@@ -36,7 +36,7 @@ void Room::Init(int32 map_id, int32 zone_cell_size)
 	}
 
 	// monsters
-	for (int i = 0; i < 10; ++i)
+	for (int i = 0; i < 100; ++i)
 	{
 		SharedMonster monster = g_object_manager->Add<Monster>();
 		monster->Init(1);
