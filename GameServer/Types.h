@@ -3,6 +3,7 @@
 using SharedGameSession = shared_ptr<class GameSession>;
 using SharedObject = shared_ptr<class GameObject>;
 using SharedPlayer = shared_ptr<class Player>;
+using SharedDummyPlayer = shared_ptr<class DummyPlayer>;
 using SharedMonster = shared_ptr<class Monster>;
 using SharedProjectile = shared_ptr<class Projectile>;
 using SharedArrow = shared_ptr<class Arrow>;
