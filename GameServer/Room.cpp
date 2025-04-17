@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Room.h"
 #include "Player.h"
+#include "DummyPlayer.h"
 #include "GameSession.h"
 #include "ObjectManager.h"
 #include "DataManager.h"
@@ -127,8 +128,12 @@ void Room::Leave(int32 object_id)
 		pos = player->GetCellPos();
 
 		_map->ApplyLeave(player);
+
+		if (player->IsDummy() == false)
+		{
 		player->GetView()->JobReserved->Cancel();
 		player->ReleaseViewCube();
+		}
 
 		// to me
 		S_LeaveGame leave;
