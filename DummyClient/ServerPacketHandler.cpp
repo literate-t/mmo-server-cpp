@@ -87,6 +87,7 @@ bool Handle_S_Login(SharedPacketSession& session, Protocol::S_Login& pkt)
 
 		C_EnterGame enter_game;
 		enter_game.set_name(player.name());
+		enter_game.set_isdummy(true);
 
 		server_session->Send(ServerPacketHandler::MakeSendBuffer(enter_game));
 	}
@@ -100,6 +101,7 @@ bool Handle_S_CreatePlayer(SharedPacketSession& session, Protocol::S_CreatePlaye
 
 	C_EnterGame enter_packet;
 	enter_packet.set_name(pkt.player().name());
+	enter_packet.set_isdummy(true);
 
 	server_session->Send(ServerPacketHandler::MakeSendBuffer(enter_packet));
 

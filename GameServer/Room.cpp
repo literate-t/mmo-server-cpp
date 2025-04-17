@@ -76,9 +76,14 @@ void Room::Enter(SharedObject object, bool random_pos)
 			player->OwnerSession->Send(ClientPacketHandler::MakeSendBuffer(enter_game));
 		}
 
+		if (player->IsDummy() == false)
+		{
 		player->MakeViewCube();
 		player->GetView()->IsReset = true;
 		player->GetView()->Update();
+	}
+		else
+			player->Update();
 	}
 	else if (type == GameObjectType::PROJECTILE)
 	{
