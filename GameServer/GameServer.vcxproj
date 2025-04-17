@@ -187,6 +187,7 @@
     <ClCompile Include="ConfigManager.cpp" />
     <ClCompile Include="DataManager.cpp" />
     <ClCompile Include="DBSerializer.cpp" />
+    <ClCompile Include="DummyPlayer.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Heartbeat.cpp" />
     <ClCompile Include="Inventory.cpp" />
@@ -227,6 +228,7 @@
     <ClInclude Include="DataManager.h" />
     <ClInclude Include="DataModel.h" />
     <ClInclude Include="DBSerializer.h" />
+    <ClInclude Include="DummyPlayer.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Heartbeat.h" />
     <ClInclude Include="Inventory.h" />
