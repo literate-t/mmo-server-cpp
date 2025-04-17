@@ -104,7 +104,7 @@ void GameSession::HandleLogin(C_Login& login_packet)
 	db_bind.BindColumn(7, stat.speed);
 	db_bind.BindColumn(8, stat.total_exp);
 
-	db_bind.Execute();
+	ASSERT_CRASH(db_bind.Execute());
 
 	bool is_fetch_data = false;
 	S_Login login_ok;
@@ -145,7 +145,7 @@ void GameSession::HandleLogin(C_Login& login_packet)
 		DBBind<1, 0> db_bind(*conn, query);
 		db_bind.BindParam(0, account_name.c_str());
 
-		db_bind.Execute();
+		ASSERT_CRASH(db_bind.Execute());
 
 		int32 newId;
 		db_bind.GetId(newId);
@@ -178,7 +178,7 @@ void GameSession::HandleCreatePlayer(C_CreatePlayer packet)
 	db_bind_select.BindParam(0, packet.name().c_str());
 	db_bind_select.BindParam(1, _account_id);
 
-	db_bind_select.Execute();
+	ASSERT_CRASH(db_bind_select.Execute());
 
 	int32 new_player_id;
 	db_bind_select.GetId(new_player_id);
@@ -193,7 +193,7 @@ void GameSession::HandleCreatePlayer(C_CreatePlayer packet)
 	db_bind_insert.BindParam(5, stat_data.total_exp);
 	db_bind_insert.BindParam(6, new_player_id);
 
-	db_bind_insert.Execute();
+	ASSERT_CRASH(db_bind_insert.Execute());
 
 	g_db_connection_pool->Push(conn);
 
