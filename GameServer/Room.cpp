@@ -115,8 +115,10 @@ void Room::Leave(int32 object_id)
 	if (type == GameObjectType::PLAYER)
 	{
 		SharedPlayer player = _players[object_id];
-		if (0 == _players.erase(object_id))
+		if (player == nullptr)
 			return;
+
+		_players.erase(object_id);
 
 		player->OnLeaveGame();
 
