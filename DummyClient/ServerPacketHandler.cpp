@@ -128,5 +128,8 @@ bool Handle_S_ChangeStat(SharedPacketSession& session, Protocol::S_ChangeStat& p
 
 bool Handle_S_Ping(SharedPacketSession& session, Protocol::S_Ping& pkt)
 {
-	return false;
+	C_Pong pong;
+	session->Send(ServerPacketHandler::MakeSendBuffer(pong));
+
+	return true;
 }
