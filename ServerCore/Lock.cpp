@@ -16,7 +16,7 @@ void Lock::WriteLock(const char* name)
 	}
 
 	// time-out을 위해
-	uint32 begin = static_cast<uint32>(GetTickCount64());
+	uint64 begin = GetTickCount64();
 	// 아무도 소유하지 않을 때 WL을 획득한다
 	while (true)
 	{
@@ -73,7 +73,7 @@ void Lock::ReadLock(const char* name)
 
 	// WL을 잡지 않은 스레드라면 RL을 잡을 수 있다
 	// WL->RL이 정책이므로 RL->WL은 허용할 수 없다(데드락 방지)
-	uint32 begin = static_cast<uint32>(GetTickCount64());
+	uint64 begin = GetTickCount64();
 	while (true)
 	{
 		for (int spin_count = 0; spin_count < MAX_SPIN_COUNT; ++spin_count)
@@ -83,7 +83,7 @@ void Lock::ReadLock(const char* name)
 				return;
 		}
 
-		if (ACQUIRE_TIMEOUT_TICK <= begin - GetTickCount64())
+		if (ACQUIRE_TIMEOUT_TICK <= GetTickCount64() - begin)
 			CRASH("ReadLock time out!");
 
 		this_thread::sleep_for(1ms);
