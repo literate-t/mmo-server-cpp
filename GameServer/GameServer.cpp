@@ -21,16 +21,27 @@ enum WorkerInfo
 	TICK = 64,
 };
 
+void FlushSend()
+{
+	while (true)
+	{
+		g_session_manager->FlushSend();
+	}
+}
+
+void DoIoJob(SharedServerService& service)
+{
+	while (true)
+	{
+		service->GetIocpCore()->Dispatch(10);
+	}
+}
+
 void DoWorkerJob(SharedServerService& service)
 {
 	while (true)
 	{
-		// 네트워크 입출력 처리 + 패킷 핸들
-		service->GetIocpCore()->Dispatch(10);
-
 		ThreadManager::DistributeReservedJobs();
-
-		// Job
 		tls_end_tick_count = GetTickCount64() + WorkerInfo::TICK;
 		ThreadManager::WorkGlobalQueue();
 	}
@@ -39,7 +50,7 @@ void DoWorkerJob(SharedServerService& service)
 int main()
 {
 	ServerDB server_db;
-	server_db.MakeTables();
+	//server_db.MakeTables();
 	ClientPacketHandler::Init();
 	g_room_manager->Add(1);
 
@@ -52,7 +63,15 @@ int main()
 
 	ASSERT_CRASH(_server_service->Start());
 
-	for (int32 i = 0; i < 12; ++i)
+	for (int32 i = 0; i < 7; ++i)
+	{
+		g_thread_manager->Launch([&_server_service]()
+			{
+				DoIoJob(_server_service);
+			});
+	}
+
+	for (int32 i = 0; i < 4; ++i)
 	{
 		g_thread_manager->Launch([&_server_service]()
 			{
@@ -60,8 +79,13 @@ int main()
 			});
 	}
 
-	// main thread
-	DoWorkerJob(_server_service);
+	for (int32 i = 0; i < 2; ++i)
+	{
+		g_thread_manager->Launch([&_server_service]()
+			{
+				FlushSend();
+			});
+	}
 
 	g_thread_manager->Join();
 }
