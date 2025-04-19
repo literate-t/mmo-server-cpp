@@ -23,6 +23,8 @@ public:
 
 public:
 	void Send(SharedSendBuffer send_buffer);
+	void Send(xqueue<SharedSendBuffer>& send_buffers);
+
 	// 서버 간 통신할 때 필요할 수 있다
 	bool Connect();
 	void Disconnect(const WCHAR* cause);

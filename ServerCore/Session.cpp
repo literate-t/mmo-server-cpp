@@ -33,6 +33,24 @@ void Session::Send(SharedSendBuffer send_buffer)
 		RegisterSend();
 }
 
+void Session::Send(xqueue<SharedSendBuffer>& send_buffers)
+{
+	if (false == IsConnected())
+		return;
+
+	{
+		WRITE_LOCK;
+		while (!send_buffers.empty())
+		{
+			_send_queue.push(send_buffers.front());
+			send_buffers.pop();
+		}
+	}
+
+	if (false == _send_registered.exchange(true))
+		RegisterSend();
+}
+
 bool Session::Connect()
 {
 	return RegisterConnect();
@@ -228,6 +246,12 @@ void Session::RegisterSend()
 	{
 		WRITE_LOCK;
 		int32 write_size = 0;
+		//if (_send_queue.empty())
+		//{
+		//	_send_registered.store(false);
+		//	return;
+		//}
+
 		while (false == _send_queue.empty())
 		{
 			SharedSendBuffer send_buffer = _send_queue.front();
