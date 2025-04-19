@@ -53,6 +53,64 @@ void GameSession::OnRecvPacketProcessed(BYTE* buffer, int32 length)
 	ClientPacketHandler::HandlePacket(session, buffer, length);
 }
 
+void GameSession::Send(SharedSendBuffer send_buffer)
+{
+	bool sendible = false;
+	{
+		WRITE_LOCK;
+		_send_packets.push(send_buffer);
+		_pending_bytes += send_buffer->WriteSize();
+
+		if (_pending_bytes >= SEND_BYTE)
+			sendible = true;
+	}
+
+	if (sendible)
+		FlushSend();
+	
+	bool expected = true;
+	bool desired = false;
+	if (_can_flush.compare_exchange_strong(expected, desired))
+	{
+		g_shared_packet_manager->PushTimerAsync(SEND_TICK, [shared = shared_from_this()]()
+			{
+				SharedGameSession session = static_pointer_cast<GameSession>(shared);
+				session->FlushSend();
+			});
+	}
+}
+
+void GameSession::FlushSend()
+{
+	xqueue<SharedSendBuffer> reserved_packet;
+
+	{
+		WRITE_LOCK;
+		if (_send_packets.empty())
+		{
+			_can_flush.store(true);
+			return;
+		}
+
+		while (!_send_packets.empty())
+		{
+			reserved_packet.push(_send_packets.front());
+			_send_packets.pop();
+		}
+
+		_pending_bytes = 0;
+	}
+
+	_can_flush.store(true);
+	Session::Send(reserved_packet);
+}
+
+bool GameSession::CanFlush()
+{
+	READ_LOCK;
+	return !_send_packets.empty();
+}
+
 void GameSession::OnSendCompleted(int32 length)
 {
 	

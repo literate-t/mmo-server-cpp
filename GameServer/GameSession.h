@@ -3,6 +3,12 @@
 #include "Protocol.pb.h"
 using namespace Protocol;
 
+enum
+{
+	SEND_TICK = 10,
+	SEND_BYTE = 0x300,
+};
+
 class GameSession : public PacketSession
 {
 public:
@@ -12,6 +18,10 @@ public:
 	void OnDisconnectCompleted() override;
 	void OnRecvPacketProcessed(BYTE* buffer, int32 len) override;
 	void OnSendCompleted(int32 length) override;
+
+	void Send(SharedSendBuffer send_buffer);
+	void FlushSend();
+	bool CanFlush();
 
 	void AddPlayer(SharedPlayer player);
 	void RemovePlayer(SharedPlayer player);
@@ -40,4 +50,11 @@ private:
 
 	PlayerServerState _server_state = PlayerServerState::SERVER_STATE_LOGIN;
 	xvector<LobbyPlayerInfo*> _lobby_players;
+
+	uint32 _pending_bytes = 0;
+	Atomic<bool> _can_flush = true;
+
+	xqueue<SharedSendBuffer> _send_packets;
+
+	USE_LOCK;
 };
