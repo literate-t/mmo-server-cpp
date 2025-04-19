@@ -49,8 +49,7 @@ void Monster::Update()
 		break;
 	}
 
-	auto shared_this = shared_from_this();
-	_job_reserved = _room->PushTimerAsync(200, [shared_this]() { shared_this->Update(); });
+	_job_reserved = _room->PushTimerAsync(200, [shared_this = shared_from_this()]() { shared_this->Update(); });
 }
 
 void Monster::OnDead(SharedObject attacker)
