@@ -34,6 +34,9 @@
     <Filter Include="GameContents\Item">
       <UniqueIdentifier>{1779a35a-61ed-440d-ab71-1cfca678ed26}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Network">
+      <UniqueIdentifier>{6162b2c5-d9b1-4007-814b-53a9dbec3213}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameServer.cpp">
@@ -122,6 +125,9 @@
     </ClCompile>
     <ClCompile Include="Random.cpp">
       <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="PacketManager.cpp">
+      <Filter>Network</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -220,6 +226,9 @@
     </ClInclude>
     <ClInclude Include="Random.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketManager.h">
+      <Filter>Network</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
