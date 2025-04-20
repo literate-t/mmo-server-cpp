@@ -2,8 +2,6 @@
 #include "GameSessionManager.h"
 #include "GameSession.h"
 
-GameSessionManager g_session_manager;
-
 void GameSessionManager::Add(SharedGameSession session)
 {
 	WRITE_LOCK;
@@ -23,4 +21,16 @@ void GameSessionManager::Broadcast(SharedSendBuffer send_buffer)
 	{
 		session->Send(send_buffer);
 	}
+}
+
+void GameSessionManager::FlushSend()
+{
+	xset<SharedGameSession> sessions;
+	{
+		READ_LOCK;
+		sessions = _sessions;
+	}
+
+	for (auto& session : sessions)
+		session->FlushSend();
 }
