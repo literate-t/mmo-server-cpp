@@ -92,11 +92,7 @@ void GameSession::FlushSend()
 			return;
 		}
 
-		while (!_send_packets.empty())
-		{
-			reserved_packet.push(_send_packets.front());
-			_send_packets.pop();
-		}
+		reserved_packet.swap(_send_packets);		
 
 		_pending_bytes = 0;
 	}

@@ -40,11 +40,12 @@ void Session::Send(xqueue<SharedSendBuffer>& send_buffers)
 
 	{
 		WRITE_LOCK;
-		while (!send_buffers.empty())
-		{
-			_send_queue.push(send_buffers.front());
-			send_buffers.pop();
-		}
+		send_buffers.swap(_send_queue);
+		//while (!send_buffers.empty())
+		//{
+		//	_send_queue.push(send_buffers.front());
+		//	send_buffers.pop();
+		//}
 	}
 
 	if (false == _send_registered.exchange(true))
