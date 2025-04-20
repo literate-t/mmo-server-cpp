@@ -6,6 +6,7 @@
 #include "Room.h"
 #include "Info.h"
 #include "ObjectManager.h"
+#include "PacketManager.h"
 #include "Player.h"
 #include "DataModel.h"
 using namespace DataModel;
@@ -21,7 +22,7 @@ GameSession::~GameSession()
 
 void GameSession::OnConnectCompleted()
 {
-	g_session_manager.Add(static_pointer_cast<GameSession>(shared_from_this()));
+	g_session_manager->Add(static_pointer_cast<GameSession>(shared_from_this()));
 
 	S_Connected connected_packet;
 	Send(ClientPacketHandler::MakeSendBuffer(connected_packet));
@@ -32,7 +33,7 @@ void GameSession::OnConnectCompleted()
 
 void GameSession::OnDisconnectCompleted()
 {
-	g_session_manager.Remove(static_pointer_cast<GameSession>(shared_from_this()));
+	g_session_manager->Remove(static_pointer_cast<GameSession>(shared_from_this()));
 
 	// player와의 순환을 끊어준다
 	if (_current_player)
