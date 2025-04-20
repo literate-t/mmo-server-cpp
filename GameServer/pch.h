@@ -21,8 +21,10 @@ extern class ConfigManager* g_config_manager;
 extern class DataManager* g_data_manager;
 extern class RoomManager* g_room_manager;
 extern class ObjectManager* g_object_manager;
+extern shared_ptr<class PacketManager> g_shared_packet_manager;
+extern class GameSessionManager* g_session_manager;
 extern class Map* g_map;
-extern class shared_ptr<class Heartbeat> g_shared_heart;
+extern shared_ptr<class Heartbeat> g_shared_heart;
 
 // Include
 #include <fstream>
