@@ -54,7 +54,7 @@ void GameSession::OnRecvPacketProcessed(BYTE* buffer, int32 length)
 	ClientPacketHandler::HandlePacket(session, buffer, length);
 }
 
-void GameSession::Send(SharedSendBuffer send_buffer)
+void GameSession::ReserveSend(SharedSendBuffer send_buffer)
 {
 	bool sendible = false;
 	{

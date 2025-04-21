@@ -165,7 +165,7 @@ void Room::Broadcast(SharedSendBuffer send_buffer)
 {
 	for (auto& p : _players)
 	{
-		p.second->OwnerSession->Send(send_buffer);
+		p.second->OwnerSession->ReserveSend(send_buffer);
 	}
 }
 
@@ -178,7 +178,7 @@ void Room::Broadcast(Vector2Int pos, SharedSendBuffer send_buffer)
 		int32 dist_y = abs(pos.y - player->GetCellPos().y);
 
 		if (dist_x <= kRange && dist_y <= kRange)
-			player->OwnerSession->Send(send_buffer);
+			player->OwnerSession->ReserveSend(send_buffer);
 	}
 }
 

@@ -19,7 +19,7 @@ public:
 	void OnRecvPacketProcessed(BYTE* buffer, int32 len) override;
 	void OnSendCompleted(int32 length) override;
 
-	void Send(SharedSendBuffer send_buffer);
+	void ReserveSend(SharedSendBuffer send_buffer);
 	void FlushSend();
 	bool CanFlush();
 
