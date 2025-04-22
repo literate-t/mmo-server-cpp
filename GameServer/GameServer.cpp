@@ -21,12 +21,6 @@ enum WorkerInfo
 	TICK = 64,
 };
 
-void FlushSend()
-{
-	g_session_manager->FlushSend();
-}
-
-
 void FlushSendLoop()
 {
 	while (true)
@@ -35,24 +29,6 @@ void FlushSendLoop()
 		this_thread::sleep_for(1ms);
 	}
 }
-//
-//void DoIoJob(SharedServerService& service)
-//{
-//	while (true)
-//	{
-//		service->GetIocpCore()->Dispatch(10);
-//	}
-//}
-//
-//void DoWorkerJob(SharedServerService& service)
-//{
-//	while (true)
-//	{
-//		ThreadManager::DistributeReservedJobs();
-//		tls_end_tick_count = GetTickCount64() + WorkerInfo::TICK;
-//		ThreadManager::WorkGlobalQueue();
-//	}
-//}
 
 void DoWorkerJob(SharedServerService& service)
 {
@@ -81,7 +57,7 @@ int main()
 
 	ASSERT_CRASH(_server_service->Start());
 
-	for (int32 i = 0; i < 11; ++i)
+	for (int32 i = 0; i < 12; ++i)
 	{
 		g_thread_manager->Launch([&_server_service]()
 			{
@@ -90,37 +66,6 @@ int main()
 	}
 
 	FlushSendLoop();	
-
-	//for (int32 i = 0; i < 2; ++i)
-	//{
-	//	g_thread_manager->Launch([&_server_service]()
-	//		{
-	//			FlushSendLoop();
-	//		});
-	//}
-
-
-	//for (int32 i = 0; i < 6; ++i)
-	//{
-	//	g_thread_manager->Launch([&_server_service]()
-	//		{
-	//			DoIoJob(_server_service);
-	//		});
-	//}
-
-	//for (int32 i = 0; i < 6; ++i)
-	//{
-	//	g_thread_manager->Launch([&_server_service]()
-	//		{
-	//			DoWorkerJob(_server_service);
-	//		});
-	//}
-
-	//g_thread_manager->Launch([&_server_service]()
-	//	{
-	//		FlushSend();
-	//	});
-
 
 	g_thread_manager->Join();
 }
