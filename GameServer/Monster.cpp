@@ -4,6 +4,7 @@
 #include "Room.h"
 #include "Map.h"
 #include "Player.h"
+#include "GameSession.h"
 #include "ClientPacketHandler.h"
 #include "Random.h"
 #include "DBSerializer.h"
@@ -89,13 +90,20 @@ void Monster::UpdateIdle()
 }
 
 void Monster::UpdateMoving()
-{	
+{
+	if (false == (_target && _target->OwnerSession->IsConnected()))
+	{
+		StopTargeting();
+		BroadcastState();
+		return;
+	}
+
 	if (_move_tick > GetTickCount64())
 		return;
 	_move_tick = GetTickCount64() + static_cast<int64>(1000 / GetSpeed());
 	
 	// TODO:? target nullptr check
-	if (_target->GetRoom() != _room)
+	if (_target && _target->GetRoom() != _room)
 	{
 		StopTargeting();
 		BroadcastState();
@@ -135,10 +143,17 @@ void Monster::UpdateMoving()
 
 void Monster::UpdateSkill()
 {
+	if (false == (_target && _target->OwnerSession->IsConnected()))
+	{
+		StopTargeting();
+		BroadcastState();
+		return;
+	}
+
 	if (_skill_tick == 0)
 	{
 		// TODO:? target nullptr check
-		if (_target->GetRoom() != _room)
+		if (_target && _target->GetRoom() != _room)
 		{
 			StopTargeting();
 			BroadcastState();
