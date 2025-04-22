@@ -33,6 +33,13 @@ void GameSession::OnConnectCompleted()
 
 void GameSession::OnDisconnectCompleted()
 {
+		
+	{
+		xqueue<SharedSendBuffer> end_queue;
+		_send_packets.swap(end_queue);
+		_can_flush.store(false);	
+	}
+
 	g_session_manager->Remove(static_pointer_cast<GameSession>(shared_from_this()));
 
 	// player와의 순환을 끊어준다
@@ -43,7 +50,7 @@ void GameSession::OnDisconnectCompleted()
 			room->PushJobAsync(&Room::Leave, _current_player->GetObjectId());
 		}
 	}
-
+	
 	_current_player = nullptr;
 	_players.clear();
 }
