@@ -63,8 +63,6 @@ void Session::Disconnect(const WCHAR* cause)
 		return;
 
 	printf("Disconnect: %ls\n", cause);
-	//OnDisconnectCompleted();
-	//GetService()->UnregisterSession(GetSharedSession());
 	RegisterDisconnect();
 }
 
@@ -119,8 +117,10 @@ bool Session::RegisterDisconnect()
 void Session::ProcessDisconnect(IocpEvent* disconnect_event)
 {
 	disconnect_event->owner = nullptr;
+	_connected.store(false);
 	OnDisconnectCompleted();
 	GetService()->UnregisterSession(GetSharedSession());
+	puts("Session::ProcessDisconnect");
 	xdelete(disconnect_event);
 }
 
