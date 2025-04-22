@@ -35,7 +35,7 @@ private:
 	uint64 _search_tick = 0;
 	uint64 _move_tick = 0;
 
-	SharedObject _target = nullptr;
+	SharedPlayer _target = nullptr;
 	SharedRoom _room;
 
 	SharedJob _job_reserved;
