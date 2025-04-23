@@ -11,6 +11,7 @@ using SharedRoom = shared_ptr<class Room>;
 using SharedItem = shared_ptr<class Item>;
 using SharedWeapon = shared_ptr<class Weapon>;
 using SharedArmor = shared_ptr<class Armor>;
+using SharedConsumbale = shared_ptr<class Consumable>;
 using SharedInventory = shared_ptr<class Inventory>;
 using SharedViewCube = shared_ptr<class ViewCube>;
 using SharedMap = shared_ptr<class Map>;
