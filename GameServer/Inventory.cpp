@@ -17,8 +17,10 @@ SharedItem Inventory::Get(int32 slot)
 		return nullptr;
 	}	
 }
+
+int32 Inventory::Erase(int32 slot)
 {
-	return _items[slot];
+	return static_cast<int32>(_items.erase(slot));
 }
 
 SharedItem Inventory::FindIf(function<bool(const SharedItem&)> predicate)
