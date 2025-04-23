@@ -28,9 +28,11 @@ enum
 	PKT_S_AddItem = 17,
 	PKT_C_EquipItem = 18,
 	PKT_S_EquipItem = 19,
-	PKT_S_ChangeStat = 20,
-	PKT_S_Ping = 21,
-	PKT_C_Pong = 22,
+	PKT_C_UseItem = 20,
+	PKT_S_UseItem = 21,
+	PKT_S_ChangeStat = 22,
+	PKT_S_Ping = 23,
+	PKT_C_Pong = 24,
 };
 
 bool Handle_INVALID(SharedPacketSession& session, BYTE* buffer, int32 length);
@@ -48,6 +50,7 @@ bool Handle_S_CreatePlayer(SharedPacketSession& session, Protocol::S_CreatePlaye
 bool Handle_S_ItemList(SharedPacketSession& session, Protocol::S_ItemList& pkt);
 bool Handle_S_AddItem(SharedPacketSession& session, Protocol::S_AddItem& pkt);
 bool Handle_S_EquipItem(SharedPacketSession& session, Protocol::S_EquipItem& pkt);
+bool Handle_S_UseItem(SharedPacketSession& session, Protocol::S_UseItem& pkt);
 bool Handle_S_ChangeStat(SharedPacketSession& session, Protocol::S_ChangeStat& pkt);
 bool Handle_S_Ping(SharedPacketSession& session, Protocol::S_Ping& pkt);
 
@@ -73,6 +76,7 @@ public:
 		g_packet_handler[PKT_S_ItemList] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::S_ItemList>(Handle_S_ItemList, session, buffer, length); };
 		g_packet_handler[PKT_S_AddItem] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::S_AddItem>(Handle_S_AddItem, session, buffer, length); };
 		g_packet_handler[PKT_S_EquipItem] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::S_EquipItem>(Handle_S_EquipItem, session, buffer, length); };
+		g_packet_handler[PKT_S_UseItem] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::S_UseItem>(Handle_S_UseItem, session, buffer, length); };
 		g_packet_handler[PKT_S_ChangeStat] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::S_ChangeStat>(Handle_S_ChangeStat, session, buffer, length); };
 		g_packet_handler[PKT_S_Ping] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::S_Ping>(Handle_S_Ping, session, buffer, length); };		
 	}
@@ -85,6 +89,7 @@ public:
 	static SharedSendBuffer MakeSendBuffer(Protocol::C_EnterGame& pkt) { return MakeSendBuffer(pkt, PKT_C_EnterGame); }
 	static SharedSendBuffer MakeSendBuffer(Protocol::C_CreatePlayer& pkt) { return MakeSendBuffer(pkt, PKT_C_CreatePlayer); }
 	static SharedSendBuffer MakeSendBuffer(Protocol::C_EquipItem& pkt) { return MakeSendBuffer(pkt, PKT_C_EquipItem); }
+	static SharedSendBuffer MakeSendBuffer(Protocol::C_UseItem& pkt) { return MakeSendBuffer(pkt, PKT_C_UseItem); }
 	static SharedSendBuffer MakeSendBuffer(Protocol::C_Pong& pkt) { return MakeSendBuffer(pkt, PKT_C_Pong); }	
 
 private:

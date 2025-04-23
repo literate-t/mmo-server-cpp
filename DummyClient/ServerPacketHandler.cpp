@@ -121,6 +121,11 @@ bool Handle_S_EquipItem(SharedPacketSession& session, Protocol::S_EquipItem& pkt
 	return false;
 }
 
+bool Handle_S_UseItem(SharedPacketSession& session, Protocol::S_UseItem& pkt)
+{
+	return false;
+}
+
 bool Handle_S_ChangeStat(SharedPacketSession& session, Protocol::S_ChangeStat& pkt)
 {
 	return false;
