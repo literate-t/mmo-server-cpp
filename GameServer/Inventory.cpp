@@ -6,7 +6,17 @@ void Inventory::Add(SharedItem item)
 	_items[item->GetSlot()] = item;
 }
 
-SharedItem& Inventory::Get(int32 slot)
+SharedItem Inventory::Get(int32 slot)
+{
+	try
+	{
+		return _items.at(slot);
+	}
+	catch (out_of_range& e)
+	{
+		return nullptr;
+	}	
+}
 {
 	return _items[slot];
 }
