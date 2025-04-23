@@ -131,7 +131,7 @@ void Room::Leave(int32 object_id)
 
 		// to me
 		S_LeaveGame leave;
-		player->OwnerSession->Send(ClientPacketHandler::MakeSendBuffer(leave));
+		player->OwnerSession->ReserveSend(ClientPacketHandler::MakeSendBuffer(leave));
 	}
 	else if (type == GameObjectType::MONSTER)
 	{

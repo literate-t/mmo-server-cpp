@@ -150,6 +150,7 @@ void GameObject::OnDead(SharedObject attacker)
 	GetPositionInfo().set_state(EntityState::IDLE);
 	GetPositionInfo().set_movedir(MoveDir::DOWN);
 
+	this_thread::sleep_for(100ms);
 	room->Enter(shared_from_this());
 }
 
