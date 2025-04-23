@@ -14,7 +14,7 @@ public:
 	SharedGameSession OwnerSession;	
 
 	Inventory& GetInventory() { return _inventory; }	
-	void RefreshStat();	
+	void RefreshStat();
 
 	SharedViewCube& GetView() { return _view_cube; }
 	void MakeViewCube();
@@ -28,6 +28,7 @@ public:
 
 	// packet
 	void HandleEquipItemPacket(const C_EquipItem& pkt);
+	void HandleUseItemPacket(const C_UseItem& pkt);
 
 private:
 	Inventory _inventory;

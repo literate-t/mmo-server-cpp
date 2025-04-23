@@ -132,3 +132,34 @@ void Player::HandleEquipItemPacket(const C_EquipItem& equip_item)
 
 	RefreshStat();
 }
+
+void Player::HandleUseItemPacket(const C_UseItem& pkt)
+{
+	SharedItem find_item = GetInventory().Get(pkt.slot());
+	if (find_item == nullptr)
+		return;
+
+	if (find_item->GetItemType() != ItemType::ITEM_TYPE_CONSUMABLE)
+		return;
+
+	if (GetHp() == GetMaxHp())
+		return;
+
+	SharedConsumbale consumable = static_pointer_cast<Consumable>(find_item);
+	AddHp(consumable->GetDamage());
+
+	if (0 == GetInventory().Erase(pkt.slot()))
+		return;
+
+	SharedPlayer this_player = static_pointer_cast<Player>(shared_from_this());
+	DBSerializer::UseItemNoti(this_player, find_item);
+
+	S_ChangeHp change_hp;
+	change_hp.set_hp(GetHp());
+	change_hp.set_objectid(GetObjectId());
+	OwnerSession->Send(ClientPacketHandler::MakeSendBuffer(change_hp));
+
+	S_UseItem use_item;
+	use_item.set_slot(pkt.slot());
+	OwnerSession->Send(ClientPacketHandler::MakeSendBuffer(use_item));
+}
