@@ -28,9 +28,11 @@ enum
 	PKT_S_AddItem = 17,
 	PKT_C_EquipItem = 18,
 	PKT_S_EquipItem = 19,
-	PKT_S_ChangeStat = 20,
-	PKT_S_Ping = 21,
-	PKT_C_Pong = 22,
+	PKT_C_UseItem = 20,
+	PKT_S_UseItem = 21,
+	PKT_S_ChangeStat = 22,
+	PKT_S_Ping = 23,
+	PKT_C_Pong = 24,
 };
 
 bool Handle_INVALID(SharedPacketSession& session, BYTE* buffer, int32 length);
@@ -40,6 +42,7 @@ bool Handle_C_Login(SharedPacketSession& session, Protocol::C_Login& pkt);
 bool Handle_C_EnterGame(SharedPacketSession& session, Protocol::C_EnterGame& pkt);
 bool Handle_C_CreatePlayer(SharedPacketSession& session, Protocol::C_CreatePlayer& pkt);
 bool Handle_C_EquipItem(SharedPacketSession& session, Protocol::C_EquipItem& pkt);
+bool Handle_C_UseItem(SharedPacketSession& session, Protocol::C_UseItem& pkt);
 bool Handle_C_Pong(SharedPacketSession& session, Protocol::C_Pong& pkt);
 
 class ClientPacketHandler
@@ -56,6 +59,7 @@ public:
 		g_packet_handler[PKT_C_EnterGame] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::C_EnterGame>(Handle_C_EnterGame, session, buffer, length); };
 		g_packet_handler[PKT_C_CreatePlayer] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::C_CreatePlayer>(Handle_C_CreatePlayer, session, buffer, length); };
 		g_packet_handler[PKT_C_EquipItem] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::C_EquipItem>(Handle_C_EquipItem, session, buffer, length); };
+		g_packet_handler[PKT_C_UseItem] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::C_UseItem>(Handle_C_UseItem, session, buffer, length); };
 		g_packet_handler[PKT_C_Pong] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::C_Pong>(Handle_C_Pong, session, buffer, length); };		
 	}
 
@@ -75,6 +79,7 @@ public:
 	static SharedSendBuffer MakeSendBuffer(Protocol::S_ItemList& pkt) { return MakeSendBuffer(pkt, PKT_S_ItemList); }
 	static SharedSendBuffer MakeSendBuffer(Protocol::S_AddItem& pkt) { return MakeSendBuffer(pkt, PKT_S_AddItem); }
 	static SharedSendBuffer MakeSendBuffer(Protocol::S_EquipItem& pkt) { return MakeSendBuffer(pkt, PKT_S_EquipItem); }
+	static SharedSendBuffer MakeSendBuffer(Protocol::S_UseItem& pkt) { return MakeSendBuffer(pkt, PKT_S_UseItem); }
 	static SharedSendBuffer MakeSendBuffer(Protocol::S_ChangeStat& pkt) { return MakeSendBuffer(pkt, PKT_S_ChangeStat); }
 	static SharedSendBuffer MakeSendBuffer(Protocol::S_Ping& pkt) { return MakeSendBuffer(pkt, PKT_S_Ping); }	
 
