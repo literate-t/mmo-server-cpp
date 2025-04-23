@@ -450,6 +450,11 @@ void Room::HandleEquipItemPacket(SharedPlayer player, const Protocol::C_EquipIte
 	player->HandleEquipItemPacket(equip_item);
 }
 
+void Room::HandleUseItemPacket(SharedPlayer player, const Protocol::C_UseItem& use_item)
+{
+	player->HandleUseItemPacket(use_item);
+}
+
 Vector2Int Room::GetRandomPos()
 {
 	random_device rd;
