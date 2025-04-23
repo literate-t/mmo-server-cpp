@@ -29,8 +29,11 @@ public:
 	void SetRoom(SharedRoom room) { _room = room; }
 	SharedRoom GetRoom() { return _room.lock(); }
 
+	int32 GetMaxHp() const;
+
 	int32 GetHp() const;
 	void SetHp(int32 hp);
+	void AddHp(int32 hp);
 
 	float GetSpeed() const;
 	void SetSpeed(float speed);

@@ -50,6 +50,11 @@ Protocol::PositionInfo& GameObject::GetPositionInfo()
 	return *_pos_info;
 }
 
+int32 GameObject::GetMaxHp() const
+{
+	return _stat_info->maxhp();
+}
+
 int32 GameObject::GetHp() const
 {	
 	return _stat_info->hp();
@@ -58,6 +63,12 @@ int32 GameObject::GetHp() const
 void GameObject::SetHp(int32 hp)
 {
 	_stat_info->set_hp(hp);
+}
+
+void GameObject::AddHp(int32 hp)
+{
+	int32 sum = hp + GetHp();
+	SetHp(sum);
 }
 
 float GameObject::GetSpeed() const
