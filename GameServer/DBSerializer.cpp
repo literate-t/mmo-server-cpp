@@ -107,3 +107,24 @@ void DBSerializer::EquipItemNoti(SharedPlayer player, SharedItem item)
 		g_db_connection_pool->Push(conn);
 		});
 }
+
+void DBSerializer::UseItemNoti(SharedPlayer player, SharedItem item)
+{
+	Instance()->PushJobAsync([player, item]() {
+		DBConnection* conn = g_db_connection_pool->Pop();
+		auto query = L"DELETE FROM items WHERE item_id = (?) and slot = (?)";
+
+		DBBind<2, 0> db_bind(*conn, query);
+
+		int32 item_db_id = item->GetItemDbId();
+		int32 slot = item->GetSlot();
+
+		db_bind.BindParam(0, item_db_id);
+		db_bind.BindParam(1, slot);
+
+		if (!db_bind.Execute())
+			throw new runtime_error("DB Failed: UseItemNoti()");
+
+		g_db_connection_pool->Push(conn);
+		});
+}
