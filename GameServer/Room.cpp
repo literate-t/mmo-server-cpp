@@ -36,10 +36,10 @@ void Room::Init(int32 map_id, int32 zone_cell_size)
 	}
 
 	// monsters
-	for (int i = 0; i < 200; ++i)
+	for (int i = 0; i < 100; ++i)
 	{
 		SharedMonster monster = g_object_manager->Add<Monster>();
-		monster->Init(1);
+		monster->Init(GOBLIN_MACE, "Entity/GoblinMace");
 		PushJobAsync(&Room::Enter, monster, true);
 	}
 }
@@ -95,7 +95,7 @@ void Room::Enter(SharedObject object, bool random_pos)
 		monster->SetRoom(static_pointer_cast<Room>(shared_from_this()));
 		GetZone(pos_info)->GetMonsters().insert(monster);
 		_map->ApplyMove(monster, monster->GetCellPos());
-		monster->SetObjectName(to_string(object_id));
+		monster->SetObjectName(monster->GetPrefab());
 		monster->Update();
 		_monsters[object_id] = monster;
 	}

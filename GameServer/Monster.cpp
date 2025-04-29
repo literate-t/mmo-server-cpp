@@ -14,17 +14,23 @@ Monster::Monster()
 {
 }
 
+Monster::Monster(string prefab)
+	:GameObject(GameObjectType::MONSTER), _prefab(prefab)
+{
+}
+
 Monster::~Monster()
 {
 	cout << "~Monster()" << endl;
 }
 
-void Monster::Init(int32 data_sheet_id)
+void Monster::Init(int32 data_sheet_id, string&& prefab)
 {
 	_data_sheet_id = data_sheet_id;
 	MonsterData* data = g_data_manager->Monster(_data_sheet_id);
 	SetStatInfoWithStatData(data->stat);
 	SetState(EntityState::IDLE);
+	_prefab = prefab;
 }
 
 // FSM
@@ -70,6 +76,11 @@ void Monster::OnDead(SharedObject attacker)
 		SharedPlayer player = static_pointer_cast<Player>(owner);
 		DBSerializer::SavePlayerReward(player, GetRoom(), reward.value());
 	}
+}
+
+const string& Monster::GetPrefab() const
+{
+	return _prefab;
 }
 
 void Monster::UpdateIdle()

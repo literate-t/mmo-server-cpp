@@ -2,6 +2,15 @@
 #include "Protocol.pb.h"
 using namespace Protocol;
 
+enum MonsterDataSheetId
+{
+	GOBLIN_MACE = 1,
+	GOBLIN_SPEAR,
+	GOBLIN_THIEF,
+	ORC_CHIEF,
+	ORC_GRUNT
+};
+
 struct StatData
 {
 	int32 level;

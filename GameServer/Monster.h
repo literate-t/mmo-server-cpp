@@ -6,11 +6,14 @@ class Monster : public GameObject
 {
 public:
 	Monster();
+	Monster(string prefab);
 	~Monster();
 
-	void Init(int32 data_sheet_id);
+	void Init(int32 data_sheet_id, string&& prefab);
 	void Update() override;
 	virtual void OnDead(SharedObject attacker) override;
+
+	const string& GetPrefab() const;
 
 protected:
 	virtual void UpdateIdle();
@@ -27,6 +30,7 @@ private:
 	int32 _data_sheet_id;
 	StatData* _stat_data;
 	SkillData* _skill_data;
+	string _prefab;
 	int16 _search_range = 10;
 	int16 _chase_range = 20;
 	int16 _skill_range = 1;
