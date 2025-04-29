@@ -85,6 +85,14 @@ void Player::HandleEquipItemPacket(const C_EquipItem& equip_item)
 
 	SharedPlayer this_player = static_pointer_cast<Player>(shared_from_this());
 
+	if (find_item->GetItemType() == ItemType::ITEM_TYPE_WEAPON)
+	{
+		// Player is archer
+		SharedWeapon weapon = static_pointer_cast<Weapon>(find_item);
+		if (weapon->GetWeaponType() != WEAPON_TYPE_BOW)
+			return;
+	}
+
 	// Unequip same type item equipped
 	if (equip_item.equipped())
 	{
