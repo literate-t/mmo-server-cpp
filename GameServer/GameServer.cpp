@@ -46,7 +46,7 @@ int main()
 	ServerDB server_db;
 	//server_db.MakeTables();
 	ClientPacketHandler::Init();
-	g_room_manager->Add(1);
+	g_room_manager->Add(2);
 
 	SharedServerService _server_service = MakeShared<ServerService>(
 		NetAddress(L"127.0.0.1", 9999),
