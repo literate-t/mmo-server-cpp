@@ -30,9 +30,11 @@ enum
 	PKT_S_EquipItem = 19,
 	PKT_C_UseItem = 20,
 	PKT_S_UseItem = 21,
-	PKT_S_ChangeStat = 22,
-	PKT_S_Ping = 23,
-	PKT_C_Pong = 24,
+	PKT_C_DropItem = 22,
+	PKT_S_DropItem = 23,
+	PKT_S_ChangeStat = 24,
+	PKT_C_Pong = 25,
+	PKT_S_Ping = 26,
 };
 
 bool Handle_INVALID(SharedPacketSession& session, BYTE* buffer, int32 length);
