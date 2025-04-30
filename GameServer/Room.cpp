@@ -455,6 +455,11 @@ void Room::HandleUseItemPacket(SharedPlayer player, const Protocol::C_UseItem& u
 	player->HandleUseItemPacket(use_item);
 }
 
+void Room::HandleDropItemPacket(SharedPlayer player, const Protocol::C_DropItem& drop_packet)
+{
+	player->HandleDropItemPacket(drop_packet);
+}
+
 Vector2Int Room::GetRandomPos()
 {
 	random_device rd;
