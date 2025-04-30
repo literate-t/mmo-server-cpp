@@ -108,7 +108,7 @@ void DBSerializer::EquipItemNoti(SharedPlayer player, SharedItem item)
 		});
 }
 
-void DBSerializer::UseItemNoti(SharedPlayer player, SharedItem item)
+void DBSerializer::DropItemNoti(SharedPlayer player, SharedItem item)
 {
 	Instance()->PushJobAsync([player, item]() {
 		DBConnection* conn = g_db_connection_pool->Pop();

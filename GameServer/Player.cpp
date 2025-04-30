@@ -160,7 +160,7 @@ void Player::HandleUseItemPacket(const C_UseItem& pkt)
 		return;
 
 	SharedPlayer this_player = static_pointer_cast<Player>(shared_from_this());
-	DBSerializer::UseItemNoti(this_player, find_item);
+	DBSerializer::DropItemNoti(this_player, find_item);
 
 	S_ChangeHp change_hp;
 	change_hp.set_hp(GetHp());
