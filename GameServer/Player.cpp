@@ -171,3 +171,20 @@ void Player::HandleUseItemPacket(const C_UseItem& pkt)
 	use_item.set_slot(pkt.slot());
 	OwnerSession->Send(ClientPacketHandler::MakeSendBuffer(use_item));
 }
+
+void Player::HandleDropItemPacket(const C_DropItem& pkt)
+{
+	SharedItem find_item = GetInventory().Get(pkt.slot());
+	if (find_item == nullptr)
+		return;
+
+	if (0 == GetInventory().Erase(pkt.slot()))
+		return;
+
+	SharedPlayer this_player = static_pointer_cast<Player>(shared_from_this());
+	DBSerializer::DropItemNoti(this_player, find_item);
+
+	S_DropItem drop_item;
+	drop_item.set_slot(pkt.slot());
+	OwnerSession->Send(ClientPacketHandler::MakeSendBuffer(drop_item));
+}

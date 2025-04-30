@@ -29,6 +29,7 @@ public:
 	// packet
 	void HandleEquipItemPacket(const C_EquipItem& pkt);
 	void HandleUseItemPacket(const C_UseItem& pkt);
+	void HandleDropItemPacket(const C_DropItem& pkt);
 
 private:
 	Inventory _inventory;
