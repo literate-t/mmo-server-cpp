@@ -87,6 +87,17 @@ bool Handle_C_UseItem(SharedPacketSession& session, Protocol::C_UseItem& pkt)
 	return false;
 }
 
+bool Handle_C_DropItem(SharedPacketSession& session, Protocol::C_DropItem& pkt)
+{
+	shared_ptr<GameSession> game_session = static_pointer_cast<GameSession>(session);
+	SharedPlayer player = game_session->GetPlayer();
+	SharedRoom room = player->GetRoom();
+
+	room->PushJobAsync(&Room::HandleDropItemPacket, player, pkt);
+
+	return false;
+}
+
 bool Handle_C_Pong(SharedPacketSession& session, Protocol::C_Pong& pkt)
 {	
 	g_shared_heart->HandlePong(static_pointer_cast<GameSession>(session));

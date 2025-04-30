@@ -45,6 +45,7 @@ bool Handle_C_EnterGame(SharedPacketSession& session, Protocol::C_EnterGame& pkt
 bool Handle_C_CreatePlayer(SharedPacketSession& session, Protocol::C_CreatePlayer& pkt);
 bool Handle_C_EquipItem(SharedPacketSession& session, Protocol::C_EquipItem& pkt);
 bool Handle_C_UseItem(SharedPacketSession& session, Protocol::C_UseItem& pkt);
+bool Handle_C_DropItem(SharedPacketSession& session, Protocol::C_DropItem& pkt);
 bool Handle_C_Pong(SharedPacketSession& session, Protocol::C_Pong& pkt);
 
 class ClientPacketHandler
@@ -62,6 +63,7 @@ public:
 		g_packet_handler[PKT_C_CreatePlayer] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::C_CreatePlayer>(Handle_C_CreatePlayer, session, buffer, length); };
 		g_packet_handler[PKT_C_EquipItem] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::C_EquipItem>(Handle_C_EquipItem, session, buffer, length); };
 		g_packet_handler[PKT_C_UseItem] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::C_UseItem>(Handle_C_UseItem, session, buffer, length); };
+		g_packet_handler[PKT_C_DropItem] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::C_DropItem>(Handle_C_DropItem, session, buffer, length); };
 		g_packet_handler[PKT_C_Pong] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::C_Pong>(Handle_C_Pong, session, buffer, length); };		
 	}
 
@@ -82,6 +84,7 @@ public:
 	static SharedSendBuffer MakeSendBuffer(Protocol::S_AddItem& pkt) { return MakeSendBuffer(pkt, PKT_S_AddItem); }
 	static SharedSendBuffer MakeSendBuffer(Protocol::S_EquipItem& pkt) { return MakeSendBuffer(pkt, PKT_S_EquipItem); }
 	static SharedSendBuffer MakeSendBuffer(Protocol::S_UseItem& pkt) { return MakeSendBuffer(pkt, PKT_S_UseItem); }
+	static SharedSendBuffer MakeSendBuffer(Protocol::S_DropItem& pkt) { return MakeSendBuffer(pkt, PKT_S_DropItem); }
 	static SharedSendBuffer MakeSendBuffer(Protocol::S_ChangeStat& pkt) { return MakeSendBuffer(pkt, PKT_S_ChangeStat); }
 	static SharedSendBuffer MakeSendBuffer(Protocol::S_Ping& pkt) { return MakeSendBuffer(pkt, PKT_S_Ping); }	
 
