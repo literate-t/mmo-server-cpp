@@ -35,6 +35,8 @@ enum
 	PKT_S_ChangeStat = 24,
 	PKT_C_Pong = 25,
 	PKT_S_Ping = 26,
+	PKT_C_AnimEnd = 27,
+	PKT_S_OnDamaged = 28,
 };
 
 bool Handle_INVALID(SharedPacketSession& session, BYTE* buffer, int32 length);
@@ -56,6 +58,7 @@ bool Handle_S_UseItem(SharedPacketSession& session, Protocol::S_UseItem& pkt);
 bool Handle_S_DropItem(SharedPacketSession& session, Protocol::S_DropItem& pkt);
 bool Handle_S_ChangeStat(SharedPacketSession& session, Protocol::S_ChangeStat& pkt);
 bool Handle_S_Ping(SharedPacketSession& session, Protocol::S_Ping& pkt);
+bool Handle_S_OnDamaged(SharedPacketSession& session, Protocol::S_OnDamaged& pkt);
 
 class ServerPacketHandler
 {
@@ -82,7 +85,8 @@ public:
 		g_packet_handler[PKT_S_UseItem] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::S_UseItem>(Handle_S_UseItem, session, buffer, length); };
 		g_packet_handler[PKT_S_DropItem] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::S_DropItem>(Handle_S_DropItem, session, buffer, length); };
 		g_packet_handler[PKT_S_ChangeStat] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::S_ChangeStat>(Handle_S_ChangeStat, session, buffer, length); };
-		g_packet_handler[PKT_S_Ping] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::S_Ping>(Handle_S_Ping, session, buffer, length); };		
+		g_packet_handler[PKT_S_Ping] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::S_Ping>(Handle_S_Ping, session, buffer, length); };
+		g_packet_handler[PKT_S_OnDamaged] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::S_OnDamaged>(Handle_S_OnDamaged, session, buffer, length); };		
 	}
 
 	static bool HandlePacket(SharedPacketSession& session, BYTE* buffer, int32 length);	
@@ -95,7 +99,8 @@ public:
 	static SharedSendBuffer MakeSendBuffer(Protocol::C_EquipItem& pkt) { return MakeSendBuffer(pkt, PKT_C_EquipItem); }
 	static SharedSendBuffer MakeSendBuffer(Protocol::C_UseItem& pkt) { return MakeSendBuffer(pkt, PKT_C_UseItem); }
 	static SharedSendBuffer MakeSendBuffer(Protocol::C_DropItem& pkt) { return MakeSendBuffer(pkt, PKT_C_DropItem); }
-	static SharedSendBuffer MakeSendBuffer(Protocol::C_Pong& pkt) { return MakeSendBuffer(pkt, PKT_C_Pong); }	
+	static SharedSendBuffer MakeSendBuffer(Protocol::C_Pong& pkt) { return MakeSendBuffer(pkt, PKT_C_Pong); }
+	static SharedSendBuffer MakeSendBuffer(Protocol::C_AnimEnd& pkt) { return MakeSendBuffer(pkt, PKT_C_AnimEnd); }	
 
 private:
 	template<typename PacketType, typename ProcessFunc>

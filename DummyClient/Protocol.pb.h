@@ -48,6 +48,9 @@ struct TableStruct_Protocol_2eproto {
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Protocol_2eproto;
 namespace Protocol {
+class C_AnimEnd;
+struct C_AnimEndDefaultTypeInternal;
+extern C_AnimEndDefaultTypeInternal _C_AnimEnd_default_instance_;
 class C_CreatePlayer;
 struct C_CreatePlayerDefaultTypeInternal;
 extern C_CreatePlayerDefaultTypeInternal _C_CreatePlayer_default_instance_;
@@ -129,6 +132,9 @@ extern S_LoginDefaultTypeInternal _S_Login_default_instance_;
 class S_Move;
 struct S_MoveDefaultTypeInternal;
 extern S_MoveDefaultTypeInternal _S_Move_default_instance_;
+class S_OnDamaged;
+struct S_OnDamagedDefaultTypeInternal;
+extern S_OnDamagedDefaultTypeInternal _S_OnDamaged_default_instance_;
 class S_Ping;
 struct S_PingDefaultTypeInternal;
 extern S_PingDefaultTypeInternal _S_Ping_default_instance_;
@@ -149,6 +155,7 @@ struct StatInfoDefaultTypeInternal;
 extern StatInfoDefaultTypeInternal _StatInfo_default_instance_;
 }  // namespace Protocol
 PROTOBUF_NAMESPACE_OPEN
+template<> ::Protocol::C_AnimEnd* Arena::CreateMaybeMessage<::Protocol::C_AnimEnd>(Arena*);
 template<> ::Protocol::C_CreatePlayer* Arena::CreateMaybeMessage<::Protocol::C_CreatePlayer>(Arena*);
 template<> ::Protocol::C_DropItem* Arena::CreateMaybeMessage<::Protocol::C_DropItem>(Arena*);
 template<> ::Protocol::C_EnterGame* Arena::CreateMaybeMessage<::Protocol::C_EnterGame>(Arena*);
@@ -176,6 +183,7 @@ template<> ::Protocol::S_ItemList* Arena::CreateMaybeMessage<::Protocol::S_ItemL
 template<> ::Protocol::S_LeaveGame* Arena::CreateMaybeMessage<::Protocol::S_LeaveGame>(Arena*);
 template<> ::Protocol::S_Login* Arena::CreateMaybeMessage<::Protocol::S_Login>(Arena*);
 template<> ::Protocol::S_Move* Arena::CreateMaybeMessage<::Protocol::S_Move>(Arena*);
+template<> ::Protocol::S_OnDamaged* Arena::CreateMaybeMessage<::Protocol::S_OnDamaged>(Arena*);
 template<> ::Protocol::S_Ping* Arena::CreateMaybeMessage<::Protocol::S_Ping>(Arena*);
 template<> ::Protocol::S_Skill* Arena::CreateMaybeMessage<::Protocol::S_Skill>(Arena*);
 template<> ::Protocol::S_Spawn* Arena::CreateMaybeMessage<::Protocol::S_Spawn>(Arena*);
@@ -195,7 +203,7 @@ enum MessageId : int {
   C_SKILL = 6,
   S_SKILL = 7,
   S_CHANGE_HP = 8,
-  S_DIe = 9,
+  S_DIE = 9,
   S_CONNECTED = 10,
   C_LOGIN = 11,
   S_LOGIN = 12,
@@ -213,12 +221,14 @@ enum MessageId : int {
   S_CHANGE_STAT = 24,
   C_PONG = 25,
   S_PING = 26,
+  C_ANIM_END = 27,
+  S_ON_DAMAGED = 28,
   MessageId_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   MessageId_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool MessageId_IsValid(int value);
 constexpr MessageId MessageId_MIN = S_ENTER_GAME;
-constexpr MessageId MessageId_MAX = S_PING;
+constexpr MessageId MessageId_MAX = S_ON_DAMAGED;
 constexpr int MessageId_ARRAYSIZE = MessageId_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* MessageId_descriptor();
@@ -4556,6 +4566,302 @@ class S_Ping final :
 };
 // -------------------------------------------------------------------
 
+class C_AnimEnd final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.C_AnimEnd) */ {
+ public:
+  inline C_AnimEnd() : C_AnimEnd(nullptr) {}
+  ~C_AnimEnd() override;
+  explicit PROTOBUF_CONSTEXPR C_AnimEnd(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  C_AnimEnd(const C_AnimEnd& from);
+  C_AnimEnd(C_AnimEnd&& from) noexcept
+    : C_AnimEnd() {
+    *this = ::std::move(from);
+  }
+
+  inline C_AnimEnd& operator=(const C_AnimEnd& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline C_AnimEnd& operator=(C_AnimEnd&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const C_AnimEnd& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const C_AnimEnd* internal_default_instance() {
+    return reinterpret_cast<const C_AnimEnd*>(
+               &_C_AnimEnd_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    27;
+
+  friend void swap(C_AnimEnd& a, C_AnimEnd& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(C_AnimEnd* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(C_AnimEnd* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  C_AnimEnd* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<C_AnimEnd>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const C_AnimEnd& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const C_AnimEnd& from) {
+    C_AnimEnd::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(C_AnimEnd* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Protocol.C_AnimEnd";
+  }
+  protected:
+  explicit C_AnimEnd(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kObjectIdFieldNumber = 1,
+  };
+  // int32 objectId = 1;
+  void clear_objectid();
+  int32_t objectid() const;
+  void set_objectid(int32_t value);
+  private:
+  int32_t _internal_objectid() const;
+  void _internal_set_objectid(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:Protocol.C_AnimEnd)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    int32_t objectid_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_Protocol_2eproto;
+};
+// -------------------------------------------------------------------
+
+class S_OnDamaged final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.S_OnDamaged) */ {
+ public:
+  inline S_OnDamaged() : S_OnDamaged(nullptr) {}
+  ~S_OnDamaged() override;
+  explicit PROTOBUF_CONSTEXPR S_OnDamaged(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  S_OnDamaged(const S_OnDamaged& from);
+  S_OnDamaged(S_OnDamaged&& from) noexcept
+    : S_OnDamaged() {
+    *this = ::std::move(from);
+  }
+
+  inline S_OnDamaged& operator=(const S_OnDamaged& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline S_OnDamaged& operator=(S_OnDamaged&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const S_OnDamaged& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const S_OnDamaged* internal_default_instance() {
+    return reinterpret_cast<const S_OnDamaged*>(
+               &_S_OnDamaged_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    28;
+
+  friend void swap(S_OnDamaged& a, S_OnDamaged& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(S_OnDamaged* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(S_OnDamaged* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  S_OnDamaged* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<S_OnDamaged>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const S_OnDamaged& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const S_OnDamaged& from) {
+    S_OnDamaged::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(S_OnDamaged* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Protocol.S_OnDamaged";
+  }
+  protected:
+  explicit S_OnDamaged(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kObjectIdFieldNumber = 1,
+  };
+  // int32 objectId = 1;
+  void clear_objectid();
+  int32_t objectid() const;
+  void set_objectid(int32_t value);
+  private:
+  int32_t _internal_objectid() const;
+  void _internal_set_objectid(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:Protocol.S_OnDamaged)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    int32_t objectid_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_Protocol_2eproto;
+};
+// -------------------------------------------------------------------
+
 class ObjectInfo final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.ObjectInfo) */ {
  public:
@@ -4604,7 +4910,7 @@ class ObjectInfo final :
                &_ObjectInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    27;
+    29;
 
   friend void swap(ObjectInfo& a, ObjectInfo& b) {
     a.Swap(&b);
@@ -4808,7 +5114,7 @@ class LobbyPlayerInfo final :
                &_LobbyPlayerInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    28;
+    30;
 
   friend void swap(LobbyPlayerInfo& a, LobbyPlayerInfo& b) {
     a.Swap(&b);
@@ -4992,7 +5298,7 @@ class PositionInfo final :
                &_PositionInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    29;
+    31;
 
   friend void swap(PositionInfo& a, PositionInfo& b) {
     a.Swap(&b);
@@ -5173,7 +5479,7 @@ class StatInfo final :
                &_StatInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    30;
+    32;
 
   friend void swap(StatInfo& a, StatInfo& b) {
     a.Swap(&b);
@@ -5376,7 +5682,7 @@ class SkillInfo final :
                &_SkillInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    31;
+    33;
 
   friend void swap(SkillInfo& a, SkillInfo& b) {
     a.Swap(&b);
@@ -5524,7 +5830,7 @@ class ItemInfo final :
                &_ItemInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    32;
+    34;
 
   friend void swap(ItemInfo& a, ItemInfo& b) {
     a.Swap(&b);
@@ -7070,6 +7376,54 @@ inline void S_ChangeStat::set_allocated_statinfo(::Protocol::StatInfo* statinfo)
 
 // -------------------------------------------------------------------
 
+// C_AnimEnd
+
+// int32 objectId = 1;
+inline void C_AnimEnd::clear_objectid() {
+  _impl_.objectid_ = 0;
+}
+inline int32_t C_AnimEnd::_internal_objectid() const {
+  return _impl_.objectid_;
+}
+inline int32_t C_AnimEnd::objectid() const {
+  // @@protoc_insertion_point(field_get:Protocol.C_AnimEnd.objectId)
+  return _internal_objectid();
+}
+inline void C_AnimEnd::_internal_set_objectid(int32_t value) {
+  
+  _impl_.objectid_ = value;
+}
+inline void C_AnimEnd::set_objectid(int32_t value) {
+  _internal_set_objectid(value);
+  // @@protoc_insertion_point(field_set:Protocol.C_AnimEnd.objectId)
+}
+
+// -------------------------------------------------------------------
+
+// S_OnDamaged
+
+// int32 objectId = 1;
+inline void S_OnDamaged::clear_objectid() {
+  _impl_.objectid_ = 0;
+}
+inline int32_t S_OnDamaged::_internal_objectid() const {
+  return _impl_.objectid_;
+}
+inline int32_t S_OnDamaged::objectid() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_OnDamaged.objectId)
+  return _internal_objectid();
+}
+inline void S_OnDamaged::_internal_set_objectid(int32_t value) {
+  
+  _impl_.objectid_ = value;
+}
+inline void S_OnDamaged::set_objectid(int32_t value) {
+  _internal_set_objectid(value);
+  // @@protoc_insertion_point(field_set:Protocol.S_OnDamaged.objectId)
+}
+
+// -------------------------------------------------------------------
+
 // ObjectInfo
 
 // int32 objectId = 1;
@@ -7825,6 +8179,10 @@ inline void ItemInfo::set_equipped(bool value) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
