@@ -2,8 +2,10 @@
 #include "ClientPacketHandler.h"
 #include "GameSession.h"
 #include "Player.h"
+#include "Monster.h"
 #include "Room.h"
 #include "Heartbeat.h"
+#include "ObjectManager.h"
 
 PacketHandlerFunc g_packet_handler[HANDLER_MAX];
 
@@ -102,6 +104,25 @@ bool Handle_C_Pong(SharedPacketSession& session, Protocol::C_Pong& pkt)
 {	
 	g_shared_heart->HandlePong(static_pointer_cast<GameSession>(session));
 	return true;
+}
+
+bool Handle_C_AnimEnd(SharedPacketSession& session, Protocol::C_AnimEnd& pkt)
+{
+	shared_ptr<GameSession> game_session = static_pointer_cast<GameSession>(session);
+	SharedPlayer player = game_session->GetPlayer();
+	
+	SharedRoom room = player->GetRoom();
+	GameObjectType type = g_object_manager->GetObjectTypeById(pkt.objectid());
+
+	SharedObject object;
+	if (type == GameObjectType::PLAYER)
+		object = room->GetPlayer(pkt.objectid());
+	else if (type == GameObjectType::MONSTER)
+		object = room->GetMonster(pkt.objectid());
+
+	object->OnDeadAnim();
+
+	return false;
 }
 
 

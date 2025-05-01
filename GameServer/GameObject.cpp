@@ -147,6 +147,12 @@ void GameObject::OnDead(SharedObject attacker)
 	die_packet.set_attackerid(attacker->GetObjectId());
 
 	room->Broadcast(GetCellPos(), ClientPacketHandler::MakeSendBuffer(die_packet));
+}
+
+void GameObject::OnDeadAnim()
+{
+	auto room = GetRoom();
+	if (room == nullptr) return;
 
 	room->Leave(GetObjectId());
 
