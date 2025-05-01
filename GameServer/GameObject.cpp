@@ -143,8 +143,6 @@ void GameObject::OnDead(SharedObject attacker)
 
 	S_Die die_packet;
 	die_packet.set_objectid(GetObjectId());
-	// can be necessary in client
-	die_packet.set_attackerid(attacker->GetObjectId());
 
 	room->Broadcast(GetCellPos(), ClientPacketHandler::MakeSendBuffer(die_packet));
 }
@@ -160,7 +158,6 @@ void GameObject::OnDeadAnim()
 	GetPositionInfo().set_state(EntityState::IDLE);
 	GetPositionInfo().set_movedir(MoveDir::DOWN);
 
-	this_thread::sleep_for(100ms);
 	room->Enter(shared_from_this());
 }
 
