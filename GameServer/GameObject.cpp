@@ -32,7 +32,7 @@ Protocol::StatInfo& GameObject::GetStatInfo()
 void GameObject::SetStatInfoWithStatData(StatData& stat_data)
 {
 	_stat_info->set_level(stat_data.level);
-	_stat_info->set_hp(stat_data.hp);
+	_stat_info->set_hp(stat_data.max_hp);
 	_stat_info->set_maxhp(stat_data.max_hp);
 	_stat_info->set_attack(stat_data.attack);
 	_stat_info->set_speed(stat_data.speed);
@@ -119,7 +119,7 @@ void GameObject::OnDamaged(SharedObject attacker, int32 damage)
 {
 	auto room = GetRoom();
 	if (room == nullptr) return;
-
+	
 	S_OnDamaged on_damaged;
 	on_damaged.set_objectid(GetObjectId());
 	room->Broadcast(GetCellPos(), ClientPacketHandler::MakeSendBuffer(on_damaged));
@@ -137,12 +137,12 @@ void GameObject::OnDamaged(SharedObject attacker, int32 damage)
 }
 
 void GameObject::OnDead(SharedObject attacker)
-{
+{	
 	auto room = GetRoom();
 	if (room == nullptr) return;
 
 	S_Die die_packet;
-	die_packet.set_objectid(GetObjectId());
+	die_packet.set_objectid(GetObjectId());	
 
 	room->Broadcast(GetCellPos(), ClientPacketHandler::MakeSendBuffer(die_packet));
 }
@@ -152,7 +152,7 @@ void GameObject::OnDeadAnim()
 	auto room = GetRoom();
 	if (room == nullptr) return;
 
-	room->Leave(GetObjectId());
+	room->Leave(GetObjectId());	
 
 	SetHp(GetStatInfo().maxhp());
 	GetPositionInfo().set_state(EntityState::IDLE);
