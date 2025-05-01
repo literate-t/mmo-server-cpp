@@ -264,6 +264,16 @@ const xvector<SharedProjectile>& Room::GetAdjacentProjectiles(Vector2Int cell_po
 	return _adjacent_projectiles;
 }
 
+SharedMonster Room::GetMonster(int32 object_id)
+{
+	return _monsters.at(object_id);
+}
+
+SharedPlayer Room::GetPlayer(int32 object_id)
+{
+	return _players.at(object_id);
+}
+
 // TODO: proxy pattern
 const xvector<SharedZone>& Room::GetAdjacentZones(Vector2Int cell_pos, int32 range)
 {

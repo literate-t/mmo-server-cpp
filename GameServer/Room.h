@@ -27,6 +27,9 @@ public:
 	const xvector<SharedMonster>& GetAdjacentMonsters(Vector2Int cell_pos, int32 range = kRange);
 	const xvector<SharedProjectile>& GetAdjacentProjectiles(Vector2Int cell_pos, int32 range = kRange);
 
+	SharedMonster GetMonster(int32 object_id);
+	SharedPlayer GetPlayer(int32 object_id);
+
 	SharedPlayer FindClosestPlayer(Vector2Int base_pos, int32 range);
 	SharedMonster FindClosestMonster(Vector2Int base_pos, int32 range);
 	SharedPlayer FindPlayer(function<bool(SharedPlayer)> predicate);
