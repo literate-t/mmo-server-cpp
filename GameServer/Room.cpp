@@ -79,7 +79,7 @@ void Room::Enter(SharedObject object, bool random_pos)
 
 		player->MakeViewCube();
 		player->GetView()->IsReset = true;
-		player->GetView()->Update();
+		player->GetView()->Update();		
 	}
 	else if (type == GameObjectType::PROJECTILE)
 	{
@@ -131,7 +131,7 @@ void Room::Leave(int32 object_id)
 
 		// to me
 		S_LeaveGame leave;
-		player->OwnerSession->ReserveSend(ClientPacketHandler::MakeSendBuffer(leave));
+		player->OwnerSession->Send(ClientPacketHandler::MakeSendBuffer(leave));
 	}
 	else if (type == GameObjectType::MONSTER)
 	{
