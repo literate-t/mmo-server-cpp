@@ -120,6 +120,10 @@ void GameObject::OnDamaged(SharedObject attacker, int32 damage)
 	auto room = GetRoom();
 	if (room == nullptr) return;
 
+	S_OnDamaged on_damaged;
+	on_damaged.set_objectid(GetObjectId());
+	room->Broadcast(GetCellPos(), ClientPacketHandler::MakeSendBuffer(on_damaged));
+
 	int32 final_damage = max(0, damage - GetTotalDefence());
 	SetHp(max(0, GetHp() - final_damage));
 
