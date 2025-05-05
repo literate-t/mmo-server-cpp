@@ -126,6 +126,11 @@ bool Handle_S_UseItem(SharedPacketSession& session, Protocol::S_UseItem& pkt)
 	return false;
 }
 
+bool Handle_S_DropItem(SharedPacketSession& session, Protocol::S_DropItem& pkt)
+{
+	return false;
+}
+
 bool Handle_S_ChangeStat(SharedPacketSession& session, Protocol::S_ChangeStat& pkt)
 {
 	return false;
@@ -137,4 +142,9 @@ bool Handle_S_Ping(SharedPacketSession& session, Protocol::S_Ping& pkt)
 	session->Send(ServerPacketHandler::MakeSendBuffer(pong));
 
 	return true;
+}
+
+bool Handle_S_OnDamaged(SharedPacketSession& session, Protocol::S_OnDamaged& pkt)
+{
+	return false;
 }
