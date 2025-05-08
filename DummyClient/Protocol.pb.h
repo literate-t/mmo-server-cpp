@@ -153,6 +153,9 @@ extern SkillInfoDefaultTypeInternal _SkillInfo_default_instance_;
 class StatInfo;
 struct StatInfoDefaultTypeInternal;
 extern StatInfoDefaultTypeInternal _StatInfo_default_instance_;
+class StatusInfo;
+struct StatusInfoDefaultTypeInternal;
+extern StatusInfoDefaultTypeInternal _StatusInfo_default_instance_;
 }  // namespace Protocol
 PROTOBUF_NAMESPACE_OPEN
 template<> ::Protocol::C_AnimEnd* Arena::CreateMaybeMessage<::Protocol::C_AnimEnd>(Arena*);
@@ -190,6 +193,7 @@ template<> ::Protocol::S_Spawn* Arena::CreateMaybeMessage<::Protocol::S_Spawn>(A
 template<> ::Protocol::S_UseItem* Arena::CreateMaybeMessage<::Protocol::S_UseItem>(Arena*);
 template<> ::Protocol::SkillInfo* Arena::CreateMaybeMessage<::Protocol::SkillInfo>(Arena*);
 template<> ::Protocol::StatInfo* Arena::CreateMaybeMessage<::Protocol::StatInfo>(Arena*);
+template<> ::Protocol::StatusInfo* Arena::CreateMaybeMessage<::Protocol::StatusInfo>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace Protocol {
 
@@ -271,6 +275,31 @@ inline bool EntityState_Parse(
     ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, EntityState* value) {
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<EntityState>(
     EntityState_descriptor(), name, value);
+}
+enum EntityStatus : int {
+  NORMAL = 0,
+  DAMAGED = 1,
+  EntityStatus_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  EntityStatus_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool EntityStatus_IsValid(int value);
+constexpr EntityStatus EntityStatus_MIN = NORMAL;
+constexpr EntityStatus EntityStatus_MAX = DAMAGED;
+constexpr int EntityStatus_ARRAYSIZE = EntityStatus_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* EntityStatus_descriptor();
+template<typename T>
+inline const std::string& EntityStatus_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, EntityStatus>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function EntityStatus_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    EntityStatus_descriptor(), enum_t_value);
+}
+inline bool EntityStatus_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, EntityStatus* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<EntityStatus>(
+    EntityStatus_descriptor(), name, value);
 }
 enum MoveDir : int {
   UP = 0,
@@ -482,6 +511,32 @@ inline bool ConsumableType_Parse(
     ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, ConsumableType* value) {
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<ConsumableType>(
     ConsumableType_descriptor(), name, value);
+}
+enum PrefabType : int {
+  ARCHER = 0,
+  SPEARMAN = 1,
+  TEMPLAR = 2,
+  PrefabType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  PrefabType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool PrefabType_IsValid(int value);
+constexpr PrefabType PrefabType_MIN = ARCHER;
+constexpr PrefabType PrefabType_MAX = TEMPLAR;
+constexpr int PrefabType_ARRAYSIZE = PrefabType_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* PrefabType_descriptor();
+template<typename T>
+inline const std::string& PrefabType_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, PrefabType>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function PrefabType_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    PrefabType_descriptor(), enum_t_value);
+}
+inline bool PrefabType_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, PrefabType* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<PrefabType>(
+    PrefabType_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -4987,6 +5042,7 @@ class ObjectInfo final :
     kPosInfoFieldNumber = 3,
     kStatInfoFieldNumber = 4,
     kObjectIdFieldNumber = 1,
+    kPrefabTypeFieldNumber = 5,
   };
   // string name = 2;
   void clear_name();
@@ -5047,6 +5103,15 @@ class ObjectInfo final :
   void _internal_set_objectid(int32_t value);
   public:
 
+  // .Protocol.PrefabType prefabType = 5;
+  void clear_prefabtype();
+  ::Protocol::PrefabType prefabtype() const;
+  void set_prefabtype(::Protocol::PrefabType value);
+  private:
+  ::Protocol::PrefabType _internal_prefabtype() const;
+  void _internal_set_prefabtype(::Protocol::PrefabType value);
+  public:
+
   // @@protoc_insertion_point(class_scope:Protocol.ObjectInfo)
  private:
   class _Internal;
@@ -5059,6 +5124,7 @@ class ObjectInfo final :
     ::Protocol::PositionInfo* posinfo_;
     ::Protocol::StatInfo* statinfo_;
     int32_t objectid_;
+    int prefabtype_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -5431,6 +5497,154 @@ class PositionInfo final :
 };
 // -------------------------------------------------------------------
 
+class StatusInfo final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.StatusInfo) */ {
+ public:
+  inline StatusInfo() : StatusInfo(nullptr) {}
+  ~StatusInfo() override;
+  explicit PROTOBUF_CONSTEXPR StatusInfo(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  StatusInfo(const StatusInfo& from);
+  StatusInfo(StatusInfo&& from) noexcept
+    : StatusInfo() {
+    *this = ::std::move(from);
+  }
+
+  inline StatusInfo& operator=(const StatusInfo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline StatusInfo& operator=(StatusInfo&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const StatusInfo& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const StatusInfo* internal_default_instance() {
+    return reinterpret_cast<const StatusInfo*>(
+               &_StatusInfo_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    32;
+
+  friend void swap(StatusInfo& a, StatusInfo& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(StatusInfo* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(StatusInfo* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  StatusInfo* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<StatusInfo>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const StatusInfo& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const StatusInfo& from) {
+    StatusInfo::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(StatusInfo* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Protocol.StatusInfo";
+  }
+  protected:
+  explicit StatusInfo(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kStatusFieldNumber = 1,
+  };
+  // .Protocol.EntityStatus status = 1;
+  void clear_status();
+  ::Protocol::EntityStatus status() const;
+  void set_status(::Protocol::EntityStatus value);
+  private:
+  ::Protocol::EntityStatus _internal_status() const;
+  void _internal_set_status(::Protocol::EntityStatus value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:Protocol.StatusInfo)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    int status_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_Protocol_2eproto;
+};
+// -------------------------------------------------------------------
+
 class StatInfo final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.StatInfo) */ {
  public:
@@ -5479,7 +5693,7 @@ class StatInfo final :
                &_StatInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    32;
+    33;
 
   friend void swap(StatInfo& a, StatInfo& b) {
     a.Swap(&b);
@@ -5682,7 +5896,7 @@ class SkillInfo final :
                &_SkillInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    33;
+    34;
 
   friend void swap(SkillInfo& a, SkillInfo& b) {
     a.Swap(&b);
@@ -5830,7 +6044,7 @@ class ItemInfo final :
                &_ItemInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    34;
+    35;
 
   friend void swap(ItemInfo& a, ItemInfo& b) {
     a.Swap(&b);
@@ -7676,6 +7890,26 @@ inline void ObjectInfo::set_allocated_statinfo(::Protocol::StatInfo* statinfo) {
   // @@protoc_insertion_point(field_set_allocated:Protocol.ObjectInfo.statInfo)
 }
 
+// .Protocol.PrefabType prefabType = 5;
+inline void ObjectInfo::clear_prefabtype() {
+  _impl_.prefabtype_ = 0;
+}
+inline ::Protocol::PrefabType ObjectInfo::_internal_prefabtype() const {
+  return static_cast< ::Protocol::PrefabType >(_impl_.prefabtype_);
+}
+inline ::Protocol::PrefabType ObjectInfo::prefabtype() const {
+  // @@protoc_insertion_point(field_get:Protocol.ObjectInfo.prefabType)
+  return _internal_prefabtype();
+}
+inline void ObjectInfo::_internal_set_prefabtype(::Protocol::PrefabType value) {
+  
+  _impl_.prefabtype_ = value;
+}
+inline void ObjectInfo::set_prefabtype(::Protocol::PrefabType value) {
+  _internal_set_prefabtype(value);
+  // @@protoc_insertion_point(field_set:Protocol.ObjectInfo.prefabType)
+}
+
 // -------------------------------------------------------------------
 
 // LobbyPlayerInfo
@@ -7922,6 +8156,30 @@ inline void PositionInfo::_internal_set_posy(int32_t value) {
 inline void PositionInfo::set_posy(int32_t value) {
   _internal_set_posy(value);
   // @@protoc_insertion_point(field_set:Protocol.PositionInfo.PosY)
+}
+
+// -------------------------------------------------------------------
+
+// StatusInfo
+
+// .Protocol.EntityStatus status = 1;
+inline void StatusInfo::clear_status() {
+  _impl_.status_ = 0;
+}
+inline ::Protocol::EntityStatus StatusInfo::_internal_status() const {
+  return static_cast< ::Protocol::EntityStatus >(_impl_.status_);
+}
+inline ::Protocol::EntityStatus StatusInfo::status() const {
+  // @@protoc_insertion_point(field_get:Protocol.StatusInfo.status)
+  return _internal_status();
+}
+inline void StatusInfo::_internal_set_status(::Protocol::EntityStatus value) {
+  
+  _impl_.status_ = value;
+}
+inline void StatusInfo::set_status(::Protocol::EntityStatus value) {
+  _internal_set_status(value);
+  // @@protoc_insertion_point(field_set:Protocol.StatusInfo.status)
 }
 
 // -------------------------------------------------------------------
@@ -8247,6 +8505,8 @@ inline void ItemInfo::set_equipped(bool value) {
 
 // -------------------------------------------------------------------
 
+// -------------------------------------------------------------------
+
 
 // @@protoc_insertion_point(namespace_scope)
 
@@ -8263,6 +8523,11 @@ template <> struct is_proto_enum< ::Protocol::EntityState> : ::std::true_type {}
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::EntityState>() {
   return ::Protocol::EntityState_descriptor();
+}
+template <> struct is_proto_enum< ::Protocol::EntityStatus> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::EntityStatus>() {
+  return ::Protocol::EntityStatus_descriptor();
 }
 template <> struct is_proto_enum< ::Protocol::MoveDir> : ::std::true_type {};
 template <>
@@ -8303,6 +8568,11 @@ template <> struct is_proto_enum< ::Protocol::ConsumableType> : ::std::true_type
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::ConsumableType>() {
   return ::Protocol::ConsumableType_descriptor();
+}
+template <> struct is_proto_enum< ::Protocol::PrefabType> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::PrefabType>() {
+  return ::Protocol::PrefabType_descriptor();
 }
 
 PROTOBUF_NAMESPACE_CLOSE
