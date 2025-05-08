@@ -210,58 +210,58 @@ optional<Vector2Int> Room::GetZoneIndex(Vector2Int cell_pos)
 }
 
 // TODO: proxy pattern
-const xvector<SharedPlayer>& Room::GetAdjacentPlayers(Vector2Int cell_pos, int32 range)
+xvector<SharedPlayer> Room::GetAdjacentPlayers(Vector2Int cell_pos, int32 range)
 {
-	const xvector<SharedZone>& zones = GetAdjacentZones(cell_pos, range);
-
-	_adjacent_players.clear();
+	xvector<SharedZone> zones = GetAdjacentZones(cell_pos, range);
+	
+	xvector<SharedPlayer> adjacent_players;
 	size_t total_size = 0;
 
 	for (auto& zone : zones)
 		total_size += zone->GetPlayers().size();
 
-	_adjacent_players.reserve(total_size);
+	adjacent_players.reserve(total_size);
 
 	for (auto& zone : zones)
-		_adjacent_players.insert(_adjacent_players.end(), zone->GetPlayers().begin(), zone->GetPlayers().end());
+		adjacent_players.insert(adjacent_players.end(), zone->GetPlayers().begin(), zone->GetPlayers().end());
 
-	return _adjacent_players;
+	return xvector<SharedPlayer>(move(adjacent_players));
 }
 
-const xvector<SharedMonster>& Room::GetAdjacentMonsters(Vector2Int cell_pos, int32 range)
+xvector<SharedMonster> Room::GetAdjacentMonsters(Vector2Int cell_pos, int32 range)
 {
-	const xvector<SharedZone>& zones = GetAdjacentZones(cell_pos, range);
-
-	_adjacent_monsters.clear();
+	xvector<SharedZone> zones = GetAdjacentZones(cell_pos, range);
+	
+	xvector<SharedMonster> adjacent_monsters;
 	size_t total_size = 0;
 
 	for (auto& zone : zones)
 		total_size += zone->GetMonsters().size();
 
-	_adjacent_monsters.reserve(total_size);
+	adjacent_monsters.reserve(total_size);
 
 	for (auto& zone : zones)
-		_adjacent_monsters.insert(_adjacent_monsters.end(), zone->GetMonsters().begin(), zone->GetMonsters().end());
+		adjacent_monsters.insert(adjacent_monsters.end(), zone->GetMonsters().begin(), zone->GetMonsters().end());
 
-	return _adjacent_monsters;
+	return xvector<SharedMonster>(move(adjacent_monsters));
 }
 
-const xvector<SharedProjectile>& Room::GetAdjacentProjectiles(Vector2Int cell_pos, int32 range)
+xvector<SharedProjectile> Room::GetAdjacentProjectiles(Vector2Int cell_pos, int32 range)
 {
-	const xvector<SharedZone>& zones = GetAdjacentZones(cell_pos, range);
+	xvector<SharedZone> zones = GetAdjacentZones(cell_pos, range);
 
-	_adjacent_projectiles.clear();
+	xvector<SharedProjectile> adjacent_projectiles;
 	size_t total_size = 0;
 
 	for (auto& zone : zones)
 		total_size += zone->GetProjectiles().size();
 
-	_adjacent_projectiles.reserve(total_size);
+	adjacent_projectiles.reserve(total_size);
 
 	for (auto& zone : zones)
-		_adjacent_projectiles.insert(_adjacent_projectiles.end(), zone->GetProjectiles().begin(), zone->GetProjectiles().end());
+		adjacent_projectiles.insert(adjacent_projectiles.end(), zone->GetProjectiles().begin(), zone->GetProjectiles().end());
 
-	return _adjacent_projectiles;
+	return xvector<SharedProjectile>(move(adjacent_projectiles));
 }
 
 SharedMonster Room::GetMonster(int32 object_id)
@@ -275,9 +275,9 @@ SharedPlayer Room::GetPlayer(int32 object_id)
 }
 
 // TODO: proxy pattern
-const xvector<SharedZone>& Room::GetAdjacentZones(Vector2Int cell_pos, int32 range)
+xvector<SharedZone> Room::GetAdjacentZones(Vector2Int cell_pos, int32 range)
 {
-	_adjacent_zones.clear();
+	xvector<SharedZone> adjacent_zones;
 
 	int32 min_x = cell_pos.x - range;
 	int32 min_y = cell_pos.y - range;
@@ -292,6 +292,8 @@ const xvector<SharedZone>& Room::GetAdjacentZones(Vector2Int cell_pos, int32 ran
 	int32 right_bottom_x = (right_bottom.x - _map->GetMinX()) / _zone_cell_size;
 	int32 right_bottom_y = (_map->GetMaxY() - right_bottom.y) / _zone_cell_size;
 
+	adjacent_zones.reserve((right_bottom_y - left_top_y + 1) * (right_bottom_x - left_top_x + 1));
+
 	for (int32 y = left_top_y; y <= right_bottom_y; ++y)
 	{
 		for (int32 x = left_top_x; x <= right_bottom_x; ++x)
@@ -300,11 +302,11 @@ const xvector<SharedZone>& Room::GetAdjacentZones(Vector2Int cell_pos, int32 ran
 			if (zone == nullptr)
 				continue;
 
-			_adjacent_zones.push_back(zone);
+			adjacent_zones.push_back(move(zone));
 		}
 	}
 
-	return _adjacent_zones;
+	return xvector<SharedZone>(move(adjacent_zones));
 }
 
 SharedPlayer Room::FindClosestPlayer(Vector2Int base_pos, int32 range)

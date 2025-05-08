@@ -22,10 +22,10 @@ public:
 
 	const SharedMap& GetMap() const { return _map; }
 
-	const xvector<SharedZone>& GetAdjacentZones(Vector2Int cell_pos, int32 range = kRange);
-	const xvector<SharedPlayer>& GetAdjacentPlayers(Vector2Int cell_pos, int32 range = kRange);
-	const xvector<SharedMonster>& GetAdjacentMonsters(Vector2Int cell_pos, int32 range = kRange);
-	const xvector<SharedProjectile>& GetAdjacentProjectiles(Vector2Int cell_pos, int32 range = kRange);
+	xvector<SharedZone> GetAdjacentZones(Vector2Int cell_pos, int32 range = kRange);
+	xvector<SharedPlayer> GetAdjacentPlayers(Vector2Int cell_pos, int32 range = kRange);
+	xvector<SharedMonster> GetAdjacentMonsters(Vector2Int cell_pos, int32 range = kRange);
+	xvector<SharedProjectile> GetAdjacentProjectiles(Vector2Int cell_pos, int32 range = kRange);
 
 	SharedMonster GetMonster(int32 object_id);
 	SharedPlayer GetPlayer(int32 object_id);
@@ -54,8 +54,4 @@ private:
 	SharedMap _map;
 	int32 _zone_cell_size;
 	xvector<xvector<SharedZone>> _zones;
-	xvector<SharedZone> _adjacent_zones;
-	xvector<SharedPlayer> _adjacent_players;
-	xvector<SharedMonster> _adjacent_monsters;
-	xvector<SharedProjectile> _adjacent_projectiles;
 };
