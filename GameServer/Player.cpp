@@ -10,6 +10,8 @@ Player::Player()
 	_weapon_damage(0),
 	_armor_defence(0)
 {
+	int32 random = GetTickCount64() % 3;
+	SetPrefabType(static_cast<Protocol::PrefabType>(random));
 }
 
 Player::~Player()

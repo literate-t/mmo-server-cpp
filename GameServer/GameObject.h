@@ -18,6 +18,9 @@ public:
 
 	Protocol::GameObjectType GetType() const { return _object_type; }
 
+	Protocol::PrefabType GetPrfebType() const;
+	void SetPrefabType(Protocol::PrefabType prefab_type);
+
 	void SetCellPos(Vector2Int cell_pos);
 	Vector2Int GetCellPos();
 

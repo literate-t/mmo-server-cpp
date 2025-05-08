@@ -39,6 +39,16 @@ void GameObject::SetStatInfoWithStatData(StatData& stat_data)
 	_stat_info->set_totalexp(stat_data.total_exp);
 }
 
+Protocol::PrefabType GameObject::GetPrfebType() const
+{
+	return _object_info.prefabtype();
+}
+
+void GameObject::SetPrefabType(Protocol::PrefabType prefab_type)
+{
+	_object_info.set_prefabtype(prefab_type);
+}
+
 void GameObject::SetCellPos(Vector2Int cell_pos)
 {
 	_pos_info->set_posx(cell_pos.x);
