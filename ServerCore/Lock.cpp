@@ -1,12 +1,7 @@
 #include "pch.h"
 
-void Lock::WriteLock(const char* name)
+void Lock::WriteLock()
 {
-// 디버그 모드일 때만 데드락를 탐지한다
-#if _DEBUG
-	g_deadlock_detector->PushLock(name);
-#endif
-
 	// 동일 스레드가 WL(WriteLock)을 획득할 때는 경합하지 않는다
 	const uint32 thread_id = (_lock_flag & WRITE_THREAD_MASK) >> 16;
 	if (thread_id == tls_thread_id)
@@ -40,11 +35,8 @@ void Lock::WriteLock(const char* name)
 	}
 }
 
-void Lock::WriteUnlock(const char* name)
+void Lock::WriteUnlock()
 {
-#if _DEBUG
-	g_deadlock_detector->PopLock(name);
-#endif
 	// RL을 다 풀어야 WL을 다 풀 수 있다
 	// w->r의 순서로 락을 걸었다면 반드시 r->w 순서로 락을 풀어야지
 	if (0 != (_lock_flag.load() & READ_COUNT_MASK))
@@ -57,12 +49,8 @@ void Lock::WriteUnlock(const char* name)
 	}
 }
 
-void Lock::ReadLock(const char* name)
+void Lock::ReadLock()
 {
-#if _DEBUG
-	g_deadlock_detector->PushLock(name);
-#endif
-
 	// 동일 스레드가 RL(ReadLock)을 획득할 때는 경합하지 않는다		
 	const uint32 thread_id = (_lock_flag & WRITE_THREAD_MASK) >> 16;
 	if (thread_id == tls_thread_id)
@@ -90,12 +78,54 @@ void Lock::ReadLock(const char* name)
 	}
 }
 
-void Lock::ReadUnlock(const char* name)
+void Lock::ReadUnlock()
 {
-#if _DEBUG
-	g_deadlock_detector->PopLock(name);
-#endif
-
 	if (0 == (_lock_flag.fetch_sub(1) & READ_COUNT_MASK))
 		CRASH("INVALID_UNLOCK");
+}
+
+// ReadLockGuard
+ReadLockGuard::ReadLockGuard(Lock& lock) : _lock(lock)
+{
+#if _DEBUG
+	BEFORE_LOCK(_lock);
+#endif
+
+	_lock.ReadLock();
+
+#if _DEBUG
+	AFTER_LOCK(_lock);
+#endif
+}
+
+ReadLockGuard::~ReadLockGuard()
+{
+#if _DEBUG
+	BEFORE_UNLOCK(_lock);
+#endif
+
+	_lock.ReadUnlock();
+}
+
+// WriteLockGuard
+WriteLockGuard::WriteLockGuard(Lock& lock) : _lock(lock)
+{
+#if _DEBUG
+	BEFORE_LOCK(_lock);
+#endif
+
+	_lock.WriteLock();
+
+#if _DEBUG
+	AFTER_LOCK(_lock);
+#endif
+}
+
+WriteLockGuard::~WriteLockGuard()
+{
+#if _DEBUG
+	BEFORE_UNLOCK(_lock);
+#endif
+
+	_lock.WriteUnlock();
 }
