@@ -6,25 +6,19 @@
 class DeadLockDetector
 {
 public:
-	void PushLock(const char* name);
-	void PopLock(const char* name);
-	void CheckCycle();
+	static DeadLockDetector& Instance();
+	void BeforeLock(Lock& lock, string func_name = "", int32 line = 0);
+	void AfterLock(Lock& lock);
+	void BeforeUnlock(Lock& lock);
 
 private:
-	void Dfs(int32 index);
+	bool CheckCycle(thread::id start_thread, thread::id current_thread, unordered_set<thread::id>& visited_thread);
 
 private:
-	unordered_map<const char*, int32>	_name_to_id;
-	unordered_map<int32, const char*>	_id_to_name;	
-	// (0, {1,2})
-	map<int32, set<int32>>				_lock_history;
-
 	Mutex _lock;
-
-private:	
-	vector<int32>	_discovered_order;		// 노드의 방문 순서를 저장	
-	int32			_discovered_count = 0;	// 순서를 카운팅하는 변수	
-	vector<bool>	_finished;				// Dfs(i)의 종료 여부
-	vector<int32>	_parent;
+	unordered_map<thread::id, int32> _owner_count;
+	// 스레드가 락 획득 요청 대기(T -> R)
+	unordered_map<thread::id, vector<Lock*>> _wait_map;
+	// 스레드가 소유하는 락(R -> T)
+	unordered_map<Lock*, thread::id> _owner_map;	
 };
-

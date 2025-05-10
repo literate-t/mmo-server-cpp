@@ -1,114 +1,97 @@
 #include "pch.h"
 
-void DeadLockDetector::PushLock(const char* name)
+DeadLockDetector& DeadLockDetector::Instance()
+{
+	static DeadLockDetector instance;
+	return instance;
+}
+
+void DeadLockDetector::BeforeLock(Lock& lock, string func_name, int32 line)
 {
 	LockGuard guard(_lock);
 
-	// 아이디를 찾거나, 없으면 발급
-	int32 current_lock_id = 0;
+	thread::id current_thread = this_thread::get_id();
+	_wait_map[current_thread].push_back(&lock);
 
-	auto find_it = _name_to_id.find(name);	
-	if (_name_to_id.end() == find_it)
+	auto find_iter = _owner_map.find(&lock);
+	// 현재 락의 주인 스레드가 없거나 스스로를 재귀적으로 획득하는 거면 사이클이 없다
+	if (find_iter == _owner_map.end() || find_iter->second == current_thread)
+		return;
+
+	unordered_set<thread::id> visited_thread;
+	if (CheckCycle(current_thread, find_iter->second, visited_thread))
 	{
-		current_lock_id = static_cast<int32>(_name_to_id.size());
-		_name_to_id[name] = current_lock_id;
-		_id_to_name[current_lock_id] = name;
+		std::cerr << "Deadlock detected between thread " << current_thread
+			<< " and " << find_iter->second;
+		if (!func_name.empty()) std::cerr << " at " << func_name << ":" << line;
+		std::cerr << std::endl;
+		throw std::runtime_error("Deadlock detected");
+	}
+}
+
+void DeadLockDetector::AfterLock(Lock& lock)
+{
+	thread::id current_thread = this_thread::get_id();
+	LockGuard guard(_lock);	
+
+	auto& vector_lock = _wait_map.at(current_thread);
+
+	auto find_lock = std::find(vector_lock.begin(), vector_lock.end(), &lock);
+	if (find_lock != vector_lock.end())
+		vector_lock.erase(find_lock);
+
+	auto find_owner = _owner_map.find(&lock);
+	if (find_owner != _owner_map.end() && find_owner->second == current_thread)
+	{
+		_owner_count[current_thread]++;
 	}
 	else
 	{
-		current_lock_id = find_it->second;
+		_owner_count[current_thread] = 1;
+		_owner_map[&lock] = current_thread;
 	}
-
-	// 잡고 있는 락이 있다면
-	if (false == tls_lock_stack.empty())
-	{
-		// 락을 걸 때마다 탐지할 건데,
-		// 동일 스레드에서 중첩해서 거는 락이면 사이클 검사 할 필요 없다
-		const int32 last_lock_id = tls_lock_stack.top();
-		if (current_lock_id != last_lock_id)
-		{
-			// key에 해당하는 value를 가지고 있지 않으면 생성해서 반환한다(map, unordered_map 모두 해당)
-			set<int32>& history = _lock_history[last_lock_id];
-
-			// current_lock_id가 새로운 것이면 히스토리에 넣고 전체 사이클을 탐지하며
-			// 새로운 것이 아니면 탐지하지 않는다(이미 했으니까)
-			if (history.find(current_lock_id) == history.end())
-			{
-				history.insert(current_lock_id);
-				CheckCycle();
-			}
-		}
-	}
-
-	// 이게 살짝 이상한 느낌이 있었는데
-	// 프로젝트에서는 _lock_stack을 tls에서 관리한다고
-	tls_lock_stack.push(current_lock_id);
 }
 
-void DeadLockDetector::PopLock(const char* name)
+void DeadLockDetector::BeforeUnlock(Lock& lock)
 {
-	// 잡은 lock이 없는데 pop을 하는 건 잘못된 동작
+	thread::id current_thread = this_thread::get_id();
 	LockGuard guard(_lock);
-	if (tls_lock_stack.empty())
-		CRASH("Multiple unlock");
 
-	// 1,2,3,4로 lock을 잡았으면 4,3,2,1로 unlock을 해야 하는데
-	// 이 순서가 틀리면 잘못된 동작
-	int32 lock_id = _name_to_id[name];
-	if (tls_lock_stack.top() != lock_id)
-		CRASH("Invalid unlock");
+	auto find_iter = _owner_map.find(&lock);
 
-	tls_lock_stack.pop();
+	if (find_iter == _owner_map.end() || find_iter->second != current_thread)
+		throw std::runtime_error("Invalid unlock");
+
+	int32 count = --_owner_count[current_thread];
+	if (count == 0)
+		_owner_map.erase(find_iter);
+	else if (count < 0)
+		throw std::runtime_error("Invalid unlock");
 }
 
-void DeadLockDetector::CheckCycle()
+bool DeadLockDetector::CheckCycle(thread::id start_thread, thread::id current_thread, unordered_set<thread::id>& visited_thread)
 {
-	const int32 lock_count = static_cast<int32>(_name_to_id.size());
-	_discovered_order = vector<int32>(lock_count, -1);
-	_discovered_count = 0;
-	_finished = vector<bool>(lock_count, false);
-	_parent = vector<int32>(lock_count, -1);
+	if (!visited_thread.insert(current_thread).second)
+		return false;
 
-	for (int32 lock_id = 0; lock_id < lock_count; ++lock_id)
-		Dfs(lock_id);
-}
+	auto find_iter = _wait_map.find(current_thread);
+	if (find_iter == _wait_map.end())
+		return false;
 
-void DeadLockDetector::Dfs(int32 here)
-{
-	// 방문한 정점은 탐색하지 않는다
-	if (-1 != _discovered_order[here])
-		return;
-
-	_discovered_order[here] = _discovered_count++;
-
-	set<int32>& connected = _lock_history[here];
-	for (int32 there : connected)
+	for (Lock* lk : find_iter->second)
 	{
-		// tree edge
-		if (-1 == _discovered_order[there])
-		{
-			_parent[there] = here;
-			Dfs(there);
-		}
-		// forward edge(here가 there보다 방문 순서가 빠르면)
-		else if (_discovered_order[here] < _discovered_order[there])
+		auto find_owner = _owner_map.find(lk);
+		if (find_owner == _owner_map.end())
 			continue;
-		// backward edge. cycle! (dfs 순회가 끝나지 않았는데 there가 here보다 방문 순서가 빠르면)
-		else if (false == _finished[there])
-		{
-			printf("%s -> %s\n", _id_to_name[here], _id_to_name[there]);
-			int32 now = here;
-			while (true)
-			{
-				printf("%s -> %s\n", _id_to_name[_parent[now]], _id_to_name[now]);
-				now = _parent[now];
-				if (now == there)
-					break;
-			}
 
-			CRASH("Lock Cycle Detection!");
-		}
+		thread::id next_thread_id = find_owner->second;
+		// cycle
+		if (next_thread_id == start_thread)
+			return true;
+
+		if (CheckCycle(start_thread, next_thread_id, visited_thread))
+			return true;
 	}
 
-	_finished[here] = true;
+	return false;
 }
