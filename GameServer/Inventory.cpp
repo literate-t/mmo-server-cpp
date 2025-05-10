@@ -12,7 +12,7 @@ SharedItem Inventory::Get(int32 slot)
 	{
 		return _items.at(slot);
 	}
-	catch (out_of_range& e)
+	catch (out_of_range&)
 	{
 		return nullptr;
 	}	
