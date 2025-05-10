@@ -8,10 +8,14 @@
 #define USE_MANY_LOCKS(count)	Lock _locks[count];
 #define USE_LOCK				USE_MANY_LOCKS(1)
 // typeid(this).name() -> XxxLockGuard를 사용하는 클래스의 객체의 타입을 구한다
-#define READ_LOCK_IDX(index)	ReadLockGuard read_lock_guard_##index(_locks[index], typeid(this).name());
+#define READ_LOCK_IDX(index)	ReadLockGuard read_lock_guard_##index(_locks[index]);
 #define READ_LOCK				READ_LOCK_IDX(0)
-#define WRITE_LOCK_IDX(index)	WriteLockGuard write_lock_guard_##index(_locks[index], typeid(this).name());
+#define WRITE_LOCK_IDX(index)	WriteLockGuard write_lock_guard_##index(_locks[index]);
 #define WRITE_LOCK				WRITE_LOCK_IDX(0)
+
+#define BEFORE_LOCK(lock)		DeadLockDetector::Instance().BeforeLock(lock, __FUNCTION__, __LINE__)
+#define AFTER_LOCK(lock)		DeadLockDetector::Instance().AfterLock(lock)
+#define BEFORE_UNLOCK(lock)		DeadLockDetector::Instance().BeforeUnlock(lock)
 
 /*------------------
 		CRASH
