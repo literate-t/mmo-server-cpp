@@ -48,9 +48,6 @@
     <ClInclude Include="Lock.h">
       <Filter>Thread</Filter>
     </ClInclude>
-    <ClInclude Include="DeadLockDetector.h">
-      <Filter>Thread</Filter>
-    </ClInclude>
     <ClInclude Include="RefCounting.h">
       <Filter>Memory</Filter>
     </ClInclude>
@@ -129,6 +126,9 @@
     <ClInclude Include="DBBind.h">
       <Filter>DB</Filter>
     </ClInclude>
+    <ClInclude Include="DeadLockDetector.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CorePch.cpp">
@@ -147,9 +147,6 @@
       <Filter>Thread</Filter>
     </ClCompile>
     <ClCompile Include="Lock.cpp">
-      <Filter>Thread</Filter>
-    </ClCompile>
-    <ClCompile Include="DeadLockDetector.cpp">
       <Filter>Thread</Filter>
     </ClCompile>
     <ClCompile Include="Allocator.cpp">
@@ -214,6 +211,9 @@
     </ClCompile>
     <ClCompile Include="DBConnectionPool.cpp">
       <Filter>DB</Filter>
+    </ClCompile>
+    <ClCompile Include="DeadLockDetector.cpp">
+      <Filter>Thread</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
