@@ -66,8 +66,8 @@ void GameSession::ReserveSend(SharedSendBuffer send_buffer)
 	bool sendible = false;
 	{
 		WRITE_LOCK;
-		_send_packets.push(send_buffer);
 		_pending_bytes += send_buffer->WriteSize();
+		_send_packets.push(move(send_buffer));
 
 		if (_pending_bytes >= SEND_BYTE)
 			sendible = true;
