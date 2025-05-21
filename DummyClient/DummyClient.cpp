@@ -35,17 +35,14 @@ int main()
 	NetAddress(L"127.0.0.1", 9999),
 	MakeShared<IocpCore>(),
 	MakeShared<ServerSession>,
-	250);
+	1000);
 
 	ASSERT_CRASH(client_service->Start());
 
-	for (int32 i = 0; i < 4; ++i)
-	{
-		g_thread_manager->Launch([&client_service]()
-			{
-				DoWorkerJob(client_service);
-			});
-	}
+	g_thread_manager->Launch([&client_service]()
+		{
+			DoWorkerJob(client_service);
+		});
 
 	g_thread_manager->Join();
 }
