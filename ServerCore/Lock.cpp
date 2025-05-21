@@ -87,20 +87,20 @@ void Lock::ReadUnlock()
 // ReadLockGuard
 ReadLockGuard::ReadLockGuard(Lock& lock) : _lock(lock)
 {
-#if _DEBUG
+#if defined(_DEBUG)
 	BEFORE_LOCK(_lock);
 #endif
 
 	_lock.ReadLock();
 
-#if _DEBUG
+#if defined(_DEBUG)
 	AFTER_LOCK(_lock);
 #endif
 }
 
 ReadLockGuard::~ReadLockGuard()
 {
-#if _DEBUG
+#if defined(_DEBUG)
 	BEFORE_UNLOCK(_lock);
 #endif
 
@@ -110,20 +110,20 @@ ReadLockGuard::~ReadLockGuard()
 // WriteLockGuard
 WriteLockGuard::WriteLockGuard(Lock& lock) : _lock(lock)
 {
-#if _DEBUG
+#if defined(_DEBUG)
 	BEFORE_LOCK(_lock);
 #endif
 
 	_lock.WriteLock();
 
-#if _DEBUG
+#if defined(_DEBUG)
 	AFTER_LOCK(_lock);
 #endif
 }
 
 WriteLockGuard::~WriteLockGuard()
 {
-#if _DEBUG
+#if defined(_DEBUG)
 	BEFORE_UNLOCK(_lock);
 #endif
 
