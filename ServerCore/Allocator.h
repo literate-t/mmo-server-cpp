@@ -31,7 +31,7 @@ class PoolAllocator
 {
 	enum { PAGE_SIZE = 0x1000 };
 public:
-	static void* Allocate(int size);
+	static void* Allocate(int32 size);
 	static void Release(void* ptr);
 };
 

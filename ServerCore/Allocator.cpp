@@ -29,7 +29,7 @@ void StompAllocator::Release(void* ptr)
 /*-------------------
 	PoolAllocator
 -------------------*/
-void* PoolAllocator::Allocate(int size)
+void* PoolAllocator::Allocate(int32 size)
 {
 	return g_memory_manager->Allocate(size);
 }
