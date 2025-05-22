@@ -20,7 +20,7 @@ public:
 	void OnSendCompleted(int32 length) override;
 
 	void ReserveSend(SharedSendBuffer send_buffer);
-	void FlushSend();
+	void FlushSend() override;
 	bool CanFlush();
 
 	void AddPlayer(SharedPlayer player);

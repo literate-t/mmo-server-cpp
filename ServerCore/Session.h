@@ -40,12 +40,15 @@ public:
 	bool IsConnected() const { return _connected; }
 	SharedSession GetSharedSession() { return static_pointer_cast<Session>(shared_from_this()); }
 
+	virtual void FlushSend() {}
+
 protected:
 	/* 컨텐츠 단에서 필요하면 오버라이딩 */
 	virtual void OnConnectCompleted() {}
 	virtual int32 OnRecvCompleted(BYTE* buffer, int32 length) = 0;
 	virtual void OnSendCompleted(int32 length) {}
 	virtual void OnDisconnectCompleted() {}
+
 
 private:
 	bool RegisterDisconnect();
