@@ -129,6 +129,9 @@
     <ClInclude Include="DeadLockDetector.h">
       <Filter>Thread</Filter>
     </ClInclude>
+    <ClInclude Include="SessionManager.h">
+      <Filter>Network</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CorePch.cpp">
@@ -214,6 +217,9 @@
     </ClCompile>
     <ClCompile Include="DeadLockDetector.cpp">
       <Filter>Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="SessionManager.cpp">
+      <Filter>Network</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -48,9 +48,6 @@
     <ClCompile Include="GameSession.cpp">
       <Filter>Main</Filter>
     </ClCompile>
-    <ClCompile Include="GameSessionManager.cpp">
-      <Filter>Main</Filter>
-    </ClCompile>
     <ClCompile Include="ClientPacketHandler.cpp">
       <Filter>Main</Filter>
     </ClCompile>
@@ -132,9 +129,6 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="GameSession.h">
-      <Filter>Main</Filter>
-    </ClInclude>
-    <ClInclude Include="GameSessionManager.h">
       <Filter>Main</Filter>
     </ClInclude>
     <ClInclude Include="ClientPacketHandler.h">
