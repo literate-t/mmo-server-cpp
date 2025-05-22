@@ -8,8 +8,7 @@ enum
 /*-----------------
 	MemoryHeader
 -----------------*/
-DECLSPEC_ALIGN(SLIST_ALIGNMENT)
-class MemoryHeader : public SLIST_ENTRY
+class alignas(SLIST_ALIGNMENT) MemoryHeader : public SLIST_ENTRY
 {
 public:
 	MemoryHeader() = default;
@@ -37,8 +36,7 @@ public:
 /*----------------
 	MemoryPool
 ----------------*/
-DECLSPEC_ALIGN(SLIST_ALIGNMENT)
-class MemoryPool
+class alignas(SLIST_ALIGNMENT) MemoryPool
 {
 public:
 	MemoryPool(int32 alloc_size);
