@@ -31,10 +31,10 @@ void StompAllocator::Release(void* ptr)
 -------------------*/
 void* PoolAllocator::Allocate(int32 size)
 {
-	return g_memory_manager->Allocate(size);
+	return MemoryManager::Instance().Allocate(size);
 }
 
 void PoolAllocator::Release(void* ptr)
 {
-	return g_memory_manager->Release(ptr);
+	return MemoryManager::Instance().Release(ptr);
 }
