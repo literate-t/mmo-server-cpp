@@ -65,13 +65,13 @@ MemoryManager::~MemoryManager()
 
 void* MemoryManager::Allocate(int32 size)
 {
+
+#ifdef _STOMP
+	return StompAllocator::Alloc(size);
+#else
 	MemoryHeader* memory = nullptr;
 	// 실제 데이터 할당에 요구되는 크기가 size이고 여기에 메모리 헤더의 크기를 붙인다
 	const int32 alloc_size = size + sizeof(MemoryHeader);
-
-#ifdef _STOMP
-	memory = reinterpret_cast<MemoryHeader*>(StompAllocator::Allocate(alloc_size));
-#else
 	// 최대 크기를 초과하는 사이즈에 대해서는 풀링을 사용하지 않는다
 	if (MAX_ALLOC_SIZE < alloc_size)
 	{
@@ -84,24 +84,23 @@ void* MemoryManager::Allocate(int32 size)
 	{
 		memory = _pool_table[alloc_size]->Pop();
 	}
-#endif
-
 	// alloc_size에 메모리 헤더의 크기가 포함되어 있다
 	return MemoryHeader::Initialize(memory, alloc_size);
+#endif
 }
 
 void MemoryManager::Release(void* ptr)
 {
+
+#ifdef _STOMP
+	StompAllocator::Release(ptr);
+#else
 	MemoryHeader* memory = MemoryHeader::Release(ptr);
 	const int32 alloc_size = memory->_alloc_size;
 	ASSERT_CRASH(0 < alloc_size);
-
-#ifdef _STOMP
-	StompAllocator::Release(memory);
-#else
 	if (MAX_ALLOC_SIZE < alloc_size)
 	{
-		::_aligned_free(ptr);
+		::_aligned_free(memory);
 	}
 	else
 	{
