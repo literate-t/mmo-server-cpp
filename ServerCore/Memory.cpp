@@ -36,7 +36,7 @@ MemoryManager::MemoryManager()
 		}
 	}
 
-	for (; size <= 4098; size += 256)
+	for (; size <= 4096; size += 256)
 	{
 		MemoryPool* pool = new MemoryPool(size);
 		_pools.push_back(pool);
