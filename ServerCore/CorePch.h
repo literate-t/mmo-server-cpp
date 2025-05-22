@@ -32,6 +32,7 @@ using namespace chrono_literals;
 #include "SocketUtils.h"
 #include "SendBuffer.h"
 #include "Session.h"
+#include "SessionManager.h"
 #include "LockQueue.h"
 #include "JobQueue.h"
 #include "GlobalQueue.h"
