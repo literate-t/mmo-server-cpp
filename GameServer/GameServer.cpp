@@ -4,7 +4,6 @@
 #include "ListenHandler.h"
 #include "NetAddress.h"
 #include "GameSession.h"
-#include "GameSessionManager.h"
 #include "ClientPacketHandler.h"
 #include <tchar.h>
 #include "Protocol.pb.h"
@@ -21,25 +20,8 @@ enum WorkerInfo
 	TICK = 64,
 };
 
-void FlushSendLoop()
-{
-	while (true)
-	{
-		g_session_manager->FlushSend();
-		this_thread::sleep_for(1ms);
-	}
-}
-
-void DoWorkerJob(SharedServerService& service)
-{
-	while (true)
-	{
-		service->GetIocpCore()->Dispatch(10);
-		ThreadManager::DistributeReservedJobs();
-		tls_end_tick_count = GetTickCount64() + WorkerInfo::TICK;
-		ThreadManager::WorkGlobalQueue();
-	}
-}
+void DoWorkerJob(SharedServerService& service);
+void FlushSendLoop(SharedServerService& service);
 
 int main()
 {
@@ -73,7 +55,23 @@ int main()
 	ThreadManager::Instance().Join();
 	}
 
-	FlushSendLoop();	
+void DoWorkerJob(SharedServerService& service)
+{
+	while (true)
+	{		
+		service->GetIocpCore()->Dispatch(10);
+		ThreadManager::DistributeReservedJobs();
+		tls_end_tick_count = GetTickCount64() + WorkerInfo::TICK;
+		ThreadManager::WorkGlobalQueue();
+	}
+}
 
-	g_thread_manager->Join();
+void FlushSendLoop(SharedServerService& service)
+{
+	SharedSessionManager manger = service->GetSharedSessionManager();
+	while (true)
+	{
+		manger->FlushSend();
+		this_thread::sleep_for(1ms);
+	}
 }
