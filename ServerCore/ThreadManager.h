@@ -29,5 +29,5 @@ public:
 
 private:
 	Mutex			_lock;
-	vector<thread>	_threads;
+	xvector<thread>	_threads;
 };
