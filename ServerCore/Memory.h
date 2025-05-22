@@ -19,6 +19,12 @@ public:
 	MemoryManager();
 	~MemoryManager();
 
+	inline static MemoryManager& Instance()
+	{
+		static MemoryManager instance;
+		return instance;
+	}
+
 	void*	Allocate(int32 size);
 	void	Release(void* ptr);
 
