@@ -17,6 +17,8 @@ public:
 		static ThreadManager instance;
 		return instance;
 	}
+
+	void Start(function<void(void)> callback);
 	void Join();
 
 	static void InitTLS();
