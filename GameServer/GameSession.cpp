@@ -105,8 +105,8 @@ void GameSession::FlushSend()
 		_pending_bytes = 0;
 	}
 
-	_can_flush.store(true);
 	Session::Send(reserved_packet);
+	_can_flush.store(true);
 }
 
 bool GameSession::CanFlush()
