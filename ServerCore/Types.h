@@ -27,6 +27,7 @@ using LockGuard = std::lock_guard<std::mutex>;
 using SharedIocpObject = std::shared_ptr<class IocpObject>;
 using SharedIocpCore = std::shared_ptr<class IocpCore>;
 using SharedSession = std::shared_ptr<class Session>;
+using SharedSessionManager = std::shared_ptr<class SessionManager>;
 using SharedListenHandler = std::shared_ptr<class ListenHandler>;
 using SharedService = std::shared_ptr<class Service>;
 using SharedServerService = std::shared_ptr<class ServerService>;
