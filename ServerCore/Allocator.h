@@ -44,16 +44,14 @@ class StlAllocator
 public:
 	using value_type = T;
 
-	StlAllocator() {}
+	StlAllocator() = default;
 
 	template<typename U>
-	StlAllocator(const StlAllocator<U>&) {}
+	constexpr StlAllocator(const StlAllocator<U>&) noexcept {}
 
 	T* allocate(size_t count)
 	{
-		const int32 size = static_cast<int32>(count * sizeof(value_type));
-		// count가 1로 들어오는 이유는 내부적으로 메모리 할당을 위한 과정
-		// value_type에는 struct std::_Container_proxy 타입이 들어온다
+		const int32 size = static_cast<int32>(count * sizeof(T));
 		return static_cast<T*>(PoolAllocator::Allocate(size));
 	}
 
