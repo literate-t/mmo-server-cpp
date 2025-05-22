@@ -39,10 +39,10 @@ int main()
 
 	ASSERT_CRASH(client_service->Start());
 
-	g_thread_manager->Launch([&client_service]()
+	ThreadManager::Instance().Start([&client_service]()
 		{
 			DoWorkerJob(client_service);
 		});
 
-	g_thread_manager->Join();
+	ThreadManager::Instance().Join();
 }

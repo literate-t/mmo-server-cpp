@@ -59,10 +59,18 @@ int main()
 
 	for (int32 i = 0; i < 12; ++i)
 	{
-		g_thread_manager->Launch([&_server_service]()
+		ThreadManager::Instance().Start([&_server_service]()
 			{
 				DoWorkerJob(_server_service);
 			});
+	}
+	
+	ThreadManager::Instance().Start([&_server_service]()
+		{
+			FlushSendLoop(_server_service);
+		});
+	
+	ThreadManager::Instance().Join();
 	}
 
 	FlushSendLoop();	
