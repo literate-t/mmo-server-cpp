@@ -35,6 +35,7 @@ int main()
 		MakeShared<IocpCore>(),
 		MakeShared<GameSession>,
 		MakeShared<ListenHandler>(),
+		MakeShared<SessionManager>(),
 		100);
 
 	ASSERT_CRASH(_server_service->Start());
@@ -53,7 +54,7 @@ int main()
 		});
 	
 	ThreadManager::Instance().Join();
-	}
+}
 
 void DoWorkerJob(SharedServerService& service)
 {

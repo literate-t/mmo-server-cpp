@@ -35,6 +35,7 @@ int main()
 	NetAddress(L"127.0.0.1", 9999),
 	MakeShared<IocpCore>(),
 	MakeShared<ServerSession>,
+	MakeShared<SessionManager>(),
 	1000);
 
 	ASSERT_CRASH(client_service->Start());

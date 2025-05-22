@@ -4,7 +4,6 @@
 #include "RoomManager.h"
 #include "ObjectManager.h"
 #include "PacketManager.h"
-#include "GameSessionManager.h"
 #include "Map.h"
 #include "Heartbeat.h"
 
@@ -13,7 +12,6 @@ DataManager* g_data_manager = nullptr;
 RoomManager* g_room_manager = nullptr;
 ObjectManager* g_object_manager = nullptr;
 shared_ptr<PacketManager> g_shared_packet_manager = nullptr;
-GameSessionManager* g_session_manager = nullptr;
 Map* g_map = nullptr;
 shared_ptr<Heartbeat> g_shared_heart = nullptr;
 
@@ -27,7 +25,6 @@ public:
 		g_room_manager = new RoomManager();
 		g_object_manager = new ObjectManager();
 		g_shared_packet_manager = MakeShared<PacketManager>();
-		g_session_manager = new GameSessionManager();
 		g_map = new Map();
 		g_shared_heart = MakeShared<Heartbeat>();
 	}
@@ -39,7 +36,6 @@ public:
 		delete g_room_manager;
 		delete g_object_manager;
 		g_shared_packet_manager = nullptr;
-		delete g_session_manager;
 		delete g_map;
 		g_shared_heart = nullptr;
 	}

@@ -3,8 +3,8 @@
 #include "Session.h"
 #include "ListenHandler.h"
 
-Service::Service(ServiceType type, NetAddress address, SharedIocpCore iocp_core, SessionFactory fn_session_factory, int32 max_session_count)
-	: _type(type), _address(address), _iocp_core(iocp_core), _fn_session_factory(fn_session_factory), _max_session_count(max_session_count), _session_count(0)
+Service::Service(ServiceType type, NetAddress address, SharedIocpCore iocp_core, SessionFactory fn_session_factory, SharedSessionManager session_manger, int32 max_session_count)
+	: _type(type), _address(address), _iocp_core(iocp_core), _fn_session_factory(fn_session_factory), _max_session_count(max_session_count), _session_manager(session_manger), _session_count(0)
 {
 }
 
@@ -48,8 +48,18 @@ void Service::UnregisterSession(SharedSession session)
 	--_session_count;
 }
 
-ClientService::ClientService(NetAddress target_address, SharedIocpCore iocp_core, SessionFactory fn_session_factory, int32 max_session_count)
-	: Service(ServiceType::Client, target_address, iocp_core, fn_session_factory, max_session_count)
+void Service::AddToSessionManager(SharedSession session)
+{
+	_session_manager->Add(session);
+}
+
+void Service::RemoveFromSessionManager(SharedSession session)
+{
+	_session_manager->Remove(session);
+}
+
+ClientService::ClientService(NetAddress target_address, SharedIocpCore iocp_core, SessionFactory fn_session_factory, shared_ptr<SessionManager> session_manger, int32 max_session_count)
+	: Service(ServiceType::Client, target_address, iocp_core, fn_session_factory, session_manger, max_session_count)
 {
 
 }
@@ -79,8 +89,8 @@ void ClientService::CloseService()
 
 }
 
-ServerService::ServerService(NetAddress address, SharedIocpCore iocp_core, SessionFactory fn_session_factory, SharedListenHandler listen_handler, int32 max_session_count)
-	: Service(ServiceType::Server, address, iocp_core, fn_session_factory, max_session_count), _listen_handler(listen_handler)
+ServerService::ServerService(NetAddress address, SharedIocpCore iocp_core, SessionFactory fn_session_factory, SharedListenHandler listen_handler, shared_ptr<SessionManager> session_manger, int32 max_session_count)
+	: Service(ServiceType::Server, address, iocp_core, fn_session_factory, session_manger, max_session_count), _listen_handler(listen_handler)
 {
 }
 
