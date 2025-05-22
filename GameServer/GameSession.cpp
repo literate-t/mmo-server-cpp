@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "GameSession.h"
-#include "GameSessionManager.h"
 #include "ClientPacketHandler.h"
 #include "DataManager.h"
 #include "Room.h"
@@ -22,7 +21,7 @@ GameSession::~GameSession()
 
 void GameSession::OnConnectCompleted()
 {
-	g_session_manager->Add(static_pointer_cast<GameSession>(shared_from_this()));
+	//GetService()->GetSharedSessionManager()->Add(static_pointer_cast<GameSession>(shared_from_this()));
 
 	S_Connected connected_packet;
 	Send(ClientPacketHandler::MakeSendBuffer(connected_packet));
@@ -32,15 +31,14 @@ void GameSession::OnConnectCompleted()
 }
 
 void GameSession::OnDisconnectCompleted()
-{
-		
+{		
 	{
 		xqueue<SharedSendBuffer> end_queue;
 		_send_packets.swap(end_queue);
 		_can_flush.store(false);	
 	}
 
-	g_session_manager->Remove(static_pointer_cast<GameSession>(shared_from_this()));
+	//GetService()->GetSharedSessionManager()->Remove(static_pointer_cast<GameSession>(shared_from_this()));
 
 	// player와의 순환을 끊어준다
 	if (_current_player)
@@ -100,7 +98,7 @@ void GameSession::FlushSend()
 			return;
 		}
 
-		reserved_packet.swap(_send_packets);		
+		reserved_packet.swap(_send_packets);				
 
 		_pending_bytes = 0;
 	}
