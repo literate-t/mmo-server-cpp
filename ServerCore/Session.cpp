@@ -118,7 +118,8 @@ void Session::ProcessDisconnect(IocpEvent* disconnect_event)
 	disconnect_event->owner = nullptr;
 	_connected.store(false);
 	OnDisconnectCompleted();
-	GetService()->UnregisterSession(GetSharedSession());	
+	GetService()->UnregisterSession(GetSharedSession());
+	GetService()->RemoveFromSessionManager(GetSharedSession());
 	xdelete(disconnect_event);
 }
 
@@ -167,6 +168,7 @@ void Session::EstablishConnect(IocpEvent* connect_event)
 	}
 
 	GetService()->RegisterSession(GetSharedSession());
+	GetService()->AddToSessionManager(GetSharedSession());
 
 	// 컨텐츠 단에서 구현
 	OnConnectCompleted();
