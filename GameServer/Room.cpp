@@ -195,6 +195,9 @@ void Room::Broadcast(Vector2Int pos, SharedSendBuffer send_buffer)
 	const xvector<SharedPlayer> players = GetAdjacentPlayers(pos);
 	for (auto& player : players)
 	{
+		if (player == nullptr)
+			continue;
+
 		int32 dist_x = abs(pos.x - player->GetCellPos().x);
 		int32 dist_y = abs(pos.y - player->GetCellPos().y);
 
