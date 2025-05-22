@@ -12,7 +12,11 @@ public:
 	ThreadManager();
 	~ThreadManager();
 
-	void Launch(function<void(void)> callback);
+	inline static ThreadManager& Instance()
+	{
+		static ThreadManager instance;
+		return instance;
+	}
 	void Join();
 
 	static void InitTLS();
