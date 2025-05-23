@@ -18,14 +18,14 @@ void ServerDB::MakeTables(bool create)
 		CREATE TABLE accounts										\
 		(															\
 			[account_id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),	\
-			[account_name] NVARCHAR(50)								\
+			[account_name] NVARCHAR(50)	NOT NULL UNIQUE				\
 		);"
 		:
 		L"															\
 		CREATE TABLE accounts										\
 		(															\
 			[account_id] INT NOT NULL PRIMARY KEY IDENTITY(1,1),	\
-			[account_name] NVARCHAR(50)								\
+			[account_name] NVARCHAR(50)	NOT NULL UNIQUE				\
 		);";		
 	ASSERT_CRASH(db_conn->Execute(account_table_query));
 
