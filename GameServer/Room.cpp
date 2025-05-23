@@ -46,21 +46,21 @@ void Room::Init(int32 map_id, int32 zone_cell_size)
 	for (int i = 0; i < 150; ++i)
 	{
 		SharedMonster monster = g_object_manager->Add<Monster>();
-		monster->Init(GOBLIN_MACE, "Entity/OrcGrunt");
+		monster->Init(ORC_GRUNT, "Entity/OrcGrunt");
 		PushJobAsync(&Room::Enter, monster, true);
 	}
 
 	for (int i = 0; i < 150; ++i)
 	{
 		SharedMonster monster = g_object_manager->Add<Monster>();
-		monster->Init(GOBLIN_MACE, "Entity/GoblinSpear");
+		monster->Init(GOBLIN_SPEAR, "Entity/GoblinSpear");
 		PushJobAsync(&Room::Enter, monster, true);
 	}
 
 	for (int i = 0; i < 150; ++i)
 	{
 		SharedMonster monster = g_object_manager->Add<Monster>();
-		monster->Init(GOBLIN_MACE, "Entity/OrcChief");
+		monster->Init(ORC_CHIEF, "Entity/OrcChief");
 		PushJobAsync(&Room::Enter, monster, true);
 	}
 }
