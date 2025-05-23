@@ -79,6 +79,7 @@ bool ClientService::Start()
 		SharedSession session = CreateSessionToIocp();
 		if (false == session->Connect())
 			return false;
+		this_thread::sleep_for(50ms);
 	}
 
 	return true;
