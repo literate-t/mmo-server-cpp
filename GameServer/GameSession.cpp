@@ -137,12 +137,12 @@ void GameSession::HandleLogin(C_Login& login_packet)
 	ClearLobbyPlayer();	
 
 	DBConnection* conn = g_db_connection_pool->Pop();
-	auto query = L"																		\
-		SELECT a.account_id as account_id, p.player_id as player_id, p.player_name as player_name,									\
+	auto query = L"																								\
+		SELECT a.account_id as account_id, p.player_id as player_id, p.player_name as player_name,				\
 		s.level as level, s.hp as hp, s.max_hp as max_hp, s.attack, s.speed as speed, s.total_exp as total_exp	\
-		FROM accounts a																	\
-		LEFT JOIN players as p ON a.account_id = p.account_id				\
-		LEFT JOIN stats as s ON p.player_id = s.player_id						\
+		FROM accounts a																							\
+		LEFT JOIN players as p ON a.account_id = p.account_id													\
+		LEFT JOIN stats as s ON p.player_id = s.player_id														\
 		WHERE a.account_name = (?)";
 
 	int32 account_id = 0;
