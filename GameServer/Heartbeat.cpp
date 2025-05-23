@@ -6,7 +6,7 @@
 void Heartbeat::Ping(SharedGameSession owner)
 {
 	uint64 diff = GetTickCount64() - owner->HeartbeatTick;
-	if (diff > 20000)
+	if (diff > 8000)
 	{
 		owner->Disconnect(L"PingPong failed");
 		owner = nullptr;
