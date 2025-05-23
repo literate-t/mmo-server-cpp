@@ -60,12 +60,11 @@ public:
 		// char* to wchar_t*
 		size_t converted_chars;
 		mbstowcs_s(&converted_chars, nullptr, 0, value, 0);
+		
+		memset(char_to_wchar, 0, sizeof(char_to_wchar));
+		mbstowcs_s(&converted_chars, char_to_wchar, converted_chars, value, _TRUNCATE);
 
-		// TODO : delete magic number
-		wchar_t dest[50];
-		mbstowcs_s(&converted_chars, dest, converted_chars, value, _TRUNCATE);
-
-		_db_connection.BindParam(index + 1, dest, &_param_index[index]);
+		_db_connection.BindParam(index + 1, char_to_wchar, &_param_index[index]);
 		_param_flag |= (1LL << index);
 	}	
 
@@ -135,5 +134,8 @@ protected:
 	SQLLEN _column_index[ColumnCount > 0 ? ColumnCount : 1];
 	uint64 _param_flag;
 	uint64 _column_flag;
+
+	// TODO : delete magic number
+	wchar_t char_to_wchar[50];
 };
 
