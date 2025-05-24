@@ -16,6 +16,9 @@ public:
 	Protocol::StatInfo& GetStatInfo();
 	void SetStatInfoWithStatData(StatData& stat_data);
 
+	void SetObjectName(string_view name);
+	string_view GetObjectName();
+
 	Protocol::GameObjectType GetType() const { return _object_type; }
 
 	Protocol::PrefabType GetPrfebType() const;

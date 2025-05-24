@@ -39,6 +39,16 @@ void GameObject::SetStatInfoWithStatData(StatData& stat_data)
 	_stat_info->set_totalexp(stat_data.total_exp);
 }
 
+void GameObject::SetObjectName(string_view name)
+{
+	_object_info.set_name(name.data(), name.size());
+}
+
+string_view GameObject::GetObjectName()
+{
+	return _object_info.name();
+}
+
 Protocol::PrefabType GameObject::GetPrfebType() const
 {
 	return _object_info.prefabtype();
@@ -131,7 +141,7 @@ void GameObject::OnDamaged(SharedObject attacker, int32 damage)
 	if (room == nullptr) return;
 	
 	S_OnDamaged on_damaged;
-	on_damaged.set_objectid(GetObjectId());
+	on_damaged.set_objectid(GetObjectId());	
 	room->Broadcast(GetCellPos(), ClientPacketHandler::MakeSendBuffer(on_damaged));
 
 	int32 final_damage = max(0, damage - GetTotalDefence());
