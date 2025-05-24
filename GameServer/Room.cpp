@@ -430,8 +430,7 @@ void Room::HandleMovePacket(SharedPlayer player, const Protocol::C_Move& move_pa
 void Room::HandleSkillPacket(SharedPlayer player, const Protocol::C_Skill& skill_packet)
 {
 	PositionInfo& pos_info = player->GetPositionInfo();
-	// skill only on idle
-	EntityState state = pos_info.state();
+	// skill only on idle 	
 	if (pos_info.state() != EntityState::IDLE)
 		return;
 
