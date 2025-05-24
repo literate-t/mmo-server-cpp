@@ -17,7 +17,7 @@
 enum WorkerInfo
 {
 	// TODO : Job 처리가 충분한 시간이 아닐 때 자동 보정
-	TICK = 64,
+	TICK = 96,
 };
 
 void DoWorkerJob(SharedServerService& service);
