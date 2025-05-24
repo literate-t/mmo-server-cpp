@@ -9,7 +9,7 @@ public:
 	Monster(string prefab);
 	~Monster();
 
-	void Init(int32 data_sheet_id, string&& prefab);
+	void Init(MonsterDataSheetId data_sheet_id, string_view prefab);
 	void Update() override;
 	virtual void OnDead(SharedObject attacker) override;
 
