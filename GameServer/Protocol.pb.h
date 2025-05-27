@@ -63,6 +63,9 @@ extern C_EnterGameDefaultTypeInternal _C_EnterGame_default_instance_;
 class C_EquipItem;
 struct C_EquipItemDefaultTypeInternal;
 extern C_EquipItemDefaultTypeInternal _C_EquipItem_default_instance_;
+class C_GoRandom;
+struct C_GoRandomDefaultTypeInternal;
+extern C_GoRandomDefaultTypeInternal _C_GoRandom_default_instance_;
 class C_Login;
 struct C_LoginDefaultTypeInternal;
 extern C_LoginDefaultTypeInternal _C_Login_default_instance_;
@@ -163,6 +166,7 @@ template<> ::Protocol::C_CreatePlayer* Arena::CreateMaybeMessage<::Protocol::C_C
 template<> ::Protocol::C_DropItem* Arena::CreateMaybeMessage<::Protocol::C_DropItem>(Arena*);
 template<> ::Protocol::C_EnterGame* Arena::CreateMaybeMessage<::Protocol::C_EnterGame>(Arena*);
 template<> ::Protocol::C_EquipItem* Arena::CreateMaybeMessage<::Protocol::C_EquipItem>(Arena*);
+template<> ::Protocol::C_GoRandom* Arena::CreateMaybeMessage<::Protocol::C_GoRandom>(Arena*);
 template<> ::Protocol::C_Login* Arena::CreateMaybeMessage<::Protocol::C_Login>(Arena*);
 template<> ::Protocol::C_Move* Arena::CreateMaybeMessage<::Protocol::C_Move>(Arena*);
 template<> ::Protocol::C_Pong* Arena::CreateMaybeMessage<::Protocol::C_Pong>(Arena*);
@@ -227,12 +231,13 @@ enum MessageId : int {
   S_PING = 26,
   C_ANIM_END = 27,
   S_ON_DAMAGED = 28,
+  C_GO_RANDOM = 29,
   MessageId_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   MessageId_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool MessageId_IsValid(int value);
 constexpr MessageId MessageId_MIN = S_ENTER_GAME;
-constexpr MessageId MessageId_MAX = S_ON_DAMAGED;
+constexpr MessageId MessageId_MAX = C_GO_RANDOM;
 constexpr int MessageId_ARRAYSIZE = MessageId_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* MessageId_descriptor();
@@ -279,12 +284,13 @@ inline bool EntityState_Parse(
 enum EntityStatus : int {
   NORMAL = 0,
   DAMAGED = 1,
+  STATUS_DEAD = 2,
   EntityStatus_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   EntityStatus_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool EntityStatus_IsValid(int value);
 constexpr EntityStatus EntityStatus_MIN = NORMAL;
-constexpr EntityStatus EntityStatus_MAX = DAMAGED;
+constexpr EntityStatus EntityStatus_MAX = STATUS_DEAD;
 constexpr int EntityStatus_ARRAYSIZE = EntityStatus_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* EntityStatus_descriptor();
@@ -4917,6 +4923,124 @@ class S_OnDamaged final :
 };
 // -------------------------------------------------------------------
 
+class C_GoRandom final :
+    public ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:Protocol.C_GoRandom) */ {
+ public:
+  inline C_GoRandom() : C_GoRandom(nullptr) {}
+  explicit PROTOBUF_CONSTEXPR C_GoRandom(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  C_GoRandom(const C_GoRandom& from);
+  C_GoRandom(C_GoRandom&& from) noexcept
+    : C_GoRandom() {
+    *this = ::std::move(from);
+  }
+
+  inline C_GoRandom& operator=(const C_GoRandom& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline C_GoRandom& operator=(C_GoRandom&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const C_GoRandom& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const C_GoRandom* internal_default_instance() {
+    return reinterpret_cast<const C_GoRandom*>(
+               &_C_GoRandom_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    29;
+
+  friend void swap(C_GoRandom& a, C_GoRandom& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(C_GoRandom* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(C_GoRandom* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  C_GoRandom* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<C_GoRandom>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyFrom;
+  inline void CopyFrom(const C_GoRandom& from) {
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl(*this, from);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeFrom;
+  void MergeFrom(const C_GoRandom& from) {
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl(*this, from);
+  }
+  public:
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Protocol.C_GoRandom";
+  }
+  protected:
+  explicit C_GoRandom(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:Protocol.C_GoRandom)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+  };
+  friend struct ::TableStruct_Protocol_2eproto;
+};
+// -------------------------------------------------------------------
+
 class ObjectInfo final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.ObjectInfo) */ {
  public:
@@ -4965,7 +5089,7 @@ class ObjectInfo final :
                &_ObjectInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    29;
+    30;
 
   friend void swap(ObjectInfo& a, ObjectInfo& b) {
     a.Swap(&b);
@@ -5180,7 +5304,7 @@ class LobbyPlayerInfo final :
                &_LobbyPlayerInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    30;
+    31;
 
   friend void swap(LobbyPlayerInfo& a, LobbyPlayerInfo& b) {
     a.Swap(&b);
@@ -5364,7 +5488,7 @@ class PositionInfo final :
                &_PositionInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    31;
+    32;
 
   friend void swap(PositionInfo& a, PositionInfo& b) {
     a.Swap(&b);
@@ -5545,7 +5669,7 @@ class StatusInfo final :
                &_StatusInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    32;
+    33;
 
   friend void swap(StatusInfo& a, StatusInfo& b) {
     a.Swap(&b);
@@ -5693,7 +5817,7 @@ class StatInfo final :
                &_StatInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    33;
+    34;
 
   friend void swap(StatInfo& a, StatInfo& b) {
     a.Swap(&b);
@@ -5896,7 +6020,7 @@ class SkillInfo final :
                &_SkillInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    34;
+    35;
 
   friend void swap(SkillInfo& a, SkillInfo& b) {
     a.Swap(&b);
@@ -6044,7 +6168,7 @@ class ItemInfo final :
                &_ItemInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    35;
+    36;
 
   friend void swap(ItemInfo& a, ItemInfo& b) {
     a.Swap(&b);
@@ -7638,6 +7762,10 @@ inline void S_OnDamaged::set_objectid(int32_t value) {
 
 // -------------------------------------------------------------------
 
+// C_GoRandom
+
+// -------------------------------------------------------------------
+
 // ObjectInfo
 
 // int32 objectId = 1;
@@ -8437,6 +8565,8 @@ inline void ItemInfo::set_equipped(bool value) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

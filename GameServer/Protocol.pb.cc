@@ -398,6 +398,17 @@ struct S_OnDamagedDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 S_OnDamagedDefaultTypeInternal _S_OnDamaged_default_instance_;
+PROTOBUF_CONSTEXPR C_GoRandom::C_GoRandom(
+    ::_pbi::ConstantInitialized) {}
+struct C_GoRandomDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR C_GoRandomDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~C_GoRandomDefaultTypeInternal() {}
+  union {
+    C_GoRandom _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 C_GoRandomDefaultTypeInternal _C_GoRandom_default_instance_;
 PROTOBUF_CONSTEXPR ObjectInfo::ObjectInfo(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.name_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
@@ -508,7 +519,7 @@ struct ItemInfoDefaultTypeInternal {
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ItemInfoDefaultTypeInternal _ItemInfo_default_instance_;
 }  // namespace Protocol
-static ::_pb::Metadata file_level_metadata_Protocol_2eproto[36];
+static ::_pb::Metadata file_level_metadata_Protocol_2eproto[37];
 static const ::_pb::EnumDescriptor* file_level_enum_descriptors_Protocol_2eproto[12];
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_Protocol_2eproto = nullptr;
 
@@ -720,6 +731,12 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::Protocol::S_OnDamaged, _impl_.objectid_),
   ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::Protocol::C_GoRandom, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protocol::ObjectInfo, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
@@ -817,13 +834,14 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 186, -1, -1, sizeof(::Protocol::S_Ping)},
   { 192, -1, -1, sizeof(::Protocol::C_AnimEnd)},
   { 199, -1, -1, sizeof(::Protocol::S_OnDamaged)},
-  { 206, -1, -1, sizeof(::Protocol::ObjectInfo)},
-  { 217, -1, -1, sizeof(::Protocol::LobbyPlayerInfo)},
-  { 226, -1, -1, sizeof(::Protocol::PositionInfo)},
-  { 236, -1, -1, sizeof(::Protocol::StatusInfo)},
-  { 243, -1, -1, sizeof(::Protocol::StatInfo)},
-  { 255, -1, -1, sizeof(::Protocol::SkillInfo)},
-  { 262, -1, -1, sizeof(::Protocol::ItemInfo)},
+  { 206, -1, -1, sizeof(::Protocol::C_GoRandom)},
+  { 212, -1, -1, sizeof(::Protocol::ObjectInfo)},
+  { 223, -1, -1, sizeof(::Protocol::LobbyPlayerInfo)},
+  { 232, -1, -1, sizeof(::Protocol::PositionInfo)},
+  { 242, -1, -1, sizeof(::Protocol::StatusInfo)},
+  { 249, -1, -1, sizeof(::Protocol::StatInfo)},
+  { 261, -1, -1, sizeof(::Protocol::SkillInfo)},
+  { 268, -1, -1, sizeof(::Protocol::ItemInfo)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -856,6 +874,7 @@ static const ::_pb::Message* const file_default_instances[] = {
   &::Protocol::_S_Ping_default_instance_._instance,
   &::Protocol::_C_AnimEnd_default_instance_._instance,
   &::Protocol::_S_OnDamaged_default_instance_._instance,
+  &::Protocol::_C_GoRandom_default_instance_._instance,
   &::Protocol::_ObjectInfo_default_instance_._instance,
   &::Protocol::_LobbyPlayerInfo_default_instance_._instance,
   &::Protocol::_PositionInfo_default_instance_._instance,
@@ -896,65 +915,66 @@ const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABL
   "eStat\022$\n\010statInfo\030\001 \001(\0132\022.Protocol.StatI"
   "nfo\"\010\n\006C_Pong\"\010\n\006S_Ping\"\035\n\tC_AnimEnd\022\020\n\010"
   "objectId\030\001 \001(\005\"\037\n\013S_OnDamaged\022\020\n\010objectI"
-  "d\030\001 \001(\005\"\245\001\n\nObjectInfo\022\020\n\010objectId\030\001 \001(\005"
-  "\022\014\n\004name\030\002 \001(\t\022\'\n\007posInfo\030\003 \001(\0132\026.Protoc"
-  "ol.PositionInfo\022$\n\010statInfo\030\004 \001(\0132\022.Prot"
-  "ocol.StatInfo\022(\n\nprefabType\030\005 \001(\0162\024.Prot"
-  "ocol.PrefabType\"Y\n\017LobbyPlayerInfo\022\022\n\npl"
-  "ayerDbId\030\001 \001(\005\022\014\n\004name\030\002 \001(\t\022$\n\010statInfo"
-  "\030\003 \001(\0132\022.Protocol.StatInfo\"t\n\014PositionIn"
-  "fo\022$\n\005state\030\001 \001(\0162\025.Protocol.EntityState"
-  "\022\"\n\007moveDir\030\002 \001(\0162\021.Protocol.MoveDir\022\014\n\004"
-  "PosX\030\003 \001(\005\022\014\n\004PosY\030\004 \001(\005\"4\n\nStatusInfo\022&"
-  "\n\006status\030\001 \001(\0162\026.Protocol.EntityStatus\"e"
-  "\n\010StatInfo\022\r\n\005level\030\001 \001(\005\022\n\n\002hp\030\002 \001(\005\022\r\n"
-  "\005maxHp\030\003 \001(\005\022\016\n\006attack\030\004 \001(\005\022\r\n\005speed\030\005 "
-  "\001(\002\022\020\n\010totalExp\030\006 \001(\005\"\034\n\tSkillInfo\022\017\n\007sk"
-  "illId\030\001 \001(\005\"`\n\010ItemInfo\022\020\n\010itemDbId\030\001 \001("
-  "\005\022\023\n\013dataSheetId\030\002 \001(\005\022\r\n\005count\030\003 \001(\005\022\014\n"
-  "\004slot\030\004 \001(\005\022\020\n\010equipped\030\005 \001(\010*\324\003\n\tMessag"
-  "eId\022\020\n\014S_ENTER_GAME\020\000\022\020\n\014S_LEAVE_GAME\020\001\022"
-  "\013\n\007S_SPAWN\020\002\022\r\n\tS_DESPAWN\020\003\022\n\n\006C_MOVE\020\004\022"
-  "\n\n\006S_MOVE\020\005\022\013\n\007C_SKILL\020\006\022\013\n\007S_SKILL\020\007\022\017\n"
-  "\013S_CHANGE_HP\020\010\022\t\n\005S_DIE\020\t\022\017\n\013S_CONNECTED"
-  "\020\n\022\013\n\007C_LOGIN\020\013\022\013\n\007S_LOGIN\020\014\022\020\n\014C_ENTER_"
-  "GAME\020\r\022\023\n\017S_CREATE_PLAYER\020\016\022\023\n\017C_CREATE_"
-  "PLAYER\020\017\022\017\n\013S_ITEM_LIST\020\020\022\016\n\nS_ADD_ITEM\020"
-  "\021\022\020\n\014C_EQUIP_ITEM\020\022\022\020\n\014S_EQUIP_ITEM\020\023\022\016\n"
-  "\nC_USE_ITEM\020\024\022\016\n\nS_USE_ITEM\020\025\022\017\n\013C_DROP_"
-  "ITEM\020\026\022\017\n\013S_DROP_ITEM\020\027\022\021\n\rS_CHANGE_STAT"
-  "\020\030\022\n\n\006C_PONG\020\031\022\n\n\006S_PING\020\032\022\016\n\nC_ANIM_END"
-  "\020\033\022\020\n\014S_ON_DAMAGED\020\034*8\n\013EntityState\022\010\n\004I"
-  "DLE\020\000\022\n\n\006MOVING\020\001\022\t\n\005SKILL\020\002\022\010\n\004DEAD\020\003*\'"
-  "\n\014EntityStatus\022\n\n\006NORMAL\020\000\022\013\n\007DAMAGED\020\001*"
-  "0\n\007MoveDir\022\006\n\002UP\020\000\022\010\n\004DOWN\020\001\022\010\n\004LEFT\020\002\022\t"
-  "\n\005RIGHT\020\003*C\n\016GameObjectType\022\010\n\004NONE\020\000\022\n\n"
-  "\006PLAYER\020\001\022\013\n\007MONSTER\020\002\022\016\n\nPROJECTILE\020\003*A"
-  "\n\tSkillType\022\016\n\nSKILL_NONE\020\000\022\016\n\nSKILL_AUT"
-  "O\020\001\022\024\n\020SKILL_PROJECTILE\020\002*Z\n\021PlayerServe"
-  "rState\022\026\n\022SERVER_STATE_LOGIN\020\000\022\026\n\022SERVER"
-  "_STATE_LOBBY\020\001\022\025\n\021SERVER_STATE_GAME\020\002*c\n"
-  "\010ItemType\022\022\n\016ITEM_TYPE_NONE\020\000\022\024\n\020ITEM_TY"
-  "PE_WEAPON\020\001\022\023\n\017ITEM_TYPE_ARMOR\020\002\022\030\n\024ITEM"
-  "_TYPE_CONSUMABLE\020\003*N\n\nWeaponType\022\024\n\020WEAP"
-  "ON_TYPE_NONE\020\000\022\025\n\021WEAPON_TYPE_SWORD\020\001\022\023\n"
-  "\017WEAPON_TYPE_BOW\020\002*h\n\tArmorType\022\023\n\017ARMOR"
-  "_TYPE_NONE\020\000\022\025\n\021ARMOR_TYPE_HELMET\020\001\022\031\n\025A"
-  "RMOR_TYPE_CHESTARMOR\020\002\022\024\n\020ARMOR_TYPE_BOO"
-  "TS\020\003*F\n\016ConsumableType\022\030\n\024CONSUMABLE_TYP"
-  "E_NONE\020\000\022\032\n\026CONSUMABLE_TYPE_POTION\020\001*3\n\n"
-  "PrefabType\022\n\n\006ARCHER\020\000\022\014\n\010SPEARMAN\020\001\022\013\n\007"
-  "TEMPLAR\020\002B\035\252\002\032Google.Protobuf.MyProtocol"
-  "b\006proto3"
+  "d\030\001 \001(\005\"\014\n\nC_GoRandom\"\245\001\n\nObjectInfo\022\020\n\010"
+  "objectId\030\001 \001(\005\022\014\n\004name\030\002 \001(\t\022\'\n\007posInfo\030"
+  "\003 \001(\0132\026.Protocol.PositionInfo\022$\n\010statInf"
+  "o\030\004 \001(\0132\022.Protocol.StatInfo\022(\n\nprefabTyp"
+  "e\030\005 \001(\0162\024.Protocol.PrefabType\"Y\n\017LobbyPl"
+  "ayerInfo\022\022\n\nplayerDbId\030\001 \001(\005\022\014\n\004name\030\002 \001"
+  "(\t\022$\n\010statInfo\030\003 \001(\0132\022.Protocol.StatInfo"
+  "\"t\n\014PositionInfo\022$\n\005state\030\001 \001(\0162\025.Protoc"
+  "ol.EntityState\022\"\n\007moveDir\030\002 \001(\0162\021.Protoc"
+  "ol.MoveDir\022\014\n\004PosX\030\003 \001(\005\022\014\n\004PosY\030\004 \001(\005\"4"
+  "\n\nStatusInfo\022&\n\006status\030\001 \001(\0162\026.Protocol."
+  "EntityStatus\"e\n\010StatInfo\022\r\n\005level\030\001 \001(\005\022"
+  "\n\n\002hp\030\002 \001(\005\022\r\n\005maxHp\030\003 \001(\005\022\016\n\006attack\030\004 \001"
+  "(\005\022\r\n\005speed\030\005 \001(\002\022\020\n\010totalExp\030\006 \001(\005\"\034\n\tS"
+  "killInfo\022\017\n\007skillId\030\001 \001(\005\"`\n\010ItemInfo\022\020\n"
+  "\010itemDbId\030\001 \001(\005\022\023\n\013dataSheetId\030\002 \001(\005\022\r\n\005"
+  "count\030\003 \001(\005\022\014\n\004slot\030\004 \001(\005\022\020\n\010equipped\030\005 "
+  "\001(\010*\345\003\n\tMessageId\022\020\n\014S_ENTER_GAME\020\000\022\020\n\014S"
+  "_LEAVE_GAME\020\001\022\013\n\007S_SPAWN\020\002\022\r\n\tS_DESPAWN\020"
+  "\003\022\n\n\006C_MOVE\020\004\022\n\n\006S_MOVE\020\005\022\013\n\007C_SKILL\020\006\022\013"
+  "\n\007S_SKILL\020\007\022\017\n\013S_CHANGE_HP\020\010\022\t\n\005S_DIE\020\t\022"
+  "\017\n\013S_CONNECTED\020\n\022\013\n\007C_LOGIN\020\013\022\013\n\007S_LOGIN"
+  "\020\014\022\020\n\014C_ENTER_GAME\020\r\022\023\n\017S_CREATE_PLAYER\020"
+  "\016\022\023\n\017C_CREATE_PLAYER\020\017\022\017\n\013S_ITEM_LIST\020\020\022"
+  "\016\n\nS_ADD_ITEM\020\021\022\020\n\014C_EQUIP_ITEM\020\022\022\020\n\014S_E"
+  "QUIP_ITEM\020\023\022\016\n\nC_USE_ITEM\020\024\022\016\n\nS_USE_ITE"
+  "M\020\025\022\017\n\013C_DROP_ITEM\020\026\022\017\n\013S_DROP_ITEM\020\027\022\021\n"
+  "\rS_CHANGE_STAT\020\030\022\n\n\006C_PONG\020\031\022\n\n\006S_PING\020\032"
+  "\022\016\n\nC_ANIM_END\020\033\022\020\n\014S_ON_DAMAGED\020\034\022\017\n\013C_"
+  "GO_RANDOM\020\035*8\n\013EntityState\022\010\n\004IDLE\020\000\022\n\n\006"
+  "MOVING\020\001\022\t\n\005SKILL\020\002\022\010\n\004DEAD\020\003*8\n\014EntityS"
+  "tatus\022\n\n\006NORMAL\020\000\022\013\n\007DAMAGED\020\001\022\017\n\013STATUS"
+  "_DEAD\020\002*0\n\007MoveDir\022\006\n\002UP\020\000\022\010\n\004DOWN\020\001\022\010\n\004"
+  "LEFT\020\002\022\t\n\005RIGHT\020\003*C\n\016GameObjectType\022\010\n\004N"
+  "ONE\020\000\022\n\n\006PLAYER\020\001\022\013\n\007MONSTER\020\002\022\016\n\nPROJEC"
+  "TILE\020\003*A\n\tSkillType\022\016\n\nSKILL_NONE\020\000\022\016\n\nS"
+  "KILL_AUTO\020\001\022\024\n\020SKILL_PROJECTILE\020\002*Z\n\021Pla"
+  "yerServerState\022\026\n\022SERVER_STATE_LOGIN\020\000\022\026"
+  "\n\022SERVER_STATE_LOBBY\020\001\022\025\n\021SERVER_STATE_G"
+  "AME\020\002*c\n\010ItemType\022\022\n\016ITEM_TYPE_NONE\020\000\022\024\n"
+  "\020ITEM_TYPE_WEAPON\020\001\022\023\n\017ITEM_TYPE_ARMOR\020\002"
+  "\022\030\n\024ITEM_TYPE_CONSUMABLE\020\003*N\n\nWeaponType"
+  "\022\024\n\020WEAPON_TYPE_NONE\020\000\022\025\n\021WEAPON_TYPE_SW"
+  "ORD\020\001\022\023\n\017WEAPON_TYPE_BOW\020\002*h\n\tArmorType\022"
+  "\023\n\017ARMOR_TYPE_NONE\020\000\022\025\n\021ARMOR_TYPE_HELME"
+  "T\020\001\022\031\n\025ARMOR_TYPE_CHESTARMOR\020\002\022\024\n\020ARMOR_"
+  "TYPE_BOOTS\020\003*F\n\016ConsumableType\022\030\n\024CONSUM"
+  "ABLE_TYPE_NONE\020\000\022\032\n\026CONSUMABLE_TYPE_POTI"
+  "ON\020\001*3\n\nPrefabType\022\n\n\006ARCHER\020\000\022\014\n\010SPEARM"
+  "AN\020\001\022\013\n\007TEMPLAR\020\002B\035\252\002\032Google.Protobuf.My"
+  "Protocolb\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_Protocol_2eproto_deps[1] = {
   &::descriptor_table_google_2fprotobuf_2ftimestamp_2eproto,
 };
 static ::_pbi::once_flag descriptor_table_Protocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Protocol_2eproto = {
-    false, false, 3168, descriptor_table_protodef_Protocol_2eproto,
+    false, false, 3216, descriptor_table_protodef_Protocol_2eproto,
     "Protocol.proto",
-    &descriptor_table_Protocol_2eproto_once, descriptor_table_Protocol_2eproto_deps, 1, 36,
+    &descriptor_table_Protocol_2eproto_once, descriptor_table_Protocol_2eproto_deps, 1, 37,
     schemas, file_default_instances, TableStruct_Protocol_2eproto::offsets,
     file_level_metadata_Protocol_2eproto, file_level_enum_descriptors_Protocol_2eproto,
     file_level_service_descriptors_Protocol_2eproto,
@@ -1001,6 +1021,7 @@ bool MessageId_IsValid(int value) {
     case 26:
     case 27:
     case 28:
+    case 29:
       return true;
     default:
       return false;
@@ -1031,6 +1052,7 @@ bool EntityStatus_IsValid(int value) {
   switch (value) {
     case 0:
     case 1:
+    case 2:
       return true;
     default:
       return false;
@@ -6232,6 +6254,46 @@ void S_OnDamaged::InternalSwap(S_OnDamaged* other) {
 
 // ===================================================================
 
+class C_GoRandom::_Internal {
+ public:
+};
+
+C_GoRandom::C_GoRandom(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase(arena, is_message_owned) {
+  // @@protoc_insertion_point(arena_constructor:Protocol.C_GoRandom)
+}
+C_GoRandom::C_GoRandom(const C_GoRandom& from)
+  : ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase() {
+  C_GoRandom* const _this = this; (void)_this;
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  // @@protoc_insertion_point(copy_constructor:Protocol.C_GoRandom)
+}
+
+
+
+
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData C_GoRandom::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl,
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl,
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*C_GoRandom::GetClassData() const { return &_class_data_; }
+
+
+
+
+
+
+
+::PROTOBUF_NAMESPACE_ID::Metadata C_GoRandom::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
+      file_level_metadata_Protocol_2eproto[29]);
+}
+
+// ===================================================================
+
 class ObjectInfo::_Internal {
  public:
   static const ::Protocol::PositionInfo& posinfo(const ObjectInfo* msg);
@@ -6575,7 +6637,7 @@ void ObjectInfo::InternalSwap(ObjectInfo* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata ObjectInfo::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[29]);
+      file_level_metadata_Protocol_2eproto[30]);
 }
 
 // ===================================================================
@@ -6851,7 +6913,7 @@ void LobbyPlayerInfo::InternalSwap(LobbyPlayerInfo* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata LobbyPlayerInfo::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[30]);
+      file_level_metadata_Protocol_2eproto[31]);
 }
 
 // ===================================================================
@@ -7116,7 +7178,7 @@ void PositionInfo::InternalSwap(PositionInfo* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata PositionInfo::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[31]);
+      file_level_metadata_Protocol_2eproto[32]);
 }
 
 // ===================================================================
@@ -7297,7 +7359,7 @@ void StatusInfo::InternalSwap(StatusInfo* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata StatusInfo::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[32]);
+      file_level_metadata_Protocol_2eproto[33]);
 }
 
 // ===================================================================
@@ -7616,7 +7678,7 @@ void StatInfo::InternalSwap(StatInfo* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata StatInfo::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[33]);
+      file_level_metadata_Protocol_2eproto[34]);
 }
 
 // ===================================================================
@@ -7794,7 +7856,7 @@ void SkillInfo::InternalSwap(SkillInfo* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata SkillInfo::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[34]);
+      file_level_metadata_Protocol_2eproto[35]);
 }
 
 // ===================================================================
@@ -8077,7 +8139,7 @@ void ItemInfo::InternalSwap(ItemInfo* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata ItemInfo::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[35]);
+      file_level_metadata_Protocol_2eproto[36]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
@@ -8198,6 +8260,10 @@ Arena::CreateMaybeMessage< ::Protocol::C_AnimEnd >(Arena* arena) {
 template<> PROTOBUF_NOINLINE ::Protocol::S_OnDamaged*
 Arena::CreateMaybeMessage< ::Protocol::S_OnDamaged >(Arena* arena) {
   return Arena::CreateMessageInternal< ::Protocol::S_OnDamaged >(arena);
+}
+template<> PROTOBUF_NOINLINE ::Protocol::C_GoRandom*
+Arena::CreateMaybeMessage< ::Protocol::C_GoRandom >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::Protocol::C_GoRandom >(arena);
 }
 template<> PROTOBUF_NOINLINE ::Protocol::ObjectInfo*
 Arena::CreateMaybeMessage< ::Protocol::ObjectInfo >(Arena* arena) {
