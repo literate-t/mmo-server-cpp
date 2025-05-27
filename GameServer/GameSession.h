@@ -32,9 +32,9 @@ public:
 	inline SharedPlayer& GetPlayer() { return _current_player; }
 	inline weak_ptr<class Room>& GetRoom() { return _room; }
 
-	void HandleLogin(C_Login& login_packet);
-	void HandleCreatePlayer(C_CreatePlayer packet);
-	void HandleEnterGame(C_EnterGame packet);
+	void HandleLogin(const C_Login& login_packet);
+	void HandleCreatePlayer(const C_CreatePlayer& packet);
+	void HandleEnterGame(const C_EnterGame& packet);
 
 private:
 	void ClearLobbyPlayer();

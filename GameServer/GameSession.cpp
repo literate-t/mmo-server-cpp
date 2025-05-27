@@ -129,7 +129,7 @@ void GameSession::RemovePlayer(SharedPlayer player)
 	_players.erase(find_iter);
 }
 
-void GameSession::HandleLogin(C_Login& login_packet)
+void GameSession::HandleLogin(const C_Login& login_packet)
 {
 	if (_server_state != PlayerServerState::SERVER_STATE_LOGIN)
 		return;
@@ -222,7 +222,7 @@ void GameSession::HandleLogin(C_Login& login_packet)
 	g_db_connection_pool->Push(conn);
 }
 
-void GameSession::HandleCreatePlayer(C_CreatePlayer packet)
+void GameSession::HandleCreatePlayer(const C_CreatePlayer& packet)
 {
 	if (_server_state != PlayerServerState::SERVER_STATE_LOBBY)
 		return;
@@ -279,7 +279,7 @@ void GameSession::HandleCreatePlayer(C_CreatePlayer packet)
 	Send(ClientPacketHandler::MakeSendBuffer(new_player_pkt));
 }
 
-void GameSession::HandleEnterGame(C_EnterGame packet)
+void GameSession::HandleEnterGame(const C_EnterGame& packet)
 {
 	if (_server_state != PlayerServerState::SERVER_STATE_LOBBY)
 		return;
