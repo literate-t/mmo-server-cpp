@@ -190,3 +190,8 @@ void Player::HandleDropItemPacket(const C_DropItem& pkt)
 	drop_item.set_slot(pkt.slot());
 	OwnerSession->Send(ClientPacketHandler::MakeSendBuffer(drop_item));
 }
+
+void Player::GoToRandomPosition(bool set_hp_max)
+{
+	GameObject::OnDeadAnim(set_hp_max);
+}

@@ -50,6 +50,7 @@ bool Handle_C_UseItem(SharedPacketSession& session, Protocol::C_UseItem& pkt);
 bool Handle_C_DropItem(SharedPacketSession& session, Protocol::C_DropItem& pkt);
 bool Handle_C_Pong(SharedPacketSession& session, Protocol::C_Pong& pkt);
 bool Handle_C_AnimEnd(SharedPacketSession& session, Protocol::C_AnimEnd& pkt);
+bool Handle_C_GoRandom(SharedPacketSession& session, const Protocol::C_GoRandom& pkt);
 
 class ClientPacketHandler
 {
@@ -69,6 +70,7 @@ public:
 		g_packet_handler[PKT_C_DropItem] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::C_DropItem>(Handle_C_DropItem, session, buffer, length); };
 		g_packet_handler[PKT_C_Pong] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::C_Pong>(Handle_C_Pong, session, buffer, length); };
 		g_packet_handler[PKT_C_AnimEnd] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::C_AnimEnd>(Handle_C_AnimEnd, session, buffer, length); };		
+		g_packet_handler[PKT_C_GoRandom] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::C_GoRandom>(Handle_C_GoRandom, session, buffer, length); };		
 	}
 
 	static bool HandlePacket(SharedPacketSession& session, BYTE* buffer, int32 length);	

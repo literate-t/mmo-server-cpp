@@ -31,6 +31,8 @@ public:
 	void HandleUseItemPacket(const C_UseItem& pkt);
 	void HandleDropItemPacket(const C_DropItem& pkt);
 
+	void GoToRandomPosition(bool set_hp_max = false);
+
 private:
 	Inventory _inventory;
 	SharedViewCube _view_cube;

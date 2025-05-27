@@ -40,6 +40,7 @@ public:
 	void HandleEquipItemPacket(SharedPlayer player, const Protocol::C_EquipItem& equip_packet);
 	void HandleUseItemPacket(SharedPlayer player, const Protocol::C_UseItem& use_packet);
 	void HandleDropItemPacket(SharedPlayer player, const Protocol::C_DropItem& drop_packet);
+	void HandleGoRandomPacket(SharedPlayer player, const Protocol::C_GoRandom& random_packet);
 
 	Vector2Int GetRandomPos();
 

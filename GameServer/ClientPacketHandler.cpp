@@ -123,6 +123,15 @@ bool Handle_C_AnimEnd(SharedPacketSession& session, Protocol::C_AnimEnd& pkt)
 	object->OnDeadAnim();
 
 	return false;
+bool Handle_C_GoRandom(SharedPacketSession& session, const Protocol::C_GoRandom& pkt)
+{
+	shared_ptr<GameSession> game_session = static_pointer_cast<GameSession>(session);
+	SharedPlayer player = game_session->GetPlayer();
+	SharedRoom room = player->GetRoom();
+
+	room->PushJobAsync(&Room::HandleGoRandomPacket, player, pkt);
+
+	return true;
 }
 
 
