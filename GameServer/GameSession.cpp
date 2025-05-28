@@ -27,7 +27,7 @@ void GameSession::OnConnectCompleted()
 	Send(ClientPacketHandler::MakeSendBuffer(connected_packet));
 
 	HeartbeatTick = GetTickCount64();
-	g_shared_heart->PushTimerAsync(5000, &Heartbeat::Ping, static_pointer_cast<GameSession>(shared_from_this()));
+	g_shared_heart->PushJobTimerAsync(5000, &Heartbeat::Ping, static_pointer_cast<GameSession>(shared_from_this()));
 }
 
 void GameSession::OnDisconnectCompleted()
@@ -78,7 +78,7 @@ void GameSession::ReserveSend(SharedSendBuffer send_buffer)
 	bool desired = false;
 	if (_can_flush.compare_exchange_strong(expected, desired))
 	{
-		g_shared_packet_manager->PushTimerAsync(SEND_TICK, [shared = shared_from_this()]()
+		g_shared_packet_manager->PushJobTimerAsync(SEND_TICK, [shared = shared_from_this()]()
 			{
 				SharedGameSession session = static_pointer_cast<GameSession>(shared);
 				session->FlushSend();

@@ -24,7 +24,7 @@ public:
 	}
 
 	// for lamda
-	SharedJob PushTimerAsync(uint64 delay_time, CallbackType&& callback)
+	SharedJob PushJobTimerAsync(uint64 delay_time, CallbackType&& callback)
 	{
 		SharedJob job = ObjectPool<Job>::MakeShared(move(callback));
 		g_job_timer->ReserveJob(delay_time, shared_from_this(), job);
@@ -33,7 +33,7 @@ public:
 	}
 
 	template<typename T, typename Return, typename...Args1, typename...Args2>
-	SharedJob PushTimerAsync(uint64 delay_time, Return(T::* member_func)(Args1...), Args2&&...args)
+	SharedJob PushJobTimerAsync(uint64 delay_time, Return(T::* member_func)(Args1...), Args2&&...args)
 	{
 		shared_ptr<T> owner = static_pointer_cast<T>(shared_from_this());
 		SharedJob job = ObjectPool<Job>::MakeShared(owner, member_func, forward<Args2>(args)...);

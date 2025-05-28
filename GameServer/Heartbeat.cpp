@@ -15,7 +15,7 @@ void Heartbeat::Ping(SharedGameSession owner)
 
 	S_Ping ping;
 	owner->Send(ClientPacketHandler::MakeSendBuffer(ping));
-	g_shared_heart->PushTimerAsync(5000, &Heartbeat::Ping, owner);
+	g_shared_heart->PushJobTimerAsync(5000, &Heartbeat::Ping, owner);
 }
 
 void Heartbeat::HandlePong(SharedGameSession owner)
