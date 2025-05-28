@@ -37,6 +37,7 @@ enum
 	PKT_S_Ping = 26,
 	PKT_C_AnimEnd = 27,
 	PKT_S_OnDamaged = 28,
+	PKT_C_GoRandom = 29,
 };
 
 bool Handle_INVALID(SharedPacketSession& session, BYTE* buffer, int32 length);
