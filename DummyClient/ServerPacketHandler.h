@@ -37,6 +37,7 @@ enum
 	PKT_S_Ping = 26,
 	PKT_C_AnimEnd = 27,
 	PKT_S_OnDamaged = 28,
+	PKT_C_GoRandom = 29,
 };
 
 bool Handle_INVALID(SharedPacketSession& session, BYTE* buffer, int32 length);
@@ -100,7 +101,8 @@ public:
 	static SharedSendBuffer MakeSendBuffer(Protocol::C_UseItem& pkt) { return MakeSendBuffer(pkt, PKT_C_UseItem); }
 	static SharedSendBuffer MakeSendBuffer(Protocol::C_DropItem& pkt) { return MakeSendBuffer(pkt, PKT_C_DropItem); }
 	static SharedSendBuffer MakeSendBuffer(Protocol::C_Pong& pkt) { return MakeSendBuffer(pkt, PKT_C_Pong); }
-	static SharedSendBuffer MakeSendBuffer(Protocol::C_AnimEnd& pkt) { return MakeSendBuffer(pkt, PKT_C_AnimEnd); }	
+	static SharedSendBuffer MakeSendBuffer(Protocol::C_AnimEnd& pkt) { return MakeSendBuffer(pkt, PKT_C_AnimEnd); }
+	static SharedSendBuffer MakeSendBuffer(Protocol::C_GoRandom& pkt) { return MakeSendBuffer(pkt, PKT_C_GoRandom); }	
 
 private:
 	template<typename PacketType, typename ProcessFunc>
