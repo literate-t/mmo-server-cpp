@@ -21,8 +21,6 @@ GameSession::~GameSession()
 
 void GameSession::OnConnectCompleted()
 {
-	//GetService()->GetSharedSessionManager()->Add(static_pointer_cast<GameSession>(shared_from_this()));
-
 	S_Connected connected_packet;
 	Send(ClientPacketHandler::MakeSendBuffer(connected_packet));
 
@@ -37,8 +35,6 @@ void GameSession::OnDisconnectCompleted()
 		_send_packets.swap(end_queue);
 		_can_flush.store(false);	
 	}
-
-	//GetService()->GetSharedSessionManager()->Remove(static_pointer_cast<GameSession>(shared_from_this()));
 
 	// player와의 순환을 끊어준다
 	if (_current_player)
