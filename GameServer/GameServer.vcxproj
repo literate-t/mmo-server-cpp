@@ -231,7 +231,6 @@
   <ItemGroup>
     <ClInclude Include="Arrow.h" />
     <ClInclude Include="ConfigManager.h" />
-    <ClInclude Include="DataContents.h" />
     <ClInclude Include="DataManager.h" />
     <ClInclude Include="DataModel.h" />
     <ClInclude Include="DBSerializer.h" />
