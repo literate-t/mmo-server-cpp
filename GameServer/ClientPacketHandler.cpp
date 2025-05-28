@@ -23,7 +23,7 @@ bool Handle_INVALID(SharedPacketSession& session, BYTE* buffer, int32 length)
 	return false;
 }
 
-bool Handle_C_Move(SharedPacketSession& session, Protocol::C_Move& pkt)
+bool Handle_C_Move(SharedPacketSession& session, const Protocol::C_Move& pkt)
 {
 	shared_ptr<GameSession> game_session = static_pointer_cast<GameSession>(session);
 	SharedPlayer player = game_session->GetPlayer();
@@ -34,7 +34,7 @@ bool Handle_C_Move(SharedPacketSession& session, Protocol::C_Move& pkt)
 	return true;
 }
 
-bool Handle_C_Skill(SharedPacketSession& session, Protocol::C_Skill& pkt)
+bool Handle_C_Skill(SharedPacketSession& session, const Protocol::C_Skill& pkt)
 {
 	shared_ptr<GameSession> game_session = static_pointer_cast<GameSession>(session);
 	SharedPlayer player = game_session->GetPlayer();
@@ -45,7 +45,7 @@ bool Handle_C_Skill(SharedPacketSession& session, Protocol::C_Skill& pkt)
 	return true;
 }
 
-bool Handle_C_Login(SharedPacketSession& session, Protocol::C_Login& pkt)
+bool Handle_C_Login(SharedPacketSession& session, const Protocol::C_Login& pkt)
 {
 	shared_ptr<GameSession> game_session = static_pointer_cast<GameSession>(session);
 	game_session->HandleLogin(pkt);
@@ -53,7 +53,7 @@ bool Handle_C_Login(SharedPacketSession& session, Protocol::C_Login& pkt)
 	return true;
 }
 
-bool Handle_C_CreatePlayer(SharedPacketSession& session, Protocol::C_CreatePlayer& pkt)
+bool Handle_C_CreatePlayer(SharedPacketSession& session, const Protocol::C_CreatePlayer& pkt)
 {
 	shared_ptr<GameSession> game_session = static_pointer_cast<GameSession>(session);
 	game_session->HandleCreatePlayer(pkt);
@@ -61,7 +61,7 @@ bool Handle_C_CreatePlayer(SharedPacketSession& session, Protocol::C_CreatePlaye
 	return true;
 }
 
-bool Handle_C_EnterGame(SharedPacketSession& session, Protocol::C_EnterGame& pkt)
+bool Handle_C_EnterGame(SharedPacketSession& session, const Protocol::C_EnterGame& pkt)
 {
 	shared_ptr<GameSession> game_session = static_pointer_cast<GameSession>(session);
 	game_session->HandleEnterGame(pkt);
@@ -69,7 +69,7 @@ bool Handle_C_EnterGame(SharedPacketSession& session, Protocol::C_EnterGame& pkt
 	return true;
 }
 
-bool Handle_C_EquipItem(SharedPacketSession& session, Protocol::C_EquipItem& pkt)
+bool Handle_C_EquipItem(SharedPacketSession& session, const Protocol::C_EquipItem& pkt)
 {
 	shared_ptr<GameSession> game_session = static_pointer_cast<GameSession>(session);
 	SharedPlayer player = game_session->GetPlayer();
@@ -79,7 +79,7 @@ bool Handle_C_EquipItem(SharedPacketSession& session, Protocol::C_EquipItem& pkt
 	return true;
 }
 
-bool Handle_C_UseItem(SharedPacketSession& session, Protocol::C_UseItem& pkt)
+bool Handle_C_UseItem(SharedPacketSession& session, const Protocol::C_UseItem& pkt)
 {
 	shared_ptr<GameSession> game_session = static_pointer_cast<GameSession>(session);
 	SharedPlayer player = game_session->GetPlayer();
@@ -89,7 +89,7 @@ bool Handle_C_UseItem(SharedPacketSession& session, Protocol::C_UseItem& pkt)
 	return false;
 }
 
-bool Handle_C_DropItem(SharedPacketSession& session, Protocol::C_DropItem& pkt)
+bool Handle_C_DropItem(SharedPacketSession& session, const Protocol::C_DropItem& pkt)
 {
 	shared_ptr<GameSession> game_session = static_pointer_cast<GameSession>(session);
 	SharedPlayer player = game_session->GetPlayer();
@@ -100,13 +100,13 @@ bool Handle_C_DropItem(SharedPacketSession& session, Protocol::C_DropItem& pkt)
 	return false;
 }
 
-bool Handle_C_Pong(SharedPacketSession& session, Protocol::C_Pong& pkt)
+bool Handle_C_Pong(SharedPacketSession& session, const Protocol::C_Pong& pkt)
 {	
 	g_shared_heart->HandlePong(static_pointer_cast<GameSession>(session));
 	return true;
 }
 
-bool Handle_C_AnimEnd(SharedPacketSession& session, Protocol::C_AnimEnd& pkt)
+bool Handle_C_AnimEnd(SharedPacketSession& session, const Protocol::C_AnimEnd& pkt)
 {
 	shared_ptr<GameSession> game_session = static_pointer_cast<GameSession>(session);
 	SharedPlayer player = game_session->GetPlayer();
@@ -122,7 +122,9 @@ bool Handle_C_AnimEnd(SharedPacketSession& session, Protocol::C_AnimEnd& pkt)
 
 	object->OnDeadAnim();
 
-	return false;
+	return true;
+}
+
 bool Handle_C_GoRandom(SharedPacketSession& session, const Protocol::C_GoRandom& pkt)
 {
 	shared_ptr<GameSession> game_session = static_pointer_cast<GameSession>(session);

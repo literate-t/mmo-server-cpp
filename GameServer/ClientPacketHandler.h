@@ -41,16 +41,16 @@ enum
 };
 
 bool Handle_INVALID(SharedPacketSession& session, BYTE* buffer, int32 length);
-bool Handle_C_Move(SharedPacketSession& session, Protocol::C_Move& pkt);
-bool Handle_C_Skill(SharedPacketSession& session, Protocol::C_Skill& pkt);
-bool Handle_C_Login(SharedPacketSession& session, Protocol::C_Login& pkt);
-bool Handle_C_EnterGame(SharedPacketSession& session, Protocol::C_EnterGame& pkt);
-bool Handle_C_CreatePlayer(SharedPacketSession& session, Protocol::C_CreatePlayer& pkt);
-bool Handle_C_EquipItem(SharedPacketSession& session, Protocol::C_EquipItem& pkt);
-bool Handle_C_UseItem(SharedPacketSession& session, Protocol::C_UseItem& pkt);
-bool Handle_C_DropItem(SharedPacketSession& session, Protocol::C_DropItem& pkt);
-bool Handle_C_Pong(SharedPacketSession& session, Protocol::C_Pong& pkt);
-bool Handle_C_AnimEnd(SharedPacketSession& session, Protocol::C_AnimEnd& pkt);
+bool Handle_C_Move(SharedPacketSession& session, const Protocol::C_Move& pkt);
+bool Handle_C_Skill(SharedPacketSession& session,const Protocol::C_Skill& pkt);
+bool Handle_C_Login(SharedPacketSession& session, const Protocol::C_Login& pkt);
+bool Handle_C_EnterGame(SharedPacketSession& session, const Protocol::C_EnterGame& pkt);
+bool Handle_C_CreatePlayer(SharedPacketSession& session, const Protocol::C_CreatePlayer& pkt);
+bool Handle_C_EquipItem(SharedPacketSession& session, const Protocol::C_EquipItem& pkt);
+bool Handle_C_UseItem(SharedPacketSession& session, const Protocol::C_UseItem& pkt);
+bool Handle_C_DropItem(SharedPacketSession& session, const Protocol::C_DropItem& pkt);
+bool Handle_C_Pong(SharedPacketSession& session, const Protocol::C_Pong& pkt);
+bool Handle_C_AnimEnd(SharedPacketSession& session, const Protocol::C_AnimEnd& pkt);
 bool Handle_C_GoRandom(SharedPacketSession& session, const Protocol::C_GoRandom& pkt);
 
 class ClientPacketHandler
@@ -70,7 +70,7 @@ public:
 		g_packet_handler[PKT_C_UseItem] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::C_UseItem>(Handle_C_UseItem, session, buffer, length); };
 		g_packet_handler[PKT_C_DropItem] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::C_DropItem>(Handle_C_DropItem, session, buffer, length); };
 		g_packet_handler[PKT_C_Pong] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::C_Pong>(Handle_C_Pong, session, buffer, length); };
-		g_packet_handler[PKT_C_AnimEnd] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::C_AnimEnd>(Handle_C_AnimEnd, session, buffer, length); };		
+		g_packet_handler[PKT_C_AnimEnd] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::C_AnimEnd>(Handle_C_AnimEnd, session, buffer, length); };
 		g_packet_handler[PKT_C_GoRandom] = [](SharedPacketSession& session, BYTE* buffer, int32 length) { return ParsePacket <Protocol::C_GoRandom>(Handle_C_GoRandom, session, buffer, length); };		
 	}
 
