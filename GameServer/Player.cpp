@@ -21,7 +21,7 @@ Player::~Player()
 
 void Player::RefreshStat()
 {
-	_weapon_damage = 0;
+	_weapon_damage = 30;
 	_armor_defence = 0;
 
 	for (auto& [key, value] : _inventory.GetItems())
