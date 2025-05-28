@@ -4,7 +4,6 @@
 #include <atomic>
 #include <array>
 
-// 언리얼 엔진에서도 등장하는 방법
 using BYTE = unsigned char;
 using int8 = __int8;
 using int16 = __int16;

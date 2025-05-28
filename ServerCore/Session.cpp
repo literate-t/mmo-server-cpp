@@ -2,9 +2,7 @@
 #include "Session.h"
 #include "Service.h"
 
-/*------------
-	Session
-------------*/
+// -------- Session -------- //
 Session::Session() : _recv_buffer{ BUFFER_SIZE }
 {
 	_socket = SocketUtils::CreateAsyncSocket();
@@ -333,9 +331,7 @@ void Session::HandleError(int32 error)
 	}
 }
 
-/*------------------
-	PacketSession
-------------------*/
+// -------- PacketSession -------- //
 PacketSession::PacketSession()
 {
 }

@@ -1,8 +1,5 @@
 #pragma once
 
-/*---------------------------
-	Reader/Writer SpinLock
----------------------------*/
 /*------------------------------------------
 	[wwwwwwww][wwwwwwww][rrrrrrrr][rrrrrrrr]
 	w: write flag(Exclusive lock owner flag)
@@ -14,6 +11,8 @@
 // 쓰기 락을 잡은 스레드는 중첩해서 쓰기, 읽기 락을 전부 잡을 수 있음
 // r -> w(x)
 // 읽기 락이 걸려 있으면 쓰기 락은 잡을 수 없음
+
+// --------- Lock --------- //
 class Lock
 {
 	enum : uint32
@@ -37,9 +36,7 @@ private:
 	uint16 _write_count = 0;
 };
 
-/*---------------
-	LockGurad
-----------------*/
+// -------- ReadLockGuard -------- //
 class ReadLockGuard
 {
 public:
@@ -50,6 +47,7 @@ private:
 	Lock& _lock;
 };
 
+// -------- WriteLockGuard -------- //
 class WriteLockGuard
 {
 public:

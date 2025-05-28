@@ -1,8 +1,5 @@
 #include "pch.h"
 
-/*------------------
-	ThreadManager
-------------------*/
 ThreadManager::ThreadManager()
 {
 	// Main thread

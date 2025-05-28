@@ -1,4 +1,3 @@
-// CorePch는 다른 프로젝트에서도 사용할 수 있다
 #pragma once
 
 // CoreMacrh.h에 xalloc 매크로 함수가 있고
@@ -28,7 +27,6 @@ using namespace chrono_literals;
 #include "Allocator.h"
 #include "Memory.h"
 #include "ObjectPool.h"
-#include "TypeCast.h"
 #include "SocketUtils.h"
 #include "SendBuffer.h"
 #include "Session.h"

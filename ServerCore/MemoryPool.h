@@ -5,9 +5,7 @@ enum
 	SLIST_ALIGNMENT = 16
 };
 
-/*-----------------
-	MemoryHeader
------------------*/
+// -------- MemoryHeader -------- //
 class alignas(SLIST_ALIGNMENT) MemoryHeader : public SLIST_ENTRY
 {
 public:
@@ -33,9 +31,7 @@ public:
 	int32 _alloc_size;
 };
 
-/*----------------
-	MemoryPool
-----------------*/
+// -------- MemoryPool -------- //
 class alignas(SLIST_ALIGNMENT) MemoryPool
 {
 public:

@@ -1,8 +1,6 @@
 #pragma once
 
-/*-------------------
-	BaseAllocator
--------------------*/
+// ---------- BaseAllocator ---------- //
 class BaseAllocator
 {
 public:
@@ -10,9 +8,8 @@ public:
 	static void Release(void* ptr);
 };
 
-/*-------------------
-	StompAllocator
--------------------*/
+
+// ---------- StompAllocator ---------- //
 class StompAllocator
 {
 	enum { 
@@ -24,9 +21,7 @@ public:
 	static void Release(void* ptr);
 };
 
-/*-------------------
-	PoolAllocator
--------------------*/
+// ---------- PoolAllocator ---------- //
 class PoolAllocator
 {
 	enum { PAGE_SIZE = 0x1000 };
@@ -35,9 +30,7 @@ public:
 	static void Release(void* ptr);
 };
 
-/*-------------------
-	 StlAllocator
--------------------*/
+// ---------- StlAllocator ---------- //
 template<typename T>
 class StlAllocator
 {

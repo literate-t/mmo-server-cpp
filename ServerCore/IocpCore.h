@@ -1,6 +1,7 @@
 #pragma once
 
 class IocpKey;
+// --------- IocpObject --------- //
 class IocpObject : public enable_shared_from_this<IocpObject>
 {
 public:
@@ -8,6 +9,7 @@ public:
 	virtual void Dispatch(class IocpEvent* iocp_event, int32 number_of_bytes = 0) abstract;
 };
 
+// --------- IocpCore --------- //
 class IocpCore
 {
 public:

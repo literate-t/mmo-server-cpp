@@ -1,10 +1,8 @@
 #include "pch.h"
 #include "MemoryPool.h"
 
-/*-------------------
-	MemoryManager
--------------------*/
-// Choose between StopAllocator and MemoryPool
+
+// Choose between StompAllocator and MemoryPool
 MemoryManager::MemoryManager()
 {
 #ifdef _STOMP

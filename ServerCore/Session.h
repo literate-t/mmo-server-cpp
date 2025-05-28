@@ -5,9 +5,7 @@
 #include "NetAddress.h"
 #include "RecvBuffer.h"
 
-/*------------
-	Session
-------------*/
+// -------- Session -------- //
 class Session : public IocpObject
 {	
 	friend class ListenHandler;
@@ -89,15 +87,14 @@ private:
 	SendEvent _send_event;
 };
 
-/*------------------
-	PacketSession
-------------------*/
+// -------- PacketHeader -------- //
 struct PacketHeader
 {
 	uint16 size;
 	uint16 id;
 };
 
+// -------- PacketSession -------- //
 class PacketSession : public Session
 {
 public:

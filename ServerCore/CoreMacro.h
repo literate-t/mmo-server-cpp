@@ -2,9 +2,7 @@
 
 #define OUT
 
-/*------------------
-		Lock
-*------------------*/
+// ------- Lock ------- //
 #define USE_MANY_LOCKS(count)	Lock _locks[count];
 #define USE_LOCK				USE_MANY_LOCKS(1)
 // typeid(this).name() -> XxxLockGuard를 사용하는 클래스의 객체의 타입을 구한다
@@ -17,9 +15,7 @@
 #define AFTER_LOCK(lock)		DeadLockDetector::Instance().AfterLock(lock)
 #define BEFORE_UNLOCK(lock)		DeadLockDetector::Instance().BeforeUnlock(lock)
 
-/*------------------
-		CRASH
-*------------------*/
+// ------- CRASH ------- //
 // 강제로 crash 낼 때 사용한다
 // __analysis_assume(expr)은 expr를 true로 간주
 #define CRASH(cause)						\

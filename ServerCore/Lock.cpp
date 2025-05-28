@@ -1,5 +1,6 @@
 #include "pch.h"
 
+// --------- Lock --------- //
 void Lock::WriteLock()
 {
 	// 동일 스레드가 WL(WriteLock)을 획득할 때는 경합하지 않는다
@@ -84,7 +85,7 @@ void Lock::ReadUnlock()
 		CRASH("INVALID_UNLOCK");
 }
 
-// ReadLockGuard
+// --------- ReadLockGuard --------- //
 ReadLockGuard::ReadLockGuard(Lock& lock) : _lock(lock)
 {
 #if defined(_DEBUG)
@@ -107,7 +108,7 @@ ReadLockGuard::~ReadLockGuard()
 	_lock.ReadUnlock();
 }
 
-// WriteLockGuard
+// --------- WriteLockGuard --------- /
 WriteLockGuard::WriteLockGuard(Lock& lock) : _lock(lock)
 {
 #if defined(_DEBUG)

@@ -48,9 +48,6 @@
     <ClInclude Include="Lock.h">
       <Filter>Thread</Filter>
     </ClInclude>
-    <ClInclude Include="RefCounting.h">
-      <Filter>Memory</Filter>
-    </ClInclude>
     <ClInclude Include="Memory.h">
       <Filter>Memory</Filter>
     </ClInclude>
@@ -64,9 +61,6 @@
       <Filter>Memory</Filter>
     </ClInclude>
     <ClInclude Include="ObjectPool.h">
-      <Filter>Memory</Filter>
-    </ClInclude>
-    <ClInclude Include="TypeCast.h">
       <Filter>Memory</Filter>
     </ClInclude>
     <ClInclude Include="NetAddress.h">
@@ -95,12 +89,6 @@
     </ClInclude>
     <ClInclude Include="SendBuffer.h">
       <Filter>Network</Filter>
-    </ClInclude>
-    <ClInclude Include="BufferReader.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="BufferWriter.h">
-      <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Job.h">
       <Filter>Job</Filter>
@@ -187,12 +175,6 @@
     </ClCompile>
     <ClCompile Include="SendBuffer.cpp">
       <Filter>Network</Filter>
-    </ClCompile>
-    <ClCompile Include="BufferReader.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="BufferWriter.cpp">
-      <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="Job.cpp">
       <Filter>Job</Filter>

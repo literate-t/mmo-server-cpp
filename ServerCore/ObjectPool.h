@@ -3,10 +3,8 @@
 #include "Types.h"
 #include "MemoryPool.h"
 
-/*------------------
-	 ObjectPool
-------------------*/
 // choose between StopAllocator and ObjectPool
+
 template<typename Type>
 class ObjectPool
 {

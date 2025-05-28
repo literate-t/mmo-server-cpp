@@ -5,6 +5,7 @@
 #include <functional>
 #include "SessionManager.h"
 
+// ------- ServiceType ------- //
 enum class ServiceType : uint8
 {
 	Server,
@@ -13,6 +14,7 @@ enum class ServiceType : uint8
 
 using SessionFactory = function<SharedSession(void)>;
 
+// --------- Service --------- //
 class Service : public enable_shared_from_this<Service>
 {
 public:
@@ -56,9 +58,7 @@ protected:
 	SessionFactory _fn_session_factory;
 };
 
-/*-------------------
-	Client Service
--------------------*/
+// --------- ClientService --------- //
 class ClientService : public Service
 {
 public:
@@ -69,9 +69,7 @@ public:
 	void CloseService() override;
 };
 
-/*-------------------
-	Server Service
--------------------*/
+// --------- ServerService --------- //
 class ServerService : public Service
 {
 public:

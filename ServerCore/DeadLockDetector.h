@@ -1,8 +1,5 @@
 #pragma once
 
-/*---------------------
-	DeadLockDetector
----------------------*/
 class DeadLockDetector
 {
 public:

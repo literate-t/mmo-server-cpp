@@ -1,5 +1,6 @@
 #include "pch.h"
 
+// ------- BaseAllocator ------- //
 void* BaseAllocator::Allocate(size_t size)
 {
 	return malloc(size);
@@ -10,6 +11,7 @@ void BaseAllocator::Release(void* ptr)
 	free(ptr);
 }
 
+// ------- StompAllocator ------- //
 void* StompAllocator::Allocate(size_t size)
 {
 	const size_t page_count = (size + PAGE_SIZE - 1) / PAGE_SIZE;
@@ -26,9 +28,9 @@ void StompAllocator::Release(void* ptr)
 	bool result = VirtualFree(reinterpret_cast<void*>(base_address), 0, MEM_RELEASE);	
 }
 
-/*-------------------
-	PoolAllocator
--------------------*/
+
+
+// ------- PoolAllocator ------- //
 void* PoolAllocator::Allocate(int32 size)
 {
 	return MemoryManager::Instance().Allocate(size);
