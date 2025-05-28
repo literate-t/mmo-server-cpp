@@ -167,14 +167,16 @@ void GameObject::OnDead(SharedObject attacker)
 	room->Broadcast(GetCellPos(), ClientPacketHandler::MakeSendBuffer(die_packet));
 }
 
-void GameObject::OnDeadAnim()
+void GameObject::OnDeadAnim(bool set_hp_max)
 {
 	auto room = GetRoom();
 	if (room == nullptr) return;
 
 	room->Leave(GetObjectId());	
 
-	SetHp(GetStatInfo().maxhp());
+	if (set_hp_max)
+		SetHp(GetStatInfo().maxhp());
+	
 	GetPositionInfo().set_state(EntityState::IDLE);
 	GetPositionInfo().set_movedir(MoveDir::DOWN);
 

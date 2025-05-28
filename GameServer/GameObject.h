@@ -57,7 +57,7 @@ public:
 
 	virtual void OnDamaged(SharedObject attacker, int32 damage);
 	virtual void OnDead(SharedObject attacker);
-	virtual void OnDeadAnim();
+	virtual void OnDeadAnim(bool set_hp_max = true);
 
 	virtual int32 GetTotalDefence();
 	virtual int32 GetTotalAttack();
