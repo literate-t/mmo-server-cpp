@@ -32,7 +32,7 @@ public:
 };
 
 // -------- MemoryPool -------- //
-class alignas(SLIST_ALIGNMENT) MemoryPool
+class MemoryPool
 {
 public:
 	MemoryPool(int32 alloc_size);
