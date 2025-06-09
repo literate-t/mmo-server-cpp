@@ -13,6 +13,6 @@ int32 ServerSessionManager::GenerateDummyId()
 
 shared_ptr<ServerSessionManager> ServerSessionManager::Instance()
 {
-    static shared_ptr<ServerSessionManager> _instance = make_shared<ServerSessionManager>();
+    static shared_ptr<ServerSessionManager> _instance = MakeShared<ServerSessionManager>();
     return _instance;
 }

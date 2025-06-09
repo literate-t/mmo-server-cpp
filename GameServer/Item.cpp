@@ -69,13 +69,13 @@ shared_ptr<Item> Item::MakeItem(ItemDB item_db)
 	switch (item_data->itemType)
 	{
 	case ItemType::ITEM_TYPE_WEAPON:
-		item = make_shared<Weapon>(item_db.DataSheetId);
+		item = MakeShared<Weapon>(item_db.DataSheetId);
 		break;
 	case ItemType::ITEM_TYPE_ARMOR:
-		item = make_shared<Armor>(item_db.DataSheetId);
+		item = MakeShared<Armor>(item_db.DataSheetId);
 		break;
 	case ItemType::ITEM_TYPE_CONSUMABLE:
-		item = make_shared<Consumable>(item_db.DataSheetId);
+		item = MakeShared<Consumable>(item_db.DataSheetId);
 		break;
 	}
 
