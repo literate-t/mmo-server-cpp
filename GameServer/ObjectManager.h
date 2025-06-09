@@ -2,6 +2,7 @@
 #include "Protocol.pb.h"
 using namespace Protocol;
 #include "GameObject.h"
+#include "ObjectPool.h"
 
 class ObjectManager
 {
@@ -12,7 +13,7 @@ public:
 		static_assert(is_base_of_v<GameObject, T>, "T type must be derived from GameObject");
 		static_assert(is_default_constructible_v<T>, "T type must be default constructible");
 
-		shared_ptr<T> object = make_shared<T>();
+		shared_ptr<T> object = ObjectPool<T>::MakeShared();		
 
 		{
 			WRITE_LOCK;
