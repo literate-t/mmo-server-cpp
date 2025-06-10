@@ -260,7 +260,7 @@ void Session::RegisterSend()
 
 	xvector<WSABUF> wsabufs;
 	wsabufs.reserve(_send_event.send_buffers.size());
-	for (SharedSendBuffer send_buffer : _send_event.send_buffers)
+	for (SharedSendBuffer& send_buffer : _send_event.send_buffers)
 	{
 		WSABUF wsabuf;
 		wsabuf.buf = reinterpret_cast<char*>(send_buffer->Buffer());
