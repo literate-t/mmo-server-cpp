@@ -213,11 +213,10 @@ void Session::ProcessRecv(int32 recv_bytes)
 		Disconnect(L"OnWrite overflow");
 		return;
 	}
-
-	int32 data_size = _recv_buffer.DataSizeToRead();	
-	int32 process_size = OnRecvCompleted(_recv_buffer.ReadAt(), data_size);
+	
+	int32 process_size = OnRecvCompleted(_recv_buffer.ReadAt(), recv_bytes);
 																	// process_size만큼만 커서 이동
-	if (process_size < 0 || data_size < process_size || false == _recv_buffer.OnRead(process_size))
+	if (process_size < 0 || recv_bytes < process_size || false == _recv_buffer.OnRead(process_size))
 	{
 		Disconnect(L"OnRecv error");
 		return;
