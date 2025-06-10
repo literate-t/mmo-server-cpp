@@ -22,6 +22,9 @@
     <Filter Include="DB">
       <UniqueIdentifier>{816a7aa4-fc96-40c5-86bc-1a618c4a7d82}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Buffer">
+      <UniqueIdentifier>{8cf829c1-4d79-4760-ac2e-51511eaac264}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CorePch.h">
@@ -84,12 +87,6 @@
     <ClInclude Include="Service.h">
       <Filter>Network</Filter>
     </ClInclude>
-    <ClInclude Include="RecvBuffer.h">
-      <Filter>Network</Filter>
-    </ClInclude>
-    <ClInclude Include="SendBuffer.h">
-      <Filter>Network</Filter>
-    </ClInclude>
     <ClInclude Include="Job.h">
       <Filter>Job</Filter>
     </ClInclude>
@@ -119,6 +116,12 @@
     </ClInclude>
     <ClInclude Include="SessionManager.h">
       <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="RecvBuffer.h">
+      <Filter>Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="SendBuffer.h">
+      <Filter>Buffer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -170,12 +173,6 @@
     <ClCompile Include="Service.cpp">
       <Filter>Network</Filter>
     </ClCompile>
-    <ClCompile Include="RecvBuffer.cpp">
-      <Filter>Network</Filter>
-    </ClCompile>
-    <ClCompile Include="SendBuffer.cpp">
-      <Filter>Network</Filter>
-    </ClCompile>
     <ClCompile Include="Job.cpp">
       <Filter>Job</Filter>
     </ClCompile>
@@ -202,6 +199,12 @@
     </ClCompile>
     <ClCompile Include="SessionManager.cpp">
       <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="RecvBuffer.cpp">
+      <Filter>Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="SendBuffer.cpp">
+      <Filter>Buffer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
