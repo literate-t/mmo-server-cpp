@@ -70,9 +70,6 @@ HANDLE Session::GetHandle()
 
 void Session::Dispatch(IocpEvent* iocp_event, int32 number_of_bytes)
 {
-	// 함수의 실행을 보장하기 위해
-	//auto self = shared_from_this();
-	//iocp_event->owner = nullptr;
 
 	switch (iocp_event->GetType())
 	{
