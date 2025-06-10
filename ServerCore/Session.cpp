@@ -245,11 +245,11 @@ void Session::RegisterSend()
 	{
 		WRITE_LOCK;
 		int32 write_size = 0;
-		//if (_send_queue.empty())
-		//{
-		//	_send_registered.store(false);
-		//	return;
-		//}
+		if (_send_queue.empty())
+		{
+			_send_registered.store(false);
+			return;
+		}
 
 		while (false == _send_queue.empty())
 		{
