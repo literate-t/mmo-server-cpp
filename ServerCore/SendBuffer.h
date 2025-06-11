@@ -5,9 +5,7 @@
 * SendBuffer를 할당받아 사용한다
 */
 
-/*----------------
-	SendBuffer
-----------------*/
+// -------- SendBuffer  -------- //
 class SendBuffer : public enable_shared_from_this<SendBuffer>
 {
 public:
@@ -26,9 +24,8 @@ private:
 	SharedSendBufferChunk _owner_chunk;
 };
 
-/*--------------------
-	SendBufferChunk
---------------------*/
+
+// -------- SendBufferChunk  -------- //
 class SendBufferChunk : public enable_shared_from_this<SendBufferChunk>
 {
 	friend class SendBufferManager;
@@ -48,7 +45,7 @@ private:
 	SharedSendBuffer Open(uint32 alloc_size);
 	void Close(uint32 write_size);
 
-	uint32 UsedSize() const { return _used_size; }
+	inline uint32 UsedSize() const { return _used_size; }
 	bool IsOpen() { return _open; }
 	void SetOpen(bool open) { _open = open; }	
 	BYTE* Buffer() { return &_buffer[UsedSize()]; }
@@ -61,9 +58,7 @@ private:
 };
 
 // pool 역할
-/*---------------------
-	SendBufferManager
----------------------*/
+// ----- SendBufferManager ----- //
 class SendBufferManager
 {
 public:
@@ -71,9 +66,7 @@ public:
 
 private:
 	SharedSendBufferChunk Pop();
-	void Push(SharedSendBufferChunk buffer_chunk);
-
-	static void PushGlobal(SendBufferChunk* buffer_chunk);
+	void Push(SendBufferChunk* buffer_chunk);	
 
 private:
 	USE_LOCK;

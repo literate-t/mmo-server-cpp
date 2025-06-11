@@ -95,16 +95,11 @@ SharedSendBufferChunk SendBufferManager::Pop()
 			return chunk;
 		}
 	}
-	return SharedSendBufferChunk(xnew<SendBufferChunk>(), PushGlobal);
+	return SharedSendBufferChunk(xnew<SendBufferChunk>(), [this](SendBufferChunk* buffer_chunk) {this->Push(buffer_chunk);});
 }
 
-void SendBufferManager::Push(SharedSendBufferChunk buffer_chunk)
+void SendBufferManager::Push(SendBufferChunk* buffer_chunk)
 {
 	WRITE_LOCK;
-	_send_buffer_chunks.push_back(buffer_chunk);
-}
-
-void SendBufferManager::PushGlobal(SendBufferChunk* buffer_chunk)
-{	
-	g_send_buffer_manager->Push(SharedSendBufferChunk(buffer_chunk, PushGlobal));
+	_send_buffer_chunks.push_back(SharedSendBufferChunk(buffer_chunk, [this](SendBufferChunk* buffer_chunk) {this->Push(buffer_chunk);}));
 }
