@@ -15,7 +15,9 @@ public:
 	BYTE* Buffer() { return _buffer; }
 	uint32 WriteSize() const { return _write_size; }
 	uint32 AllocSize() const { return _alloc_size; }
-	void Close(uint32 write_size);	
+
+private:
+	void OnWrite(uint32 write_size);	
 
 private:
 	BYTE* _buffer;	
@@ -42,18 +44,15 @@ public:
 
 private:
 	void Reset();
-	SharedSendBuffer Open(uint32 alloc_size);
-	void Close(uint32 write_size);
+	SharedSendBuffer Acquire(uint32 alloc_size);
+	void OnWrite(uint32 write_size);
 
 	inline uint32 UsedSize() const { return _used_size; }
-	bool IsOpen() { return _open; }
-	void SetOpen(bool open) { _open = open; }	
-	BYTE* Buffer() { return &_buffer[UsedSize()]; }
-	uint32 FreeSize() { return static_cast<uint32>(_buffer.size() - UsedSize()); }
+	inline BYTE* Buffer() { return &_buffer[_used_size]; }
+	inline uint32 FreeSize() { return static_cast<uint32>(_buffer.size() - _used_size); }
 	
 private:
-	Array<BYTE, CHUNK_SIZE> _buffer{};	
-	bool _open = false;
+	Array<BYTE, CHUNK_SIZE> _buffer{};
 	uint32 _used_size = 0;
 };
 
@@ -62,7 +61,7 @@ private:
 class SendBufferManager
 {
 public:
-	SharedSendBuffer Open(uint32 size);	
+	SharedSendBuffer Acquire(uint32 size);	
 
 private:
 	SharedSendBufferChunk Pop();
