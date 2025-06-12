@@ -62,6 +62,11 @@ class SendBufferManager
 {
 public:
 	SharedSendBuffer Acquire(uint32 size);	
+	inline static SendBufferManager& Instance()
+	{
+		static SendBufferManager instance;
+		return instance;
+	}
 
 private:
 	SharedSendBufferChunk Pop();

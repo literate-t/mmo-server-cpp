@@ -40,7 +40,7 @@ private:
 	static bool ParsePacket(ProcessFunc func, SharedPacketSession& session, BYTE* buffer, int32 length)
 	{
 		PacketType pkt;
-		// temp check
+		
 		if (false == pkt.ParseFromArray(buffer + sizeof(PacketHeader), length - sizeof(PacketHeader)))
 			return false;
 
@@ -53,16 +53,13 @@ private:
 		const uint16 data_size = static_cast<uint16>(pkt.ByteSizeLong());
 		const uint16 packet_size = data_size + sizeof(PacketHeader);
 
-		SharedSendBuffer send_buffer = g_send_buffer_manager->Open(packet_size);
+		SharedSendBuffer send_buffer = SendBufferManager::Instance().Acquire(packet_size);
 
 		PacketHeader* header = reinterpret_cast<PacketHeader*>(send_buffer->Buffer());
 		header->size = packet_size;
 		header->id = packet_id;
 
-		// temp check
 		ASSERT_CRASH(pkt.SerializeToArray(&header[1], data_size));
-
-		send_buffer->Close(packet_size);
 
 		return send_buffer;
 	}
