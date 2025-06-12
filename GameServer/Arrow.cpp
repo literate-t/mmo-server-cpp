@@ -10,8 +10,7 @@ void Arrow::Update()
 	if (Owner == nullptr || room == nullptr || Data == nullptr) return;
 
 	int32 tick = static_cast<int32>(1000 / Data->projectile.speed);
-	auto this_shared = shared_from_this();
-	room->PushJobTimerAsync(tick, [this_shared]() { this_shared->Update(); });
+	room->PushJobTimerAsync(tick, [this_shared = shared_from_this()]() { this_shared->Update(); });
 
 	Vector2Int dest_pos = GetFrontCellPosition();
 	if (room->GetMap()->ApplyMove(shared_from_this(), dest_pos, false))
