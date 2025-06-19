@@ -3,7 +3,6 @@
 #include "Types.h"
 #include "MemoryPool.h"
 
-// choose between StompAllocator and ObjectPool
 template<typename Type>
 class ObjectPool
 {

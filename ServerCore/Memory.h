@@ -1,6 +1,8 @@
 #pragma once
 
 class MemoryPool;
+
+// ------- PoolManager ------- //
 class PoolManager
 {
 	enum
@@ -32,6 +34,7 @@ private:
 	MemoryPool* _pool_table[MAX_ALLOC_SIZE + 1] = {};
 };
 
+// ------- xnew ------- //
 template<typename Type, typename ...Args>
 Type* xnew(Args&& ...args)
 {
@@ -48,6 +51,7 @@ Type* xnew(Args&& ...args)
 	return malloc_memory;
 }
 
+// ------- xdelete ------- //
 template<typename Type>
 void xdelete(Type* obj)
 {
@@ -59,7 +63,7 @@ void xdelete(Type* obj)
 #endif
 }
 
-// 메모리 풀에 shared_ptr 사용
+// ------- MakeShared ------- //
 template<typename Type, typename...Args>
 shared_ptr<Type> MakeShared(Args&& ...args)
 {
