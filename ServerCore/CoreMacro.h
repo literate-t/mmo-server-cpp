@@ -1,8 +1,11 @@
 #pragma once
 
 #define OUT
+
 // MemoryPool
 #define _SIZE_POOL
+
+//#define _TLS_SLAB
 
 // Stomp
 //#define _STOMP
