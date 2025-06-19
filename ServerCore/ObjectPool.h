@@ -12,6 +12,7 @@ public:
 	{
 #if defined(_STOMP)
 		Type* memory = static_cast<Type*>(StompAllocator::Allocate(s_alloc_size));
+#elif defined(_TLS_SLAB)
 #elif defined(_SIZE_POOL)
 		Type* memory = static_cast<Type*>(MemoryHeader::Initialize(s_pool.Pop(), s_alloc_size));
 #endif
@@ -25,6 +26,8 @@ public:
 		obj->~Type();
 #if defined(_STOMP)
 		StompAllocator::Release(obj);
+#elif defined(_TLS_SLAB)
+
 #elif defined(_SIZE_POOL)
 		s_pool.Push(MemoryHeader::Release(obj));
 #endif
@@ -41,11 +44,18 @@ public:
 private:
 	// Type 별로 존재하게 된다
 	static int32		s_alloc_size;
+
+#if defined(_TLS_SLAB)
+#elif defined(_SIZE_POOL)
 	static MemoryPool	s_pool;
+#endif
 };
 
 template<typename Type>
 int32 ObjectPool<Type>::s_alloc_size{ sizeof(Type) + sizeof(MemoryHeader) };
 
+#if defined(_TLS_SLAB)
+#elif defined(_SIZE_POOL)
 template<typename Type>
 MemoryPool ObjectPool<Type>::s_pool{ s_alloc_size };
+#endif
