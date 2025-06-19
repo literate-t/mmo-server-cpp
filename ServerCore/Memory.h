@@ -1,7 +1,7 @@
 #pragma once
 
 class MemoryPool;
-class MemoryManager
+class PoolManager
 {
 	enum
 	{
@@ -12,12 +12,12 @@ class MemoryManager
 	};
 
 public:
-	MemoryManager();
-	~MemoryManager();
+	PoolManager();
+	~PoolManager();
 
-	inline static MemoryManager& Instance()
+	inline static PoolManager& Instance()
 	{
-		static MemoryManager instance;
+		static PoolManager instance;
 		return instance;
 	}
 
@@ -25,21 +25,22 @@ public:
 	void	Release(void* ptr);
 
 private:
-#ifdef _STOMP
-#else
 	vector<MemoryPool*> _pools;
 
 	// O(1)을 위한 pool table
 	// 1 ~ 4096
 	MemoryPool* _pool_table[MAX_ALLOC_SIZE + 1] = {};
-#endif
 };
 
 template<typename Type, typename ...Args>
 Type* xnew(Args&& ...args)
 {
-	// memory alloc
-	Type* malloc_memory = static_cast<Type*>(PoolAllocator::Allocate(sizeof(Type)));	
+	Type* malloc_memory;
+#if defined(_STOMP)
+	malloc_memory = StompAllocator::Allocate(sizeof(Type));
+#elif defined(_SIZE_POOL)
+	malloc_memory = static_cast<Type*>(PoolAllocator::Allocate(sizeof(Type)));	
+#endif
 
 	// init object with ctor
 	new (malloc_memory)Type(std::forward<Args>(args)...);
@@ -50,8 +51,12 @@ Type* xnew(Args&& ...args)
 template<typename Type>
 void xdelete(Type* obj)
 {
-	obj->~Type();	
+	obj->~Type();
+#if defined(_STOMP)
+	StompAllocator::Release(sizeof(Type));
+#elif defined(_SIZE_POOL)
 	PoolAllocator::Release(obj);
+#endif
 }
 
 // 메모리 풀에 shared_ptr 사용

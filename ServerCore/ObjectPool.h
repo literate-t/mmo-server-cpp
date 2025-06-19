@@ -4,7 +4,6 @@
 #include "MemoryPool.h"
 
 // choose between StompAllocator and ObjectPool
-
 template<typename Type>
 class ObjectPool
 {
@@ -12,10 +11,9 @@ public:
 	template<typename... Args>
 	static Type* Pop(Args&&... args)
 	{
-#ifdef _STOMP
-		MemoryHeader* ptr = reinterpret_cast<MemoryHeader*>(StompAllocator::Allocate(s_alloc_size));
-		Type* memory = reinterpret_cast<Type*>(ptr);
-#else
+#if defined(_STOMP)
+		Type* memory = static_cast<Type*>(StompAllocator::Allocate(s_alloc_size));
+#elif defined(_SIZE_POOL)
 		Type* memory = static_cast<Type*>(MemoryHeader::Initialize(s_pool.Pop(), s_alloc_size));
 #endif
 		new(memory)Type(forward<Args>(args)...);
@@ -26,9 +24,9 @@ public:
 	static void Push(Type* obj)
 	{
 		obj->~Type();
-#ifdef _STOMP
+#if defined(_STOMP)
 		StompAllocator::Release(obj);
-#else
+#elif defined(_SIZE_POOL)
 		s_pool.Push(MemoryHeader::Release(obj));
 #endif
 	}

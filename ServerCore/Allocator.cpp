@@ -28,15 +28,13 @@ void StompAllocator::Release(void* ptr)
 	bool result = VirtualFree(reinterpret_cast<void*>(base_address), 0, MEM_RELEASE);	
 }
 
-
-
 // ------- PoolAllocator ------- //
 void* PoolAllocator::Allocate(int32 size)
 {
-	return MemoryManager::Instance().Allocate(size);
+	return PoolManager::Instance().Allocate(size);
 }
 
 void PoolAllocator::Release(void* ptr)
 {
-	return MemoryManager::Instance().Release(ptr);
+	return PoolManager::Instance().Release(ptr);
 }

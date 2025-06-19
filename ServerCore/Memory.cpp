@@ -1,12 +1,9 @@
 #include "pch.h"
 #include "MemoryPool.h"
 
-
 // Choose between StompAllocator and MemoryPool
-MemoryManager::MemoryManager()
+PoolManager::PoolManager()
 {
-#ifdef _STOMP
-#else
 	int32 size = 0;
 	int32 size_index = 1;
 
@@ -45,28 +42,20 @@ MemoryManager::MemoryManager()
 			++size_index;
 		}
 	}
-#endif
 }
 
-MemoryManager::~MemoryManager()
+PoolManager::~PoolManager()
 {
-#ifdef _STOMP
-#else
 	for (MemoryPool* chunk : _pools)
 	{
 		delete chunk;
 	}
 
 	_pools.clear();
-#endif
 }
 
-void* MemoryManager::Allocate(int32 size)
+void* PoolManager::Allocate(int32 size)
 {
-
-#ifdef _STOMP
-	return StompAllocator::Alloc(size);
-#else
 	MemoryHeader* memory = nullptr;
 	// 실제 데이터 할당에 요구되는 크기가 size이고 여기에 메모리 헤더의 크기를 붙인다
 	const int32 alloc_size = size + sizeof(MemoryHeader);
@@ -84,18 +73,14 @@ void* MemoryManager::Allocate(int32 size)
 	}
 	// alloc_size에 메모리 헤더의 크기가 포함되어 있다
 	return MemoryHeader::Initialize(memory, alloc_size);
-#endif
 }
 
-void MemoryManager::Release(void* ptr)
+void PoolManager::Release(void* ptr)
 {
-
-#ifdef _STOMP
-	StompAllocator::Release(ptr);
-#else
 	MemoryHeader* memory = MemoryHeader::Release(ptr);
 	const int32 alloc_size = memory->_alloc_size;
 	ASSERT_CRASH(0 < alloc_size);
+
 	if (MAX_ALLOC_SIZE < alloc_size)
 	{
 		::_aligned_free(memory);
@@ -105,5 +90,4 @@ void MemoryManager::Release(void* ptr)
 		// 풀에 반납
 		_pool_table[alloc_size]->Push(memory);
 	}
-#endif
 }
