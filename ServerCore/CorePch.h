@@ -26,6 +26,7 @@ using namespace chrono_literals;
 #include "DeadLockDetector.h"
 #include "Allocator.h"
 #include "Memory.h"
+#include "ThreadLocalSlabManager.h"
 #include "ObjectPool.h"
 #include "SocketUtils.h"
 #include "SendBuffer.h"

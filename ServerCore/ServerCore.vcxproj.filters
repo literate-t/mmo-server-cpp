@@ -123,6 +123,9 @@
     <ClInclude Include="SendBuffer.h">
       <Filter>Buffer</Filter>
     </ClInclude>
+    <ClInclude Include="ThreadLocalSlabManager.h">
+      <Filter>Memory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CorePch.cpp">
@@ -205,6 +208,9 @@
     </ClCompile>
     <ClCompile Include="SendBuffer.cpp">
       <Filter>Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadLocalSlabManager.cpp">
+      <Filter>Memory</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
