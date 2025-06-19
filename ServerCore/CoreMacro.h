@@ -1,6 +1,11 @@
 #pragma once
 
 #define OUT
+// MemoryPool
+#define _SIZE_POOL
+
+// Stomp
+//#define _STOMP
 
 // ------- Lock ------- //
 #define USE_MANY_LOCKS(count)	Lock _locks[count];

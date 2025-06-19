@@ -41,5 +41,3 @@ using SharedJobQueue = shared_ptr<class JobQueue>;
 #define sizeof32(val)		static_cast<int32>(sizeof(val))
 #define length16(arr)		static_cast<int16>(sizeof16(arr)/sizeof16(arr[0]))
 #define length32(arr)		static_cast<int32>(sizeof32(arr)/sizeof32(arr[0]))
-
-//#define _STOMP
