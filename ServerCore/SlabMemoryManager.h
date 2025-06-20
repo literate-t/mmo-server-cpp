@@ -1,7 +1,7 @@
 #pragma once
 
-// ------- ThreadLocalSlabManager ------- //
-class ThreadLocalSlabManager
+// ------- CentralPool ------- //
+class CentralPool
 {
 public:
 	void* allocate(int32 size);

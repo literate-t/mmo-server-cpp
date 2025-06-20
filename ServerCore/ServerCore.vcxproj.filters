@@ -123,7 +123,10 @@
     <ClInclude Include="SendBuffer.h">
       <Filter>Buffer</Filter>
     </ClInclude>
-    <ClInclude Include="ThreadLocalSlabManager.h">
+    <ClInclude Include="SlabMemoryManager.h">
+      <Filter>Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="PoolManager.h">
       <Filter>Memory</Filter>
     </ClInclude>
   </ItemGroup>
@@ -209,7 +212,10 @@
     <ClCompile Include="SendBuffer.cpp">
       <Filter>Buffer</Filter>
     </ClCompile>
-    <ClCompile Include="ThreadLocalSlabManager.cpp">
+    <ClCompile Include="SlabMemoryManager.cpp">
+      <Filter>Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="PoolManager.cpp">
       <Filter>Memory</Filter>
     </ClCompile>
   </ItemGroup>
