@@ -21,7 +21,7 @@ public:
 		return reinterpret_cast<void*>(++header);
 	}
 
-	static MemoryHeader* Release(void* ptr)
+	static MemoryHeader* DetachHeader(void* ptr)
 	{
 		MemoryHeader* header = reinterpret_cast<MemoryHeader*>(ptr) - 1;
 
