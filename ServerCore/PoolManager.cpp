@@ -1,6 +1,5 @@
 #include "pch.h"
 
-// Choose between StompAllocator and MemoryPool
 PoolManager::PoolManager()
 {
 	int32 size = 0;
@@ -18,7 +17,7 @@ PoolManager::PoolManager()
 		}
 	}
 
-	for (; size < 2048; size += 128)
+	for (; size < 2048; size += 64)
 	{
 		MemoryPool* pool = new MemoryPool(size);
 		_pools.push_back(pool);
@@ -30,7 +29,7 @@ PoolManager::PoolManager()
 		}
 	}
 
-	for (; size <= 4096; size += 256)
+	for (; size <= 4096; size += 128)
 	{
 		MemoryPool* pool = new MemoryPool(size);
 		_pools.push_back(pool);
@@ -76,7 +75,7 @@ void* PoolManager::Allocate(int32 size)
 
 void PoolManager::Release(void* ptr)
 {
-	MemoryHeader* memory = MemoryHeader::Release(ptr);
+	MemoryHeader* memory = MemoryHeader::DetachHeader(ptr);
 	const int32 alloc_size = memory->_alloc_size;
 	ASSERT_CRASH(0 < alloc_size);
 

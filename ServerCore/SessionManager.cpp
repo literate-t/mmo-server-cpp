@@ -24,12 +24,11 @@ void SessionManager::Broadcast(SharedSendBuffer send_buffer)
 
 void SessionManager::FlushSend()
 {
-	std::vector<SharedSession> session_snapshot;
+	xvector<SharedSession> session_snapshot;
 	{
 		READ_LOCK;
 		session_snapshot.reserve(_sessions.size());
-		for (auto& s : _sessions)
-			session_snapshot.push_back(s);
+		session_snapshot.insert(session_snapshot.end(), _sessions.begin(), _sessions.end());
 	}
 
 	for (auto& session : session_snapshot)

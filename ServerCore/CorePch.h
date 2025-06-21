@@ -8,6 +8,7 @@
 #include <utility>
 #include <chrono>
 #include <optional>
+#include <algorithm>
 using namespace std;
 using namespace chrono_literals;
 
