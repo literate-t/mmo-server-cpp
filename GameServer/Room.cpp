@@ -249,7 +249,7 @@ xvector<SharedPlayer> Room::GetAdjacentPlayers(Vector2Int cell_pos, int32 range)
 	for (auto& zone : zones)
 		adjacent_players.insert(adjacent_players.end(), zone->GetPlayers().begin(), zone->GetPlayers().end());
 
-	return xvector<SharedPlayer>(move(adjacent_players));
+	return adjacent_players;
 }
 
 xvector<SharedMonster> Room::GetAdjacentMonsters(Vector2Int cell_pos, int32 range)
@@ -267,7 +267,7 @@ xvector<SharedMonster> Room::GetAdjacentMonsters(Vector2Int cell_pos, int32 rang
 	for (auto& zone : zones)
 		adjacent_monsters.insert(adjacent_monsters.end(), zone->GetMonsters().begin(), zone->GetMonsters().end());
 
-	return xvector<SharedMonster>(move(adjacent_monsters));
+	return adjacent_monsters;
 }
 
 xvector<SharedProjectile> Room::GetAdjacentProjectiles(Vector2Int cell_pos, int32 range)
@@ -285,7 +285,7 @@ xvector<SharedProjectile> Room::GetAdjacentProjectiles(Vector2Int cell_pos, int3
 	for (auto& zone : zones)
 		adjacent_projectiles.insert(adjacent_projectiles.end(), zone->GetProjectiles().begin(), zone->GetProjectiles().end());
 
-	return xvector<SharedProjectile>(move(adjacent_projectiles));
+	return adjacent_projectiles;
 }
 
 SharedMonster Room::GetMonster(int32 object_id)
