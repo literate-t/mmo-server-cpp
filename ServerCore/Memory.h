@@ -23,7 +23,7 @@ void xdelete(Type* obj)
 {
 	obj->~Type();
 #if defined(_STOMP)
-	StompAllocator::Release(sizeof(Type));
+	StompAllocator::Release(obj);
 #elif defined(_SIZE_POOL)
 	PoolAllocator::Release(obj);
 #endif
@@ -35,3 +35,6 @@ shared_ptr<Type> MakeShared(Args&& ...args)
 {
 	return shared_ptr<Type>{xnew<Type>(forward<Args>(args)...), xdelete<Type>};
 }
+
+void* tls_pool_alloc(int32 size);
+void tls_pool_free(void* ptr);

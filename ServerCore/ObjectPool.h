@@ -2,6 +2,7 @@
 
 #include "Types.h"
 #include "MemoryPool.h"
+#include "SlabMemoryManager.h"
 
 template<typename Type>
 class ObjectPool
@@ -13,6 +14,7 @@ public:
 #if defined(_STOMP)
 		Type* memory = static_cast<Type*>(StompAllocator::Allocate(s_alloc_size));
 #elif defined(_TLS_SLAB)
+		Type* memory = static_cast<Type*>(tls_pool_alloc(s_alloc_size));
 #elif defined(_SIZE_POOL)
 		Type* memory = static_cast<Type*>(MemoryHeader::Initialize(s_pool.Pop(), s_alloc_size));
 #endif
@@ -27,9 +29,9 @@ public:
 #if defined(_STOMP)
 		StompAllocator::Release(obj);
 #elif defined(_TLS_SLAB)
-
+		tls_pool_free(obj);
 #elif defined(_SIZE_POOL)
-		s_pool.Push(MemoryHeader::Release(obj));
+		s_pool.Push(MemoryHeader::DetachHeader(obj));
 #endif
 	}
 
