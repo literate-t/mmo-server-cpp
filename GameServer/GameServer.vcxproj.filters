@@ -117,7 +117,9 @@
     <ClCompile Include="Random.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="PacketManager.cpp" />
+    <ClCompile Include="PacketManager.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -207,6 +209,8 @@
     <ClInclude Include="Random.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="PacketManager.h" />
+    <ClInclude Include="PacketManager.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
