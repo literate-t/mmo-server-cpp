@@ -5,8 +5,8 @@ using namespace Protocol;
 
 enum
 {
-	SEND_TICK = 10,
-	SEND_BYTE = 0x200,
+	SEND_TICK = 20,
+	SEND_BYTE = 0x400,
 };
 
 class GameSession : public PacketSession
