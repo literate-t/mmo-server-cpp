@@ -18,18 +18,24 @@ void ViewCube::Update()
 	SharedRoom room = _owner->GetRoom();
 	if (_owner == nullptr || room == nullptr)
 	{
-		_objects.clear();
 		return;
 	}
 
 	const xhash_set<SharedObject> current_objects = GetObjects();
+	
+	xhash_set<SharedObject> prev_objects;
 
-	// Spawn object
-	const auto& added = Except(current_objects, _prev_objects);
+	{
+		WRITE_LOCK;
+		prev_objects.swap(_prev_objects);
+	}
+
+	// Spawn object	
+	const auto added = Except(current_objects, prev_objects);
 	if (added.size() > 0)
 	{
 		S_Spawn spawn_packet;
-		for (const auto& item : added)
+		for (auto& item : added)
 		{
 			ObjectInfo* object_info = spawn_packet.add_objects();
 			object_info->MergeFrom(item->GetObjectInfo());
@@ -38,19 +44,22 @@ void ViewCube::Update()
 	}
 
 	// Despawn object
-	const auto& vanished = Except(_prev_objects, current_objects);
+	const auto vanished = Except(prev_objects, current_objects);
 	if (vanished.size() > 0)
 	{
 		S_Despawn despawn_packet;
-		for (const auto& item : vanished)
+		for (auto& item : vanished)
 			despawn_packet.add_objectids(item->GetObjectId());
 
 		_owner->OwnerSession->Send(ClientPacketHandler::MakeSendBuffer(despawn_packet));
 	}
 
-	_prev_objects.clear();
-	for (const auto& item : current_objects)
-		_prev_objects.insert(item);
+
+	{
+		WRITE_LOCK;
+		for (auto& item : current_objects)
+			_prev_objects.insert(item);
+	}
 
 	JobReserved = room->PushJobTimerAsync(100, [this](){ Update();});
 }
@@ -125,15 +134,19 @@ const xhash_set<SharedObject> ViewCube::GetObjects()
 	return objects;
 }
 
-const xvector<SharedObject>& ViewCube::Except(const xhash_set<SharedObject>& base, const xhash_set<SharedObject>& rhs)
+const xvector<SharedObject> ViewCube::Except(const xhash_set<SharedObject>& lhs, const xhash_set<SharedObject>& rhs)
 {
-	_excepts.clear();
-	for (SharedObject object : base)
+	xvector<SharedObject> excepts;
+
+	for (auto& object : lhs)
 	{
+		if (object == nullptr)
+			continue;
+
 		auto iter = rhs.find(object);
 		if (iter == rhs.end())
-			_excepts.push_back(object);
+			excepts.push_back(object);
 	}
 
-	return _excepts;
+	return excepts;
 }

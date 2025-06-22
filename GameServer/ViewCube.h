@@ -13,14 +13,14 @@ public:
 	SharedJob JobReserved;
 
 private:
-	const xvector<SharedObject>& Except(const xhash_set<SharedObject>& base, const xhash_set<SharedObject>& rhs);
+	const xvector<SharedObject> Except(const xhash_set<SharedObject>& lhs, const xhash_set<SharedObject>& rhs);
 
 private:
 	// caution: cycle
 	SharedPlayer _owner;
-	xhash_set<SharedObject> _prev_objects;
 	SharedJob _job;
-	xhash_set<SharedObject> _objects;
-	xvector<SharedObject> _excepts;
+	xhash_set<SharedObject> _prev_objects;
+
+	USE_LOCK;
 };
 
