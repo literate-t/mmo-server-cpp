@@ -22,7 +22,7 @@ void ViewCube::Update()
 		return;
 	}
 
-	const xhash_set<SharedObject>& current_objects = GetObjects();
+	const xhash_set<SharedObject> current_objects = GetObjects();
 
 	// Spawn object
 	const auto& added = Except(current_objects, _prev_objects);
@@ -55,64 +55,74 @@ void ViewCube::Update()
 	JobReserved = room->PushJobTimerAsync(100, [this](){ Update();});
 }
 
-const xhash_set<SharedObject>& ViewCube::GetObjects()
+const xhash_set<SharedObject> ViewCube::GetObjects()
 {
 	SharedRoom room = _owner->GetRoom();
 	if (_owner == nullptr || room == nullptr)
 	{
-		_objects.clear();
-		return _objects;
+		return {};
 	}
 
 	if (IsReset)
 	{
+		WRITE_LOCK;
 		_prev_objects.clear();
 		IsReset = false;
 	}
 
-	const auto& zones = room->GetAdjacentZones(_owner->GetCellPos(), kViewRange);
-	_objects.clear();
+	auto zones = room->GetAdjacentZones(_owner->GetCellPos(), kViewRange);
+	xhash_set<SharedObject> objects;
+
 	// loop only during game objects count
-	for (const auto& zone : zones)
+	for (auto& zone : zones)
 	{
-		const auto& players = zone->GetPlayers();
-		for (auto& player : players)
+		auto& players = zone->GetPlayers();
+		for (auto player : players)
 		{
+			if (player == nullptr)
+				continue;
+
 			Vector2Int dist = player->GetCellPos() - _owner->GetCellPos();
 			if (abs(dist.x) > kViewRange)
 				continue;
 			if (abs(dist.y) > kViewRange)
 				continue;
 
-			_objects.insert(player);
+			objects.insert(move(player));
 		}
 
-		const auto& monsters = zone->GetMonsters();
-		for (auto& monster : monsters)
+		auto& monsters = zone->GetMonsters();
+		for (auto monster : monsters)
 		{
+			if (monster == nullptr)
+				continue;
+
 			Vector2Int dist = monster->GetCellPos() - _owner->GetCellPos();
 			if (abs(dist.x) > kViewRange)
 				continue;
 			if (abs(dist.y) > kViewRange)
 				continue;
 
-			_objects.insert(monster);
+			objects.insert(move(monster));
 		}
 
-		const auto& projectiles = zone->GetProjectiles();
-		for (auto& projectile : projectiles)
+		auto& projectiles = zone->GetProjectiles();
+		for (auto projectile : projectiles)
 		{
+			if (projectile == nullptr)
+				continue;
+
 			Vector2Int dist = projectile->GetCellPos() - _owner->GetCellPos();
 			if (abs(dist.x) > kViewRange)
 				continue;
 			if (abs(dist.y) > kViewRange)
 				continue;
 
-			_objects.insert(projectile);
+			objects.insert(move(projectile));
 		}
 	}
 
-	return _objects;
+	return objects;
 }
 
 const xvector<SharedObject>& ViewCube::Except(const xhash_set<SharedObject>& base, const xhash_set<SharedObject>& rhs)

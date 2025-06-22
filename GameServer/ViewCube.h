@@ -5,7 +5,7 @@ public:
 	ViewCube(SharedPlayer player);
 
 	void Update();
-	const xhash_set<SharedObject>& GetObjects();
+	const xhash_set<SharedObject> GetObjects();
 
 public:
 	bool IsReset;
