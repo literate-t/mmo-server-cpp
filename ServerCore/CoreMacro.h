@@ -5,7 +5,8 @@
 // MemoryPool
 #define _SIZE_POOL
 
-//#define _TLS_SLAB
+// CentralPool + ThreadLocal
+#define _TLS_SLAB
 
 // Stomp
 //#define _STOMP
