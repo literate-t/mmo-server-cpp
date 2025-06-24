@@ -34,8 +34,6 @@ bool DBConnectionPool::Connect(int32 connection_count, const WCHAR* connection_s
 
 void DBConnectionPool::Clear()
 {
-	WRITE_LOCK;
-
 	if (_environment != SQL_NULL_HANDLE)
 	{
 		SQLFreeHandle(SQL_HANDLE_ENV, _environment);
