@@ -36,7 +36,7 @@ int main()
 	MakeShared<IocpCore>(),
 	MakeShared<ServerSession>,
 	MakeShared<SessionManager>(),
-	1000);
+	4000);
 
 	ASSERT_CRASH(client_service->Start());
 
