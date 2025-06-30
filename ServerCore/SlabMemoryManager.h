@@ -1,9 +1,9 @@
 #pragma once
-#include <iterator>
 
-const int kFetchCount= 32;
-const int kDataCount = 32;
-const int kArraySizeCount = 512 / 32;
+const int32 kMaxChunkInfoCount = 16;
+const int32 kChunkStride = 32;
+const int32 kMaxBlockSize = 512;
+const int32 kThreadSlabArrayCount = kMaxBlockSize / kChunkStride;
 
 // ------- CentralPool ------- //
 class CentralPool
