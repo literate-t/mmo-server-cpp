@@ -56,6 +56,19 @@ private:
 	array<int32, kThreadSlabArrayCount> arr_size;
 	array<int32, kMaxBlockSize + 1> _size_converter;
 };
+
+struct ChunkInfo
+{
+	ChunkInfo(void* chunk_base, int32 alloc_size, int32 block_count)
+		: chunk_base(chunk_base), alloc_size(alloc_size), block_count(block_count)
+	{
+		freed_count.store(0, memory_order_release);
+	}
+
+	void* chunk_base;
+	int32 alloc_size;
+	int32 block_count;
+	atomic<int32> freed_count;
 };
 
 // ------- ThreadLocalSlab ------- //
