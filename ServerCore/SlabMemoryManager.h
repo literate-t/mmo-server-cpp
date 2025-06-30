@@ -71,6 +71,65 @@ struct ChunkInfo
 	atomic<int32> freed_count;
 };
 
+// ------- ChunkHeader ------- //
+class alignas(64) ChunkHeader
+{
+public:
+	ChunkHeader(ChunkInfo* chunk_info)
+		: chunk_info(chunk_info) {
+	}
+
+	// return: ChunkHeader
+	static inline void InitHeader(void* ptr, ChunkInfo* chunk_info)
+	{
+		ChunkHeader* header = reinterpret_cast<ChunkHeader*>(ptr);
+		new(header)ChunkHeader(chunk_info);
+	}
+
+	static inline ChunkHeader* DetachHeader(void* ptr)
+	{
+		ChunkHeader* header = reinterpret_cast<ChunkHeader*>(ptr);
+		return --header;
+	}
+
+	static inline void* DetachPayload(ChunkHeader* header)
+	{
+		return ++header;
+	}
+
+	static inline void* DetachPayload(ChunkInfo* chunk_info)
+	{
+		return DetachPayload(reinterpret_cast<ChunkHeader*>(chunk_info->chunk_base));
+	}
+
+	ChunkInfo* chunk_info;
+};
+
+// ------- BlockHeader ------- //
+struct BlockHeader
+{
+	BlockHeader() = default;
+	BlockHeader(ChunkInfo* chunk_info)
+		: chunk_info(chunk_info) {
+	}
+
+	static inline void* InitHeader(void* ptr, ChunkInfo* chunk_info)
+	{
+		BlockHeader* header = reinterpret_cast<BlockHeader*>(ptr);
+		new(header)BlockHeader(chunk_info);
+
+		return reinterpret_cast<void*>(++header);
+	}
+
+	static inline BlockHeader* DetachHeader(void* ptr)
+	{
+		BlockHeader* header = reinterpret_cast<BlockHeader*>(ptr);
+		return --header;
+	}
+
+	ChunkInfo* chunk_info;
+};
+
 // ------- ThreadLocalSlab ------- //
 
 class alignas(64) ThreadLocalSlab
