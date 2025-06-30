@@ -131,17 +131,51 @@ struct BlockHeader
 };
 
 // ------- ThreadLocalSlab ------- //
-
-class alignas(64) ThreadLocalSlab
+class ThreadLocalSlab
 {
 public:
-	void* Allocate(int32 size);
-	void Release(void* ptr);
+	ThreadLocalSlab() = default;
+	ThreadLocalSlab(int32 block_size);
+	~ThreadLocalSlab();
+
+	void* Acquire();
+	void Release();
+
+	const int32 _block_size;
+private:
+	void Fetch();
+	void Flush(ChunkInfo* chunk_info);
 
 private:
-	void Fetch(int32 index);
-	void Flush(int32 index);
+	const int32 _block_count;
+
+	xvector<ChunkInfo*> _chunk_infos;
+	xvector<void*> _free_block_payloads;
+};
+
+// ------- SlabMemoryManager ------- //
+class SlabMemoryManager
+{
+public:
+	SlabMemoryManager();
+	~SlabMemoryManager();
+
+	inline static SlabMemoryManager& Instance()
+	{
+		static SlabMemoryManager instance;
+		return instance;
+	}
+
+	void* Acquire(int32 size);
+	void Release(void* block_payload);
+
+	ChunkInfo* RefillChunk(int32 block_size);
+	void DrainChunk(void* chunk_base);
 
 private:
-	array<MemoryStack<kDataCount>, kArraySizeCount> _memory_stacks;
+	void* AcquireBlock(int32 size);
+	void ReleaseBlock(BlockHeader* header);
+
+private:
+	array<class ChunkPool*, kMaxBlockSize + 1> _chunk_pools;
 };
