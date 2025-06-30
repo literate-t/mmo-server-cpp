@@ -44,7 +44,11 @@ public:
 		return instance;
 	}
 
-	int32 ToIndex(int32 size);
+	inline int32 ToIndex(int32 size)
+	{
+		ASSERT_CRASH(size > 0 && size <= kMaxBlockSize);
+		return _size_converter[size];
+	}
 
 	constexpr auto& GetArray() const { return arr_size; }
 
