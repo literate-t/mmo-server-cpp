@@ -53,8 +53,9 @@ public:
 	constexpr auto& GetArray() const { return arr_size; }
 
 private:
-	array<int32, kArraySizeCount> arr_size;
-	int32 _size_count;
+	array<int32, kThreadSlabArrayCount> arr_size;
+	array<int32, kMaxBlockSize + 1> _size_converter;
+};
 };
 
 // ------- ThreadLocalSlab ------- //

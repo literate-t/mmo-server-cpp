@@ -1,15 +1,23 @@
 #include "pch.h"
 #include "SlabMemoryManager.h"
+#include "ChunkPool.h"
 
-// ------- CentralPool ------- //
-void* CentralPool::Allocate(int32 size)
+const int32 kMallocAlignment = 64;
+
+// ------- SizeConverter ------- //
+SizeConverter::SizeConverter()
+    :_size_converter{}
 {
-    return PoolManager::Instance().Allocate(size);
+    generate(arr_size.begin(), arr_size.end(), []() { static int32 seed; return seed += 32; });
+
+    int32 size = 1;
+    int32 index = 0;
+    for (int32 i = kChunkStride; i <= kMaxBlockSize; i+= kChunkStride)
+{
+        while (size <= i)
+            _size_converter[size++] = index;
+        ++index;
 }
-
-void CentralPool::Release(void* ptr)
-{
-    PoolManager::Instance().Release(ptr);
 }
 
 // ------- ThreadLocalSlab ------- //
