@@ -1,20 +1,37 @@
 #pragma once
 
 #include "Types.h"
-#include "MemoryPool.h"
 #include "SlabMemoryManager.h"
+#include "MemoryPool.h"
 
 template<typename Type>
 class ObjectPool
 {
 public:
+	// ------- MakeShared ------- //
+	template<typename...Args>
+	static shared_ptr<Type> MakeShared(Args&&...args)
+	{
+		shared_ptr<Type> sptr{ Pop(forward<Args>(args)...), Push };
+
+		return sptr;
+	}
+
+	// ------- MakeSharedThreadSlab ------- //
+	template<typename...Args>
+	static shared_ptr<Type> MakeSharedThreadSlab(Args&&...args)
+	{
+		shared_ptr<Type> sptr{ PopThreadSlab(forward<Args>(args)...), PushThreadSlab };
+
+		return sptr;
+	}
+
+	// ------- Pop ------- //
 	template<typename... Args>
 	static Type* Pop(Args&&... args)
 	{
 #if defined(_STOMP)
 		Type* memory = static_cast<Type*>(StompAllocator::Allocate(s_alloc_size));
-#elif defined(_TLS_SLAB)
-		Type* memory = static_cast<Type*>(tls_pool_alloc(s_alloc_size));
 #elif defined(_SIZE_POOL)
 		Type* memory = static_cast<Type*>(MemoryHeader::Initialize(s_pool.Pop(), s_alloc_size));
 #endif
@@ -23,24 +40,32 @@ public:
 		return memory;
 	}
 
+	// ------- PopThreadSlab ------- //
+	template<typename... Args>
+	static Type* PopThreadSlab(Args&&... args)
+	{
+		Type* memory = static_cast<Type*>(tls_pool_alloc(s_alloc_size));
+		new(memory)Type(forward<Args>(args)...);
+
+		return memory;
+	}
+
+	// ------- Push ------- //
 	static void Push(Type* obj)
 	{
 		obj->~Type();
 #if defined(_STOMP)
 		StompAllocator::Release(obj);
-#elif defined(_TLS_SLAB)
-		tls_pool_free(obj);
 #elif defined(_SIZE_POOL)
 		s_pool.Push(MemoryHeader::DetachHeader(obj));
 #endif
 	}
 
-	template<typename...Args>
-	static shared_ptr<Type> MakeShared(Args&&...args)
+	// ------- PushThreadSlab ------- //
+	static void PushThreadSlab(Type* obj)
 	{
-		shared_ptr<Type> sptr{ Pop(forward<Args>(args)...), Push };
-
-		return sptr;
+		obj->~Type();
+		tls_pool_free(obj);
 	}
 
 private:
