@@ -9,6 +9,7 @@
 #include <chrono>
 #include <optional>
 #include <algorithm>
+#include <numeric>
 using namespace std;
 using namespace chrono_literals;
 
