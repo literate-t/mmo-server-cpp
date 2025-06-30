@@ -1,4 +1,5 @@
 #pragma once
+#include "SlabMemoryManager.h"
 
 // ------- xnew ------- //
 template<typename Type, typename ...Args>
@@ -36,5 +37,12 @@ shared_ptr<Type> MakeShared(Args&& ...args)
 	return shared_ptr<Type>{xnew<Type>(forward<Args>(args)...), xdelete<Type>};
 }
 
-void* tls_pool_alloc(int32 size);
-void tls_pool_free(void* ptr);
+inline void* tls_pool_alloc(int32 size)
+{
+	return SlabMemoryManager::Instance().Acquire(size);
+}
+
+inline void tls_pool_free(void* ptr)
+{
+	SlabMemoryManager::Instance().Release(ptr);
+}
