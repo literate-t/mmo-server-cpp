@@ -3,7 +3,12 @@
 class DeadLockDetector
 {
 public:
-	static DeadLockDetector& Instance();
+	inline static DeadLockDetector& Instance()
+	{
+		static DeadLockDetector instance;
+		return instance;
+	}
+
 	void BeforeLock(Lock& lock, string func_name = "", int32 line = 0);
 	void AfterLock(Lock& lock);
 	void BeforeUnlock(Lock& lock);

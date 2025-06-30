@@ -1,11 +1,5 @@
 #include "pch.h"
 
-DeadLockDetector& DeadLockDetector::Instance()
-{
-	static DeadLockDetector instance;
-	return instance;
-}
-
 void DeadLockDetector::BeforeLock(Lock& lock, string func_name, int32 line)
 {
 	LockGuard guard(_lock);
