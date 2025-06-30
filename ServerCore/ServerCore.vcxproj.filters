@@ -129,6 +129,9 @@
     <ClInclude Include="PoolManager.h">
       <Filter>Memory</Filter>
     </ClInclude>
+    <ClInclude Include="ChunkPool.h">
+      <Filter>Memory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CorePch.cpp">
@@ -216,6 +219,9 @@
       <Filter>Memory</Filter>
     </ClCompile>
     <ClCompile Include="PoolManager.cpp">
+      <Filter>Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="ChunkPool.cpp">
       <Filter>Memory</Filter>
     </ClCompile>
   </ItemGroup>
