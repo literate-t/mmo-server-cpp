@@ -5,33 +5,6 @@ const int32 kChunkStride = 32;
 const int32 kMaxBlockSize = 512;
 const int32 kThreadSlabArrayCount = kMaxBlockSize / kChunkStride;
 
-// ------- CentralPool ------- //
-class CentralPool
-{
-public:
-	static void* Allocate(int32 size);
-	static void Release(void* ptr);
-};
-
-// ------- MemoryStack ------- //ss
-/*
-* { 32, 48, 64, 80, 96, 112, 128 ..} → index 0, 1, 2, 3, 4, 5, 6.. 
-* 각 사이즈 별로 고정된 크기의 메모리를 들고 있는다
-* 메모리를 관리할 별도의 구조체를 둔다
-*/
-template<int32 N>
-struct alignas(64) MemoryStack
-{
-	inline int32 Top() { return top; }
-
-	void* Pop() { return bufs[--top]; }
-	void Push(void* ptr) { bufs[top++] = ptr; }
-	bool Empty() { return top == 0; }
-	bool Full() { return top == N; }
-
-	void* bufs[N];
-	int32 top = 0;
-};
 // ------- SizeConverter ------- //
 class SizeConverter
 {
