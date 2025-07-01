@@ -4,7 +4,8 @@
 void Lock::WriteLock()
 {
 	// 동일 스레드가 WL(WriteLock)을 획득할 때는 경합하지 않는다
-	const uint32 thread_id = (_lock_flag & WRITE_THREAD_MASK) >> 16;
+	// _lock_flag의 최신 변경 사항이 반드시 여기서 보여야 한다.
+	const uint32 thread_id = (_lock_flag.load(memory_order_acquire) & WRITE_THREAD_MASK) >> 16;
 	if (thread_id == tls_thread_id)
 	{
 		++_write_count;
@@ -21,7 +22,8 @@ void Lock::WriteLock()
 			// 아무도 락을 획득하지 않았을 때 WL을 획득(w->r)
 			uint32 expected = EMPTY_FLAG;
 			uint32 desired = tls_thread_id << 16;
-			if (_lock_flag.compare_exchange_weak(OUT expected, desired))
+			// 성공 시 memory_order_acquire: 이전에 락을 잡은 스레드의 공유 변수 쓰기 사항이 이번 스레드에서 보여야 한다
+			if (_lock_flag.compare_exchange_weak(expected, desired, memory_order_acquire, memory_order_relaxed))
 			{
 				++_write_count;
 				return;
@@ -40,23 +42,25 @@ void Lock::WriteUnlock()
 {
 	// RL을 다 풀어야 WL을 다 풀 수 있다
 	// w->r의 순서로 락을 걸었다면 반드시 r->w 순서로 락을 풀어야지
-	if (0 != (_lock_flag.load() & READ_COUNT_MASK))
+	// 다른 쓰기 동작의 release 동작이 반드시 여기에서 load될 때 가시성이 확보돼야 한다.
+	if (0 != (_lock_flag.load(memory_order_acquire) & READ_COUNT_MASK))
 		CRASH("Invalid unlock error");
 
 	const int32 lock_count = --_write_count;
 	if (0 == lock_count)
 	{
-		_lock_flag.store(EMPTY_FLAG);
+		// 값이 갱신될 때 다른 acquire load 동작에서 가시성이 확보되도록 해준다.
+		_lock_flag.store(EMPTY_FLAG, memory_order_release);
 	}
 }
 
 void Lock::ReadLock()
 {
 	// 동일 스레드가 RL(ReadLock)을 획득할 때는 경합하지 않는다		
-	const uint32 thread_id = (_lock_flag & WRITE_THREAD_MASK) >> 16;
+	const uint32 thread_id = (_lock_flag.load(memory_order_acquire) & WRITE_THREAD_MASK) >> 16;
 	if (thread_id == tls_thread_id)
 	{
-		_lock_flag.fetch_add(1);
+		_lock_flag.fetch_add(1, memory_order_relaxed);
 		return;
 	}
 
@@ -68,7 +72,7 @@ void Lock::ReadLock()
 		for (int spin_count = 0; spin_count < MAX_SPIN_COUNT; ++spin_count)
 		{
 			uint32 expected = (_lock_flag & READ_COUNT_MASK);
-			if (_lock_flag.compare_exchange_weak(expected, expected + 1))
+			if (_lock_flag.compare_exchange_weak(expected, expected + 1, memory_order_acquire, memory_order_relaxed))
 				return;
 		}
 
@@ -81,7 +85,8 @@ void Lock::ReadLock()
 
 void Lock::ReadUnlock()
 {
-	if (0 == (_lock_flag.fetch_sub(1) & READ_COUNT_MASK))
+	// 값을 읽을 때 release store를 한 값이 보여야 하고, -1 연산한 값을 release 해야 다른 스레드의 acquire load에서 반영된다.
+	if (0 == (_lock_flag.fetch_sub(1, memory_order_acq_rel) & READ_COUNT_MASK))
 		CRASH("INVALID_UNLOCK");
 }
 
