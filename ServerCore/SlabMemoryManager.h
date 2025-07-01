@@ -44,60 +44,37 @@ struct ChunkInfo
 	atomic<int32> freed_count;
 };
 
-// ------- ChunkHeader ------- //
-class alignas(64) ChunkHeader
+// ------- ChunkMetadata ------- //
+class alignas(64) ChunkMetadata
 {
 public:
-	ChunkHeader(ChunkInfo* chunk_info)
+	ChunkMetadata(ChunkInfo* chunk_info)
 		: chunk_info(chunk_info) {
 	}
 
-	// return: ChunkHeader
-	static inline void InitHeader(void* ptr, ChunkInfo* chunk_info)
+	// return: Payload
+	static inline void* InitHeader(void* ptr, ChunkInfo* chunk_info)
 	{
-		ChunkHeader* header = reinterpret_cast<ChunkHeader*>(ptr);
-		new(header)ChunkHeader(chunk_info);
+		ChunkMetadata* header = reinterpret_cast<ChunkMetadata*>(ptr);
+		new(header)ChunkMetadata(chunk_info);
+
+		return ++header;
 	}
 
-	static inline ChunkHeader* DetachHeader(void* ptr)
+	static inline ChunkMetadata* DetachHeader(void* ptr)
 	{
-		ChunkHeader* header = reinterpret_cast<ChunkHeader*>(ptr);
+		ChunkMetadata* header = reinterpret_cast<ChunkMetadata*>(ptr);
 		return --header;
 	}
 
-	static inline void* DetachPayload(ChunkHeader* header)
+	static inline void* DetachPayload(ChunkMetadata* header)
 	{
 		return ++header;
 	}
 
 	static inline void* DetachPayload(ChunkInfo* chunk_info)
 	{
-		return DetachPayload(reinterpret_cast<ChunkHeader*>(chunk_info->chunk_base));
-	}
-
-	ChunkInfo* chunk_info;
-};
-
-// ------- BlockHeader ------- //
-struct BlockHeader
-{
-	BlockHeader() = default;
-	BlockHeader(ChunkInfo* chunk_info)
-		: chunk_info(chunk_info) {
-	}
-
-	static inline void* InitHeader(void* ptr, ChunkInfo* chunk_info)
-	{
-		BlockHeader* header = reinterpret_cast<BlockHeader*>(ptr);
-		new(header)BlockHeader(chunk_info);
-
-		return reinterpret_cast<void*>(++header);
-	}
-
-	static inline BlockHeader* DetachHeader(void* ptr)
-	{
-		BlockHeader* header = reinterpret_cast<BlockHeader*>(ptr);
-		return --header;
+		return DetachPayload(reinterpret_cast<ChunkMetadata*>(chunk_info->chunk_base));
 	}
 
 	ChunkInfo* chunk_info;
@@ -147,7 +124,7 @@ public:
 
 private:
 	void* AcquireBlock(int32 size);
-	void ReleaseBlock(BlockHeader* header);
+	void ReleaseBlock(ChunkMetadata* header);
 
 private:
 	array<class ChunkPool*, kMaxBlockSize + 1> _chunk_pools;

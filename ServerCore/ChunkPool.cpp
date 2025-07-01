@@ -32,7 +32,7 @@ void* ChunkPool::Pop()
 {
 	WRITE_LOCK;
 	if (_chunks.empty())
-		// ChunkHeader 크기만큼 더하기
+		// ChunkMetadata 크기만큼 더하기
 		return _aligned_malloc(_chunk_size + kMallocAlignment, kMallocAlignment);
 
 	void* chunk = _chunks.back();
