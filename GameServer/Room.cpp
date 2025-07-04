@@ -330,7 +330,7 @@ xvector<SharedZone> Room::GetAdjacentZones(Vector2Int cell_pos, int32 range)
 		}
 	}
 
-	return xvector<SharedZone>(move(adjacent_zones));
+	return adjacent_zones;
 }
 
 SharedPlayer Room::FindClosestPlayer(Vector2Int base_pos, int32 range)
