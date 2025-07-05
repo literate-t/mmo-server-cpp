@@ -1,9 +1,9 @@
 #pragma once
 
-const int32 kMaxChunkInfoCount = 16;
-const int32 kChunkStride = 32;
+const int32 kMaxSlabInfoCount = 16;
+const int32 kBlockStride = 32;
 const int32 kMaxBlockSize = 512;
-const int32 kThreadSlabArrayCount = kMaxBlockSize / kChunkStride;
+const int32 kThreadSlabArrayCount = kMaxBlockSize / kBlockStride;
 
 // ------- SizeConverter ------- //
 class SizeConverter
@@ -30,54 +30,54 @@ private:
 	array<int32, kMaxBlockSize + 1> _size_converter;
 };
 
-struct ChunkInfo
+struct SlabInfo
 {
-	ChunkInfo(void* chunk_base, int32 alloc_size, int32 block_count)
-		: chunk_base(chunk_base), alloc_size(alloc_size), block_count(block_count)
+	SlabInfo(void* slab_base, int32 alloc_size, int32 block_count)
+		: slab_base(slab_base), alloc_size(alloc_size), block_count(block_count)
 	{
 		freed_count.store(0, memory_order_release);
 	}
 
-	void* chunk_base;
+	void* slab_base;
 	int32 alloc_size;
 	int32 block_count;
 	atomic<int32> freed_count;
 };
 
-// ------- ChunkMetadata ------- //
-class alignas(64) ChunkMetadata
+// ------- SlabMetadata ------- //
+class alignas(64) SlabMetadata
 {
 public:
-	ChunkMetadata(ChunkInfo* chunk_info)
-		: chunk_info(chunk_info) {
+	SlabMetadata(SlabInfo* slab_info)
+		: slab_info(slab_info) {
 	}
 
 	// return: Payload
-	static inline void* InitHeader(void* ptr, ChunkInfo* chunk_info)
+	static inline void* InitHeader(void* ptr, SlabInfo* slab_info)
 	{
-		ChunkMetadata* header = reinterpret_cast<ChunkMetadata*>(ptr);
-		new(header)ChunkMetadata(chunk_info);
+		SlabMetadata* header = reinterpret_cast<SlabMetadata*>(ptr);
+		new(header)SlabMetadata(slab_info);
 
 		return ++header;
 	}
 
-	static inline ChunkMetadata* DetachHeader(void* ptr)
+	static inline SlabMetadata* DetachHeader(void* ptr)
 	{
-		ChunkMetadata* header = reinterpret_cast<ChunkMetadata*>(ptr);
+		SlabMetadata* header = reinterpret_cast<SlabMetadata*>(ptr);
 		return --header;
 	}
 
-	static inline void* DetachPayload(ChunkMetadata* header)
+	static inline void* DetachPayload(SlabMetadata* header)
 	{
 		return ++header;
 	}
 
-	static inline void* DetachPayload(ChunkInfo* chunk_info)
+	static inline void* DetachPayload(SlabInfo* slab_info)
 	{
-		return DetachPayload(reinterpret_cast<ChunkMetadata*>(chunk_info->chunk_base));
+		return DetachPayload(reinterpret_cast<SlabMetadata*>(slab_info->slab_base));
 	}
 
-	ChunkInfo* chunk_info;
+	SlabInfo* slab_info;
 };
 
 // ------- ThreadLocalSlab ------- //
@@ -94,12 +94,12 @@ public:
 	const int32 _block_size;
 private:
 	void Fetch();
-	void Flush(ChunkInfo* chunk_info);
+	void Flush(SlabInfo* slab_info);
 
 private:
 	const int32 _block_count;
 
-	xvector<ChunkInfo*> _chunk_infos;
+	xvector<SlabInfo*> _slab_infos;
 	xvector<void*> _free_block_payloads;
 };
 
@@ -119,13 +119,13 @@ public:
 	void* Acquire(int32 size);
 	void Release(void* block_payload);
 
-	ChunkInfo* RefillChunk(int32 block_size);
-	void DrainChunk(void* chunk_base);
+	SlabInfo* RefillSlab(int32 block_size);
+	void DrainSlab(void* slab_base);
 
 private:
 	void* AcquireBlock(int32 size);
-	void ReleaseBlock(ChunkMetadata* header);
+	void ReleaseBlock(SlabMetadata* header);
 
 private:
-	array<class ChunkPool*, kMaxBlockSize + 1> _chunk_pools;
+	array<class SlabPool*, kMaxBlockSize + 1> _slab_pools;
 };

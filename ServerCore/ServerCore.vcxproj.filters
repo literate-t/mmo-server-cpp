@@ -129,7 +129,7 @@
     <ClInclude Include="PoolManager.h">
       <Filter>Memory</Filter>
     </ClInclude>
-    <ClInclude Include="ChunkPool.h">
+    <ClInclude Include="SlabPool.h">
       <Filter>Memory</Filter>
     </ClInclude>
   </ItemGroup>
@@ -221,7 +221,7 @@
     <ClCompile Include="PoolManager.cpp">
       <Filter>Memory</Filter>
     </ClCompile>
-    <ClCompile Include="ChunkPool.cpp">
+    <ClCompile Include="SlabPool.cpp">
       <Filter>Memory</Filter>
     </ClCompile>
   </ItemGroup>

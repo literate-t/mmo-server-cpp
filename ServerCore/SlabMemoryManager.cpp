@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "SlabMemoryManager.h"
-#include "ChunkPool.h"
+#include "SlabPool.h"
 
 const int32 kMallocAlignment = 64;
 
@@ -12,7 +12,7 @@ SizeConverter::SizeConverter()
 
     int32 size = 1;
     int32 index = 0;
-    for (int32 i = kChunkStride; i <= kMaxBlockSize; i+= kChunkStride)
+    for (int32 i = kBlockStride; i <= kMaxBlockSize; i+= kBlockStride)
     {
         while (size <= i)
             _size_converter[size++] = index;
@@ -23,9 +23,9 @@ SizeConverter::SizeConverter()
 // ------- ThreadLocalSlab ------- //
 ThreadLocalSlab::ThreadLocalSlab(int32 alloc_size)
     : _block_size(alloc_size),
-    _block_count(CalcBlockCountOfChunk(alloc_size))
+    _block_count(CalcBlockCountOfSlab(alloc_size))
 {    
-    _chunk_infos.reserve(kMaxChunkInfoCount);
+    _slab_infos.reserve(kMaxSlabInfoCount);
 
     Fetch();
 }
@@ -48,14 +48,14 @@ void* ThreadLocalSlab::Acquire()
 
 void ThreadLocalSlab::Release()
 {
-    for (int32 i = 0; i < _chunk_infos.size();/*none*/)
+    for (int32 i = 0; i < _slab_infos.size();/*none*/)
     {
-        if (_chunk_infos[i]->block_count == _chunk_infos[i]->freed_count.load(memory_order_acquire))
+        if (_slab_infos[i]->block_count == _slab_infos[i]->freed_count.load(memory_order_acquire))
         {
-            Flush(_chunk_infos[i]);
+            Flush(_slab_infos[i]);
 
-            _chunk_infos[i] = _chunk_infos.back();
-            _chunk_infos.pop_back();
+            _slab_infos[i] = _slab_infos.back();
+            _slab_infos.pop_back();
         }
         else
         {
@@ -64,23 +64,23 @@ void ThreadLocalSlab::Release()
     }
 }
 
-void ThreadLocalSlab::Flush(ChunkInfo* chunk_info)
+void ThreadLocalSlab::Flush(SlabInfo* slab_info)
 {    
-    SlabMemoryManager::Instance().DrainChunk(chunk_info->chunk_base);
+    SlabMemoryManager::Instance().DrainSlab(slab_info->slab_base);
 }
 
 void ThreadLocalSlab::Fetch()
 {
-    ChunkInfo* chunk_info = SlabMemoryManager::Instance().RefillChunk(_block_size);
+    SlabInfo* slab_info = SlabMemoryManager::Instance().RefillSlab(_block_size);
     
-    _chunk_infos.push_back(chunk_info);
+    _slab_infos.push_back(slab_info);
 
-    int8* chunk_payload = reinterpret_cast<int8*>(ChunkMetadata::DetachPayload(chunk_info));
+    int8* slab_payload = reinterpret_cast<int8*>(SlabMetadata::DetachPayload(slab_info));
 
     for (int32 i = 0; i < _block_count; ++i)
     {
-        void* memory = reinterpret_cast<void*>(chunk_payload + (i * _block_size));
-        void* block = ChunkMetadata::InitHeader(memory, chunk_info);
+        void* memory = reinterpret_cast<void*>(slab_payload + (i * _block_size));
+        void* block = SlabMetadata::InitHeader(memory, slab_info);
 
 
         _free_block_payloads.push_back(block);
@@ -91,23 +91,23 @@ void ThreadLocalSlab::Fetch()
 SlabMemoryManager::SlabMemoryManager()
 {
     int32 size = 1;
-    for (int32 block = 32; block <= kMaxBlockSize; block += kChunkStride)
+    for (int32 block = 32; block <= kMaxBlockSize; block += kBlockStride)
     {
-        ChunkPool* pool = new ChunkPool(block);
+        SlabPool* pool = new SlabPool(block);
         while (size <= block)
-            _chunk_pools[size++] = pool;
+            _slab_pools[size++] = pool;
     }
 }
 
 SlabMemoryManager::~SlabMemoryManager()
 {
-    for (int32 block = 32; block <= kMaxBlockSize; block += kChunkStride)
-        delete _chunk_pools[block];
+    for (int32 block = 32; block <= kMaxBlockSize; block += kBlockStride)
+        delete _slab_pools[block];
 }
 
 void* SlabMemoryManager::Acquire(int32 size)    
 {
-    int32 alloc_size = size + sizeof(ChunkMetadata);
+    int32 alloc_size = size + sizeof(SlabMetadata);
     if (alloc_size > kMaxBlockSize)
         return AcquireBlock(alloc_size);
     
@@ -117,53 +117,53 @@ void* SlabMemoryManager::Acquire(int32 size)
 
 void SlabMemoryManager::Release(void* block_payload)
 {
-    ChunkMetadata* header = ChunkMetadata::DetachHeader(block_payload);
-    auto& chunk_info = header->chunk_info;
-    int32 alloc_size = chunk_info->alloc_size;
+    SlabMetadata* header = SlabMetadata::DetachHeader(block_payload);
+    auto& slab_info = header->slab_info;
+    int32 alloc_size = slab_info->alloc_size;
     ASSERT_CRASH(alloc_size > 0);
 
     if (alloc_size > kMaxBlockSize)
         ReleaseBlock(header);
     else
     {        
-        chunk_info->freed_count.fetch_add(1, memory_order_acq_rel);
-        int32 index = SizeConverter::Instance().ToIndex(chunk_info->alloc_size);
+        slab_info->freed_count.fetch_add(1, memory_order_acq_rel);
+        int32 index = SizeConverter::Instance().ToIndex(slab_info->alloc_size);
         tls_slab[index]->Release();
     }
 }
 
-ChunkInfo* SlabMemoryManager::RefillChunk(int32 block_size)
+SlabInfo* SlabMemoryManager::RefillSlab(int32 block_size)
 {
-    void* chunk_base = _chunk_pools[block_size]->Pop();
+    void* slab_base = _slab_pools[block_size]->Pop();
 
-    ChunkInfo* chunk_info = xnew<ChunkInfo>(chunk_base, block_size, CalcBlockCountOfChunk(block_size));
-    ChunkMetadata::InitHeader(chunk_base, chunk_info);
+    SlabInfo* slab_info = xnew<SlabInfo>(slab_base, block_size, CalcBlockCountOfSlab(block_size));
+    SlabMetadata::InitHeader(slab_base, slab_info);
 
-    return chunk_info;
+    return slab_info;
 }
 
-void SlabMemoryManager::DrainChunk(void* chunk_base)
+void SlabMemoryManager::DrainSlab(void* slab_base)
 {
-    ChunkMetadata* header = reinterpret_cast<ChunkMetadata*>(chunk_base);
-    int32 block_size = header->chunk_info->alloc_size;    
+    SlabMetadata* header = reinterpret_cast<SlabMetadata*>(slab_base);
+    int32 block_size = header->slab_info->alloc_size;    
     ASSERT_CRASH(block_size > 0);
-    ChunkInfo* chunk_info = header->chunk_info;
+    SlabInfo* slab_info = header->slab_info;
 
-    xdelete<ChunkInfo>(chunk_info);
-    chunk_info = nullptr;
-    _chunk_pools[block_size]->Push(header);
+    xdelete<SlabInfo>(slab_info);
+    slab_info = nullptr;
+    _slab_pools[block_size]->Push(header);
 }
 
 void* SlabMemoryManager::AcquireBlock(int32 size)
 {
-    int32 alloc_size = size + sizeof(ChunkMetadata);
-    ChunkInfo* chunk_info = xnew<ChunkInfo>(nullptr, alloc_size, 0);
-    return ChunkMetadata::InitHeader(_aligned_malloc(alloc_size, kMallocAlignment), chunk_info);
+    int32 alloc_size = size + sizeof(SlabMetadata);
+    SlabInfo* slab_info = xnew<SlabInfo>(nullptr, alloc_size, 0);
+    return SlabMetadata::InitHeader(_aligned_malloc(alloc_size, kMallocAlignment), slab_info);
 }
 
-void SlabMemoryManager::ReleaseBlock(ChunkMetadata* header)
+void SlabMemoryManager::ReleaseBlock(SlabMetadata* header)
 {
-    xdelete<ChunkInfo>(header->chunk_info);
-    header->chunk_info = nullptr;
+    xdelete<SlabInfo>(header->slab_info);
+    header->slab_info = nullptr;
     _aligned_free(header);
 }

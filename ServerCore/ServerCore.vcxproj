@@ -195,7 +195,7 @@
     <ClInclude Include="Service.h" />
     <ClInclude Include="Session.h" />
     <ClInclude Include="SessionManager.h" />
-    <ClInclude Include="ChunkPool.h" />
+    <ClInclude Include="SlabPool.h" />
     <ClInclude Include="SocketUtils.h" />
     <ClInclude Include="SlabMemoryManager.h" />
     <ClInclude Include="ThreadManager.h" />
@@ -233,7 +233,7 @@
     <ClCompile Include="Service.cpp" />
     <ClCompile Include="Session.cpp" />
     <ClCompile Include="SessionManager.cpp" />
-    <ClCompile Include="ChunkPool.cpp" />
+    <ClCompile Include="SlabPool.cpp" />
     <ClCompile Include="SocketUtils.cpp" />
     <ClCompile Include="SlabMemoryManager.cpp" />
     <ClCompile Include="ThreadManager.cpp" />
