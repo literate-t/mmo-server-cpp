@@ -76,6 +76,8 @@ void ListenHandler::Dispatch(IocpEvent* iocp_event, int32 number_of_bytes)
 void ListenHandler::RegisterAccept(AcceptEvent* accept_event)
 {
 	SharedSession session = _service->CreateSessionToIocp();
+	ASSERT_CRASH(session != nullptr);
+
 	accept_event->Init();
 	accept_event->session = session;
 	DWORD bytes_recved = 0;
