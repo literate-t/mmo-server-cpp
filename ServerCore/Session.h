@@ -66,7 +66,7 @@ private:
 // 컨텐츠 단에서 호출할 이유가 없다
 private:
 	/* interface implementation */
-	virtual HANDLE GetHandle() override;
+	virtual SOCKET GetSocket() override;
 	virtual void Dispatch(class IocpEvent* iocp_event, int32 number_of_bytes = 0) override;
 
 private:

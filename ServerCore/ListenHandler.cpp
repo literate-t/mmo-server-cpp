@@ -61,9 +61,9 @@ void ListenHandler::CloseSocket()
 	SocketUtils::Close(_socket);
 }
 
-HANDLE ListenHandler::GetHandle()
+SOCKET ListenHandler::GetSocket()
 {
-	return reinterpret_cast<HANDLE>(_socket);
+	return _socket;
 }
 
 void ListenHandler::Dispatch(IocpEvent* iocp_event, int32 number_of_bytes)

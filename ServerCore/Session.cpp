@@ -63,9 +63,9 @@ void Session::Disconnect(const WCHAR* cause)
 	RegisterDisconnect();
 }
 
-HANDLE Session::GetHandle()
+SOCKET Session::GetSocket()
 {
-	return reinterpret_cast<HANDLE>(_socket);
+	return _socket;
 }
 
 void Session::Dispatch(IocpEvent* iocp_event, int32 number_of_bytes)

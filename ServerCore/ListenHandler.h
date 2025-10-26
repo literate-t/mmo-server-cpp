@@ -16,7 +16,7 @@ public:
 
 public:
 	/* interface implementation */
-	HANDLE GetHandle() override;
+	SOCKET GetSocket() override;
 	void Dispatch(class IocpEvent* iocp_event, int32 number_of_bytes = 0) override;
 
 private:

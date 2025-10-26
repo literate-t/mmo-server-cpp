@@ -5,7 +5,7 @@ class IocpKey;
 class IocpObject : public enable_shared_from_this<IocpObject>
 {
 public:
-	virtual HANDLE GetHandle() abstract;
+	virtual SOCKET GetSocket() abstract;
 	virtual void Dispatch(class IocpEvent* iocp_event, int32 number_of_bytes = 0) abstract;
 };
 

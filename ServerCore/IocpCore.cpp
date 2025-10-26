@@ -16,7 +16,7 @@ IocpCore::~IocpCore()
 bool IocpCore::Register(SharedIocpObject iocp_object)
 {
 	// register a socket to iocp without key
-	return nullptr != CreateIoCompletionPort(iocp_object->GetHandle(), _iocp_handle, /*key*/0, 0);
+	return nullptr != CreateIoCompletionPort(reinterpret_cast<HANDLE>(iocp_object->GetSocket()), _iocp_handle, /*key*/0, 0);
 }
 
 bool IocpCore::Dispatch(uint32 timeout_ms)
