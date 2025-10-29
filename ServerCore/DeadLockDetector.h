@@ -14,7 +14,7 @@ public:
 	void BeforeUnlock(Lock& lock);
 
 private:
-	bool CheckCycle(thread::id start_thread, thread::id current_thread, unordered_set<thread::id>& visited_thread);
+	bool CheckCycle(thread::id current_thread, thread::id next_thread, unordered_set<thread::id>& visited_thread);
 
 private:
 	Mutex _lock;

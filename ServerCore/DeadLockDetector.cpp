@@ -63,12 +63,12 @@ void DeadLockDetector::BeforeUnlock(Lock& lock)
 		throw std::runtime_error("Invalid unlock");
 }
 
-bool DeadLockDetector::CheckCycle(thread::id start_thread, thread::id current_thread, unordered_set<thread::id>& visited_thread)
+bool DeadLockDetector::CheckCycle(thread::id current_thread, thread::id next_thread, unordered_set<thread::id>& visited_thread)
 {
-	if (!visited_thread.insert(current_thread).second)
+	if (!visited_thread.insert(next_thread).second)
 		return false;
 
-	auto find_iter = _wait_map.find(current_thread);
+	auto find_iter = _wait_map.find(next_thread);
 	if (find_iter == _wait_map.end())
 		return false;
 
@@ -80,10 +80,10 @@ bool DeadLockDetector::CheckCycle(thread::id start_thread, thread::id current_th
 
 		thread::id next_thread_id = find_owner->second;
 		// cycle
-		if (next_thread_id == start_thread)
+		if (next_thread_id == current_thread)
 			return true;
 
-		if (CheckCycle(start_thread, next_thread_id, visited_thread))
+		if (CheckCycle(current_thread, next_thread_id, visited_thread))
 			return true;
 	}
 
